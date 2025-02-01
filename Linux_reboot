@@ -1,0 +1,52 @@
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]# systemctl status sshd
+● sshd.service - OpenSSH server daemon
+   Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2024-05-25 23:56:33 IST; 1 months 4 days ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+ Main PID: 3413 (sshd)
+    Tasks: 1
+   CGroup: /system.slice/sshd.service
+           └─3413 /usr/sbin/sshd -D
+
+Jun 30 01:17:36 imgapp1pr sshd[2185]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+Jun 30 01:17:48 imgapp1pr sshd[2211]: pam_unix(sshd:account): account v1012395 has expired (failed to change password)
+Jun 30 01:17:48 imgapp1pr sshd[2211]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+Jun 30 01:17:56 imgapp1pr sshd[2250]: pam_unix(sshd:account): account v1012395 has expired (failed to change password)
+Jun 30 01:17:56 imgapp1pr sshd[2250]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+Jun 30 01:19:01 imgapp1pr sshd[2416]: Accepted publickey for v1009503 from 10.0.20.72 port 49645 ssh2: RSA SHA256:GoJEBtw7E4fPgkrO4PZWk1TEMYBSahBKf7YU+tj14Sw
+Jun 30 01:19:12 imgapp1pr sshd[2528]: pam_unix(sshd:account): account v1012395 has expired (failed to change password)
+Jun 30 01:19:12 imgapp1pr sshd[2528]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+Jun 30 01:19:15 imgapp1pr sshd[2553]: pam_unix(sshd:account): account v1012395 has expired (failed to change password)
+Jun 30 01:19:15 imgapp1pr sshd[2553]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]# ststemctl
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]# systemctl restart sshd
+[root@imgapp1pr ~]# systemctl status sshd
+● sshd.service - OpenSSH server daemon
+   Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2024-06-30 01:19:57 IST; 11s ago
+     Docs: man:sshd(8)
+           man:sshd_config(5)
+ Main PID: 2649 (sshd)
+    Tasks: 1
+   CGroup: /system.slice/sshd.service
+           └─2649 /usr/sbin/sshd -D
+
+Jun 30 01:19:57 imgapp1pr systemd[1]: Starting OpenSSH server daemon...
+Jun 30 01:19:57 imgapp1pr sshd[2649]: Server listening on 0.0.0.0 port 2322.
+Jun 30 01:19:57 imgapp1pr sshd[2649]: Server listening on 0.0.0.0 port 22.
+Jun 30 01:19:57 imgapp1pr systemd[1]: Started OpenSSH server daemon.
+Jun 30 01:20:03 imgapp1pr sshd[2673]: pam_unix(sshd:account): account v1012395 has expired (failed to change password)
+Jun 30 01:20:03 imgapp1pr sshd[2673]: fatal: Access denied for user v1012395 by PAM account configuration [preauth]
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]#
+[root@imgapp1pr ~]# reboot
+Connection to 10.0.20.191 closed by remote host.
+Connection to 10.0.20.191 closed.
+v1009503@varuna:/home/cbshome/v1009503#TMOUT=0
