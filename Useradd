@@ -1,0 +1,91 @@
+for i in `cat /tmp/iplist`
+do
+echo "=================$i=================="
+ssh -q $i "useradd -u 281 -g sbistaff  -d /home/kumarpra -c  'KVVS Praveen kumar , DCOG Team, DT-17102024 Named user' -s /usr/bin/ksh  -m kumarprav"
+done
+
+
+useradd -u 7010 -g 20  -d /home/cbshome/malotbha -c  'Vinaya GS , Monitoring TEAM, DT-30092023' -s /usr/bin/ksh  -m malotbha 
+
+malotbha:x:7016:20:Vinaya GS , Monitoring TEAM, DT-30092023:/home/cbshome/malotbha:/usr/bin/ksh
+
+
+patraraj:x:272:111:Rajib Patra, DCOGTeam, DT-12062017,Named user:/home/patraraj:/usr/bin/ksh
+mahespra:x:271:111:Prashant Maheshwari,DCOGTeam, Dt-20052017,Named user:/home/mahespra:/usr/bin/ksh
+chauhsum:x:241:111:Sumeet Chauhan, DCOGTeam, DT-29052017,Named user:/home/chauhsum:/usr/bin/ksh
+
+malotbha:x:277:111:bhaskar Maloth , DCOG Team, DT-17102024:/home/malotbha:/usr/bin/ksh
+chauhsum:x:241:111:Sumeet Chauhan, DCOGTeam, DT-29052017,Named user:/home/chauhsum:/usr/bin/ksh
+mishrrah:x:278:111:Rahul Mishra , DCOG Team, DT-17102024 , Named user:/home/mishrrah:/usr/bin/ksh
+
+
+
+
+useradd -u 277 -g sbistaff  -d /home/malotbha -c  'bhaskar Maloth , DCOG Team, DT-17102024' -s /usr/bin/ksh  -m malotbha
+useradd -u 278 -g sbistaff  -d /home/mishrrah -c  'Rahul Mishra , DCOG Team, DT-17102024 , Named user' -s /usr/bin/ksh  -m mishrrah
+useradd -u 279 -g sbistaff  -d /home/venkapid -c  'Pidaparthi Venkatasesha Sai Srikar , DCOG Team, DT-17102024, Named user' -s /usr/bin/ksh  -m pidapsri
+
+
+useradd -u 280 -g sbistaff  -d /home/allurswa -c  'Swarna Alluraiah , DCOG Team, DT-17102024, Named user' -s /usr/bin/ksh  -m allurswa
+useradd -u 281 -g sbistaff  -d /home/kumarpra -c  'KVVS Praveen kumar , DCOG Team, DT-17102024 Named user' -s /usr/bin/ksh  -m kumarprav
+281
+
+cat /etc/passwd | grep -i kumarpra
+
+userdel -F -r kumarpra
+
+
+
+
+
+
+10.0.20.30
+10.0.20.29
+10.0.20.7
+
+
+
+============================
+10.0.20.232
+10.0.20.242
+====================================
+sudo ssh -q $i "cat /etc/passwd | grep -i aniket"
+
+
+
+
+for i in `cat /tmp/iplist`
+do
+echo "=================$i=========================="
+ssh -q $i "cat /etc/passwd | grep -i kumarprav"
+done
+
+
+
+
+for i in 51 52 53 54 55 15 16
+do
+echo "=================10.189.20.$i=================="
+ssh 10.189.20.$i 2>/dev/null "cat /etc/passwd |grep -i dba
+done
+
+
+
+
+
+
+
+
+for i in `cat /tmp/iplist`
+do
+echo "=================$i=================="
+ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) malotbha;passwd -x 90 malotbha;passwd -n 0 malotbha;userdbset -d -a auth_failures;userdbget -a auth_failures"
+ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) mishrrah;passwd -x 90 mishrrah;passwd -n 0 mishrrah;userdbset -d -a auth_failures;userdbget -a auth_failures"
+ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) pidapsri;passwd -x 90 pidapsri;passwd -n 0 pidapsri;userdbset -d -a auth_failures;userdbget -a auth_failures"
+ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) allurswa;passwd -x 90 allurswa;passwd -n 0 allurswa;userdbset -d -a auth_failures;userdbget -a auth_failures"
+ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) kumarpra;passwd -x 90 kumarpra;passwd -n 0 kumarpra;userdbset -d -a auth_failures;userdbget -a auth_failures"
+done
+
+
+
+
