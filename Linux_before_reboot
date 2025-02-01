@@ -1,0 +1,62 @@
+hostname
+date
+uname -a
+
+cat /etc/redhat-release
+df -h
+free -m
+dmidecode -t1
+ifconfig -a
+route -n
+netstat -rn
+netstat -in
+rpm -qa
+dmesg
+cat /etc/passwd
+cat /etc/group
+cat /etc/shadow
+cat /etc/fstab
+cat /etc/hosts
+cat /etc/sysconfig/network
+cat /etc/resolv.conf
+cat /etc/sudoers
+cat /etc/cluster/cluster.conf
+cat /etc/lvm/lvm.conf
+cat /etc/multipath.conf
+chkconfig --list
+multipath -ll
+pvs
+vgs
+lvs
+lsblk
+blkid
+vgdisplay -v
+ps -ef
+ps -ef |grep -i pmon
+cat /etc/cluster/cluster.conf
+cat /etc/sysconfig/network-scripts/ifcfg-eth*
+ntpq -p
+cat /proc/cpuinfo
+cat /proc/meminfo
+vmstat
+uptime
+systool -c fc_host -v
+service --status all
+chkconfig --list
+clustat
+ll /dev/mapper/
+
+
+
+
+
+
+[root@imgapp2pr ~]# cat /etc/redhat-release
+Red Hat Enterprise Linux Server release 7.9 (Maipo)
+[root@imgapp2pr ~]#
+[root@imgapp2pr ~]#
+[root@imgapp2pr ~]#
+[root@imgapp2pr ~]#
+[root@imgapp2pr ~]# uname -r
+3.10.0-1160.11.1.el7.x86_64
+[root@imgapp2pr ~]#
