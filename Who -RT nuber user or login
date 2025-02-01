@@ -1,0 +1,17 @@
+root@rptapp3:/>ps -ef | wc -l
+3668
+root@rptapp3:/>who -RT
+fnsonlir - pts/57       Nov 22 12:28  old   29682  10.189.20.36
+fnsonlir - pts/59       Sep  9 12:44  old   34054  10.189.20.35
+fnsonlir - pts/63       Nov 11 21:55  old   52364  10.189.20.38
+
+
+root@rptapp3:/>who -RT |grep -i old | awk '{print $7}'
+
+old
+old
+
+root@rptapp3:/>who -RT |grep -i old | awk '{print $8}' |xargs kill -9
+kill: 34670: no such process
+root@rptapp3:/>who -RT |grep -i old
+fnsonlir - pts/109      Sep 14 16:05  old   34670  10.189.20.35
