@@ -1,0 +1,62 @@
+to hide root from putty session:
+
+PS1="`hostname` $"
+
+
+PS1="v1014429@`hostname` $"
+
+
+PS1="cdcidm@imgapp2pr #"
+----------------------
+pam_tally2 --user=SOCVA --reset
+----------------------------
+
+to shutdown server (halt) :
+
+shutdown -hy 0
+----------------------------
+
+to shutdown server (reboot) :
+
+shutdown -ry 0
+----------------------------
+To take kernal output :
+
+go to cd /stand
+kconfig -s vmunix09102021
+
+---------------------------------------
+/etc/opt/omni/client/cell_server
+
+
+select name,open_mode,log_mode,database_role from v$database;
+
+-----------------------------------
+alter database noarchivelog;
+==========================================
+shutdown -ry 0
+-------------------------------
+netstat -an |wc -l to check no of connections
+---------------------------------------------
+
+/HORCM/usr/bin #./horcmstart.sh 30  to start horcm
+---------------------------------------------------------------
+fsck -o full -y /dev/vg_restore_app/rlv_Penna_restore_09032022
+
+----------------------------------------------------------------------
+cat /etc/passwd|cut -d: -f1,5
+
+----------------------------------------------------------------------
+vg activate
+vgchange -a y /dev/vg01
+
+----------------------------------------------------------------------
+SBIBKPNR:/etc/opt/omni/server/cell/restoredev   ---restoredev entry
+
+----------------------------------------------------------------------
+
+select value from v$diag_info;
+
+select NAME,SEQUENCE#,DEST_ID,thread#,round(blocks*block_size/1024/1024) MBytes from v$archived_log where DEST_ID='1' and NAME is NOT NULL order by thread#,sequence#
+
+
