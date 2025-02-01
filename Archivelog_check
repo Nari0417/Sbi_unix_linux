@@ -1,0 +1,29 @@
+Login to server
+
+SET ENV OF INSTANCE WHICH IS USED TO TAKE BACKUP
+
+rman target /
+
+list expired archivelog all;
+crosscheck archivelog all;
+
+
+
+list backup of archivelog from sequence=89914  until sequence=90491 thread 1;
+
+list backup of archivelog from sequence=89914 until sequence=90100 thread 1;
+
+(list the counts before removing)
+
+delete noprompt force archivelog from sequence=89914 until sequence=90491 thread 1;
+
+
+=================================
+list expired archivelog all;
+delete expired archivelog all;
+list expired archivelog all;
+
+
+crosscheck archivelog all;
+DELETE EXPIRED BACKUP;
+=================================
