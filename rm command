@@ -1,0 +1,89 @@
+ll | grep -i "2010" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+
+
+ls -ld *test* | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+
+
+ls -ld *2019* | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+
+------------------------------------------------------------------------
+for /var/backup/configuration
+
+find /var/backup/configuration -mtime +90 -exec rm -rf {} \;
+
+ll | grep -i "Oct2023" | awk '{print $NF}'
+
+ll | grep -i "Oct2023" | awk '{print $NF}' | xargs rm -rf
+
+
+Sep2020
+
+------------------------------------------------------------------------
+for IMG JR
+
+20220403
+
+ll | grep -i ".dmp" | awk '{print $NF}' | xargs /usr/bin/rm -rf
+
+ll | grep -i "ne0__20221217" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+
+
+ll | grep -i "20220411" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+ll | grep -i "20220412" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+ll | grep -i "20220413" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+ll | grep -i "20220414" | awk '{print $NF}' | xargs sudo /usr/bin/rm -rf
+------------------------------------------------------------------------
+
+find /IMG_JR/IMG_JR_2018 -mtime +7 -exec rm -rf {} \;
+find /IMG_JR -mtime +7 -exec rm -rf {} \;
+
+find /IMG_JR -name "*.tar" -mtime +5 -exec ls -lrt {} \;
+
+
+find /IMG_JR -name "*.tar" -mtime +7 -exec rm -rf {} \;
+
+
+
+
+
+find /tmp/sa -mtime +15 -exec rm -rf {} \;
+
+
+------------------------------------------------------------------------
+MQ
+find /var/spool/mqueue -mtime +15 -exec rm -rf {} \;
+
+
+
+
+find /IMG_JR -type f -mtime +7 ! -path '/IMG_JR/IMG_JR_2018/*' ! -path '/IMG_JR/copy_tags/*' -exec ls -lrt {} \;
+
+
+------------------------------------------------------------------------
+for /var/backup/configuration of ULHAS
+
+go to /var/backup/configuration 
+ls -ld /var/backup/configuration/*/26Nov2023
+then 
+rm -rf /var/backup/configuration/*/26Nov2023 12Dec202
+rm -rf /var/backup/configuration/*/20Dec2023
+rm -rf /var/backup/configuration/*/21Dec2023
+rm -rf /var/backup/configuration/*/22Dec2023
+rm -rf /var/backup/configuration/*/23Dec2023
+rm -rf /var/backup/configuration/*/24Dec2023
+rm -rf /var/backup/configuration/*/25Dec2023
+rm -rf /var/backup/configuration/*/26Dec2023
+
+
+rm -rf /var/backup/configuration/*/12Dec2023
+rm -rf /var/backup/configuration/*/13Dec2023
+rm -rf /var/backup/configuration/*/14Dec2023
+rm -rf /var/backup/configuration/*/15Dec2023
+rm -rf /var/backup/configuration/*/16Dec2023
+rm -rf /var/backup/configuration/*/17Dec2023
+rm -rf /var/backup/configuration/*/18Dec2023
+rm -rf /var/backup/configuration/*/19Dec2023
+
+
+
+------------------------------------------------------------------------
