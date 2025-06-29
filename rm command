@@ -66,24 +66,4 @@ go to /var/backup/configuration
 ls -ld /var/backup/configuration/*/26Nov2023
 then 
 rm -rf /var/backup/configuration/*/26Nov2023 12Dec202
-rm -rf /var/backup/configuration/*/20Dec2023
-rm -rf /var/backup/configuration/*/21Dec2023
-rm -rf /var/backup/configuration/*/22Dec2023
-rm -rf /var/backup/configuration/*/23Dec2023
-rm -rf /var/backup/configuration/*/24Dec2023
-rm -rf /var/backup/configuration/*/25Dec2023
-rm -rf /var/backup/configuration/*/26Dec2023
 
-
-rm -rf /var/backup/configuration/*/12Dec2023
-rm -rf /var/backup/configuration/*/13Dec2023
-rm -rf /var/backup/configuration/*/14Dec2023
-rm -rf /var/backup/configuration/*/15Dec2023
-rm -rf /var/backup/configuration/*/16Dec2023
-rm -rf /var/backup/configuration/*/17Dec2023
-rm -rf /var/backup/configuration/*/18Dec2023
-rm -rf /var/backup/configuration/*/19Dec2023
-
-
-
-------------------------------------------------------------------------
