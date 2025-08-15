@@ -6,7 +6,16 @@ sudo mkdir -p /mnt/nfs_share
 sudo chmod 755 /mnt/nfs_share
 sudo chown nobody:nogroup /mnt/nfs_share
 sudo nano /etc/exports  # Add /mnt/nfs_share 192.168.1.0/24(rw,sync,no_subtree_check)
+or
+======================================================================
+echo "/mnt/nfs_share 13.233.132.120(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)" | sudo tee -a /etc/exports
+ip is the client server ip(remember)
+
+
+server vs clinet(server ip →← client ip)
+=======================================================================
 sudo exportfs -a
+sudo exportfs -r
 sudo systemctl start nfs-server
 sudo systemctl enable nfs-server
 sudo exportfs -v
@@ -16,6 +25,12 @@ sudo mkdir -p /mnt/nfs_client
 sudo mount <NFS_SERVER_IP>:/mnt/nfs_share /mnt/nfs_client
 df -h
 sudo nano /etc/fstab  # Add <NFS_SERVER_IP>:/mnt/nfs_share /mnt/nfs_client nfs defaults 0 0
+
+or
+======================================================================
+echo "15.206.160.89:/mnt/nfs_share   /mnt/nfs_client   nfs   defaults   0 0" | sudo tee -a /etc/fstab
+==========================================================
+
 ==============================================================================================================================================
 
 
@@ -35,10 +50,10 @@ sudo systemctl enable nfs-server
 sudo exportfs -v
 
 ------------------------------
-sudo firewall-cmd --zone=public --add-service=nfs --permanent
+sudo firewall-cmd --permanent --add-service=nfs
+sudo firewall-cmd --permanent --add-service=mountd
+sudo firewall-cmd --permanent --add-service=rpc-bind
 sudo firewall-cmd --reload
-sudo iptables -A INPUT -p tcp --dport 2049 -j ACCEPT
-sudo service iptables save
 
 
 
@@ -67,5 +82,6 @@ CILENT-SERVER
 sudo mount -v <NFS_SERVER_IP>:/mnt/nfs_share /mnt/nfs_client
 ----------------------------------------------------------------------------------------------------------------------------
 history
+
 
 
