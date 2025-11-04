@@ -1,0 +1,18 @@
+sudo dnf install tcpdump
+sudo tcpdump -D
+sudo tcpdump -i <interface_name> -w <filename>.pcap
+sudo tcpdump -i eth0 -w /tmp/capture.pcap
+sudo tcpdump -i any -w /tmp/capture.pcap
+sudo tcpdump -i eth0 -c 1000 -w /tmp/capture.pcap # Captures 1000 packets
+sudo tcpdump -i eth0 -s 0 -w /tmp/capture.pcap
+sudo tcpdump -i any port 8080 -w /tmp/capture.pcap
+
+
+sudo timeout 60 tcpdump -i any -s 0 -w /tmp/capture_8080.pcap 'dst host 192.168.1.10 and dst port 8080'
+=========================================================================================================
+sudo timeout 60: Runs the following command for exactly 60 seconds, then sends a termination signal to stop it.
+-i any: Captures packets on all active interfaces.
+-s 0: Ensures the full packet is captured for complete analysis.
+-w /tmp/capture_8080.pcap: Writes the captured packets to a file name
+dst host 192.168.1.10 and dst port 8080': This is the BPF 
+
