@@ -1,0 +1,24 @@
+How to create SSl certificate
+-------------------------------
+
+keytool -genkey -alias amlockessdr1 -keyalg RSA -keysize 2048 -validity 1460 -sigalg SHA256withRSA -ext SAN=dns:10.176.18.149,dns:10.176.18.150 -dname "CN=dom-dr-ess-1, OU=ITSP2-ESS-DR, O=STATE BANK OF INDIA, L=NAVI MUMBAI, ST=MAHARASHTRA, C=IN" -keypass AmlockEss@123 -keystore amlockessdr.jks -storepass AmlockEss@123
+
+
+keytool -certreq -v -alias amlockessdr1 -file amlockess.csr -sigalg SHA256withRSA -ext SAN=dns:10.176.18.149,dns:10.176.18.150 -keypass AmlockEss@123 -storepass AmlockEss@123 -keystore amlockessdr.jks
+
+
+
+
+import:
+
+keytool -importcert -v -alias amlockroot -trustcacerts -file rmsroot.cer -keystore amlockessdr.jks -storepass AmlockEss@123
+
+keytool -importcert -v -alias amlockessdr1 -file rmsuser.cer -keystore amlockessdr.jks -storepass AmlockEss@123
+
+
+
+
+
+keytool -importcert -v -alias amlockroot -trustcacerts -file rmsroot.cer -keystore /Weblogic/jdk1.8.0_231/jdk1.8.0_231/jre/lib/security/cacerts -storepass changeit
+
+keytool -importcert -v -alias amlockessdr1 -trustcacerts -file rmsuser.cer -keystore /Weblogic/jdk1.8.0_231/jdk1.8.0_231/jre/lib/security/cacerts -storepass changeit
