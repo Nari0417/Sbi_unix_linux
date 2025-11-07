@@ -1,0 +1,381 @@
+===================================================================
+                   Splunk  issue
+====================================================================
+ /opt/splunkforwarder/bin/splunk status
+
+ /opt/splunkforwarder/bin/splunk restart
+
+tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log     ------------------------>log file
+
+
+identify the dns name ( like clustermaster.sbi.co.in:8089)
+
+
+nc -v clustermaster.sbi.co.in 8089   (check network)
+
+nslookup  clustermaster.sbi.co.in
+
+check the dns entries are proper or not 
+
+vi /etc/resolv.conf
+
+--------------------------------------------------------
+nameserver 10.176.54.32
+nameserver 10.189.37.137
+nameserver 10.176.54.31
+# NOTE: the libc resolver may not support more than 3 nameservers.
+# The nameservers listed below may not be recognized.
+nameserver 10.189.37.138
+------------------------------------------------------------------
+nc -v 10.189.37.137 53 (check the three name servers )
+
+
+
+crontab -l
+
+10 * * * * setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log
+10 * * * * setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log/audit
+[root@VVMPPWEB02 ~]# setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log
+.
+
+tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log
+
+[root@VVMPPWEB02 ~]# /opt/splunkforwarder/bin/splunk status
+Warning: Attempting to revert the SPLUNK_HOME ownership
+Warning: Executing "chown -R splunk:splunk /opt/splunkforwarder"
+splunkd is running (PID: 1663).
+splunk helpers are running (PIDs: 4156).
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log
+11-06-2025 11:38:10.356 +0530 INFO  DC:DeploymentClient [4783 PhonehomeThread] - channel=tenantService/handshake Will retry sending handshake message to DS; err=not_connected
+11-06-2025 11:38:16.710 +0530 ERROR IndexerDiscoveryHeartbeatThread [6238 TcpOutEloop] - Error in Indexer Discovery communication. Verify that the pass4SymmKey set under [indexer_discovery:idx_discovery] in 'outputs.conf' matches the same setting  under [indexer_discovery] in 'server.conf' on the cluster manager. [uri=https://clustermaster.sbi.co.in:8089/services/indexer_discovery http_code=502 http_response="Error resolving: Name or service not known"]
+11-06-2025 11:38:38.640 +0530 WARN  TcpOutputProc [6237 parsing] - The TCP output processor has paused the data flow. Forwarding to host_dest= inside output group idx_discovery from host_src=VVMPPWEB02 has been blocked for blocked_seconds=650100. This can stall the data flow towards indexing and other network outputs. Review the receiving system's health in the Splunk Monitoring Console. It is probably not accepting data.
+11-06-2025 11:39:17.675 +0530 ERROR IndexerDiscoveryHeartbeatThread [6238 TcpOutEloop] - Error in Indexer Discovery communication. Verify that the pass4SymmKey set under [indexer_discovery:idx_discovery] in 'outputs.conf' matches the same setting  under [indexer_discovery] in 'server.conf' on the cluster manager. [uri=https://clustermaster.sbi.co.in:8089/services/indexer_discovery http_code=502 http_response="Error resolving: Name or service not known"]
+11-06-2025 11:40:18.621 +0530 ERROR IndexerDiscoveryHeartbeatThread [6238 TcpOutEloop] - Error in Indexer Discovery communication. Verify that the pass4SymmKey set under [indexer_discovery:idx_discovery] in 'outputs.conf' matches the same setting  under [indexer_discovery] in 'server.conf' on the cluster manager. [uri=https://clustermaster.sbi.co.in:8089/services/indexer_discovery http_code=502 http_response="Error resolving: Name or service not known"]
+11-06-2025 11:40:18.650 +0530 WARN  TcpOutputProc [6237 parsing] - The TCP output processor has paused the data flow. Forwarding to host_dest= inside output group idx_discovery from host_src=VVMPPWEB02 has been blocked for blocked_seconds=650200. This can stall the data flow towards indexing and other network outputs. Review the receiving system's health in the Splunk Monitoring Console. It is probably not accepting data.
+11-06-2025 11:41:10.356 +0530 INFO  DC:DeploymentClient [4783 PhonehomeThread] - channel=tenantService/handshake Will retry sending handshake message to DS; err=not_connected
+11-06-2025 11:41:19.584 +0530 ERROR IndexerDiscoveryHeartbeatThread [6238 TcpOutEloop] - Error in Indexer Discovery communication. Verify that the pass4SymmKey set under [indexer_discovery:idx_discovery] in 'outputs.conf' matches the same setting  under [indexer_discovery] in 'server.conf' on the cluster manager. [uri=https://clustermaster.sbi.co.in:8089/services/indexer_discovery http_code=502 http_response="Error resolving: Name or service not known"]
+11-06-2025 11:41:58.659 +0530 WARN  TcpOutputProc [6237 parsing] - The TCP output processor has paused the data flow. Forwarding to host_dest= inside output group idx_discovery from host_src=VVMPPWEB02 has been blocked for blocked_seconds=650300. This can stall the data flow towards indexing and other network outputs. Review the receiving system's health in the Splunk Monitoring Console. It is probably not accepting data.
+11-06-2025 11:42:20.517 +0530 ERROR IndexerDiscoveryHeartbeatThread [6238 TcpOutEloop] - Error in Indexer Discovery communication. Verify that the pass4SymmKey set under [indexer_discovery:idx_discovery] in 'outputs.conf' matches the same setting  under [indexer_discovery] in 'server.conf' on the cluster manager. [uri=https://clustermaster.sbi.co.in:8089/services/indexer_discovery http_code=502 http_response="Error resolving: Name or service not known"]
+^C
+[root@VVMPPWEB02 ~]# nc -v clustermaster.sbi.co.in 8089
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+^C0
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+;; connection timed out; no servers could be reached
+
+[root@VVMPPWEB02 ~]# cat /etc/resolv.conf
+search sbi.co.in
+nameserver 10.176.54.32
+nameserver 10.189.37.137
+nameserver 10.176.54.31
+# NOTE: the libc resolver may not support more than 3 nameservers.
+# The nameservers listed below may not be recognized.
+nameserver 10.189.37.138
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+^C^[[A^C
+[root@VVMPPWEB02 ~]# vi  /etc/resolv.conf
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+^C
+[root@VVMPPWEB02 ~]# nc -v 10.191.240.151 8089
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+Ncat: Connected to 10.191.240.151:8089.
+^C
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+
+
+^C
+[root@VVMPPWEB02 ~]# trace nslookup  clustermaster.sbi.co.in
+bash: trace: command not found...
+Failed to search for file: /mnt/BaseOS/ was not found
+[root@VVMPPWEB02 ~]# trace nslookup  clustermaster.sbi.co.in^C
+[root@VVMPPWEB02 ~]# vi /etc/resolv.conf
+[root@VVMPPWEB02 ~]# trace nslookup  clustermaster.sbi.co.in
+bash: trace: command not found...
+Failed to search for file: /mnt/BaseOS/ was not found
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+^C
+[root@VVMPPWEB02 ~]# systemctl restart NetworkManager
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+^C
+[root@VVMPPWEB02 ~]# cat /etc/resolv.conf
+nameserver 10.176.54.32
+nameserver 10.189.37.137
+nameserver 10.176.54.31
+# NOTE: the libc resolver may not support more than 3 nameservers.
+# The nameservers listed below may not be recognized.
+nameserver 10.189.37.138
+
+[root@VVMPPWEB02 ~]# nslookup  clustermaster.sbi.co.in
+;; connection timed out; no servers could be reached
+
+[root@VVMPPWEB02 ~]# cat /etc/resolv.conf
+nameserver 10.176.54.32
+nameserver 10.189.37.137
+nameserver 10.176.54.31
+# NOTE: the libc resolver may not support more than 3 nameservers.
+# The nameservers listed below may not be recognized.
+nameserver 10.189.37.138
+
+[root@VVMPPWEB02 ~]# nc -v 10.176.54.32 53
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+Ncat: TIMEOUT.
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# cat /etc/resolv.conf
+nameserver 10.176.54.32
+nameserver 10.189.37.137
+nameserver 10.176.54.31
+# NOTE: the libc resolver may not support more than 3 nameservers.
+# The nameservers listed below may not be recognized.
+nameserver 10.189.37.138
+
+[root@VVMPPWEB02 ~]# nc -v 10.189.37.137 53
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+^C
+[root@VVMPPWEB02 ~]# nc -v 10.189.37.18 53
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+^[[A^C
+[root@VVMPPWEB02 ~]# nc -v 10.189.37.138 53
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+Ncat: TIMEOUT.
+[root@VVMPPWEB02 ~]#  ping 10.176.54.32
+PING 10.176.54.32 (10.176.54.32) 56(84) bytes of data.
+^C
+--- 10.176.54.32 ping statistics ---
+11 packets transmitted, 0 received, 100% packet loss, time 10269ms
+
+[root@VVMPPWEB02 ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.176.10.1     0.0.0.0         UG    100    0        0 ens192
+10.176.10.0     0.0.0.0         255.255.254.0   U     100    0        0 ens192
+192.168.122.0   0.0.0.0         255.255.255.0   U     0      0        0 virbr0
+[root@VVMPPWEB02 ~]#  nc -v 10.189.37.137 53
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+^C
+[root@VVMPPWEB02 ~]# vi /etc/hosts
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# nc -v clustermaster.sbi.co.in 8089
+Ncat: Version 7.92 ( https://nmap.org/ncat )
+Ncat: Connected to 10.191.240.151:8089.
+
+
+
+^C
+[root@VVMPPWEB02 ~]# /opt/splunkforwarder/bin/splunk restart
+Warning: Attempting to revert the SPLUNK_HOME ownership
+Warning: Executing "chown -R splunk:splunk /opt/splunkforwarder"
+Stopping splunkd...
+Shutting down.  Please wait, as this may take a few minutes.
+
+                                                           [  OK  ]
+Stopping splunk helpers...
+                                                           [  OK  ]
+Done.
+splunkd.pid doesn't exist...
+
+Splunk> All batbelt. No tights.
+
+Checking prerequisites...
+        Management port has been set disabled; cli support for this configuration is currently incomplete.
+        Checking conf files for problems...
+                Invalid key in stanza [script://./bin/vmstat.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 40: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/iostat.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 49: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/nfsiostat.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 58: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/ps.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 67: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/top.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 76: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/bandwidth.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 85: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/cpu.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 94: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/df.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 103: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/hardware.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 112: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/interfaces.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 122: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/openPorts.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 131: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/version.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 140: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/passwd.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 149: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/openPortsEnhanced.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 158: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/service.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 167: ignoreOlderThan (value: 1d).
+                Invalid key in stanza [script://./bin/uptime.sh] in /opt/splunkforwarder/etc/apps/Splunk_TA_nix/local/inputs.conf, line 176: ignoreOlderThan (value: 1d).
+                Your indexes and inputs configurations are not internally consistent. For more information, run 'splunk btool check --debug'
+        Done
+        Checking default conf files for edits...
+        Validating installed files against hashes from '/opt/splunkforwarder/splunkforwarder-9.2.1-78803f08aabb-linux-2.6-x86_64-manifest'
+        All installed files intact.
+        Done
+All preliminary checks passed.
+
+Starting splunk server daemon (splunkd)...
+Done
+                                                           [  OK  ]
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# /opt/splunkforwarder/bin/splunk status
+Warning: Attempting to revert the SPLUNK_HOME ownership
+Warning: Executing "chown -R splunk:splunk /opt/splunkforwarder"
+splunkd is running (PID: 2291717).
+splunk helpers are running (PIDs: 2291774).
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]#
+[root@VVMPPWEB02 ~]# crontab -l
+10 * * * * setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log
+10 * * * * setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log/audit
+[root@VVMPPWEB02 ~]# setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log
+Usage: setfacl [-bkndRLP] { -m|-M|-x|-X ... } file ...
+Try `setfacl --help' for more information.
+[root@VVMPPWEB02 ~]# crontab -e
+crontab: installing new crontab
+[root@VVMPPWEB02 ~]# crontab -l
+10 * * * * setfacl -Rm u:splunk:rX,d:u:splunk:rX /var/log
+10 * * * * setfacl -Rm u:splunk:rX,d:u:splunk:rX /var/log/audit
+[root@VVMPPWEB02 ~]# setfacl -Rm u:splunk:rX,d:u:splunk:rX /var/log
+[root@VVMPPWEB02 ~]# setfacl -Rm u:splunk:rX,d:u:splunk:rX /var/log/audit
+Thu Nov  6 11:59:48 IST 2025
+[root@VVMPPWEB02 log]# ls -lrth
+total 208M
+drwxr-x---+ 2 root   root         6 Dec 11  2018 speech-dispatcher
+drwxr-xr-x+ 2 root   root         6 Aug 30  2021 glusterfs
+drwxr-x--x+ 2 root   gdm          6 Dec 13  2022 gdm
+drwxr-x---+ 2 root   root         6 Feb 15  2024 insights-client
+drwxr-x---+ 2 root   root         6 May  8  2024 private
+drwxr-xr-x+ 3 root   root        21 May  8  2024 swtpm
+drwxr-xr-x+ 2 root   root      4.0K May  8  2024 anaconda
+-rw-r--r--+ 1 root   root       187 May  8  2024 vmware-network.6.log
+-rw-r-----+ 1 root   root       186 May  8  2024 firewalld
+-rw-r--r--+ 1 root   root       23K May  8  2024 Xorg.9.log
+-rw-r-----+ 1 root   root      7.2K May  9  2024 boot.log-20240509
+-rw-r--r--+ 1 root   root       187 May  9  2024 vmware-network.5.log
+-rw-r--r--+ 1 root   root         0 May  9  2024 vmware-network.4.log
+-rw-r--r--+ 1 root   root       187 May  9  2024 vmware-network.3.log
+-rw-r-----+ 1 root   root       40K May 10  2024 boot.log-20240510
+-rw-r--r--+ 1 root   root       189 Jul 29  2024 vmware-network.2.log
+-rw-r-----+ 1 root   root       81K Jul 30  2024 boot.log-20240730
+drwxr-x---+ 2 chrony chrony       6 Sep 19  2024 chrony
+-rw-r-----+ 1 root   root       11K Oct 23  2024 boot.log-20241023
+-rw-r-----+ 1 root   root       11K Oct 31  2024 boot.log-20241031
+-rw-r--r--+ 1 root   tm_xes    1.0M Nov 21  2024 dnf.librepo.log.4
+-rw-r-----+ 1 root   root       10K Dec 30  2024 boot.log-20241230
+-rw-r-----+ 1 root   oinstall  2.3K Jan  2  2025 vmware-vmtoolsd-oracle.log
+-rw-r-----+ 1 root   oinstall  6.9K Jan  2  2025 vmware-vmusr-oracle.log
+drwxr-xr-x+ 2 root   root        23 Jan  8  2025 tuned
+-rw-r--r--+ 1 root   root      1.0M Feb 18  2025 dnf.librepo.log.3
+drwxr-xr-x+ 2 root   root         6 May  6  2025 qemu-ga
+-rw-r--r--+ 1 root   root      1.0M May 18 21:36 dnf.librepo.log.2
+drwxr-x---+ 3 root   root        18 Jun  5 20:50 libvirt
+-rw-r--r--+ 1 root   root      1.0M Aug 16 23:06 dnf.librepo.log.1
+-rw-r--r--+ 1 root   root      1.0M Aug 17 18:30 dnf.log.4
+drwxr-x---+ 3 root   root        17 Aug 28 18:23 samba
+-rw-r--r--+ 1 root   root      1.0M Sep 10 02:12 dnf.log.3
+-rw-r-----+ 1 root   tm_dsa    5.1M Sep 12 08:47 vmware-vmtoolsd-root.10.log
+-rw-r-----+ 1 root   tm_dsa    5.1M Sep 17 17:08 vmware-vmtoolsd-root.9.log
+drwxr-xr-x+ 2 lp     sys       4.0K Sep 18 03:38 cups
+-rw-r-----+ 1 root   tm_xes    5.1M Sep 22 17:13 vmware-vmtoolsd-root.8.log
+-rw-r-----+ 1 root   tm_dsa    5.1M Sep 27 14:08 vmware-vmtoolsd-root.7.log
+-rw-r--r--+ 1 root   root      1.0M Oct  1 15:47 dnf.log.2
+-rw-r-----+ 1 root   tm_xes    5.1M Oct  2 18:52 vmware-vmtoolsd-root.6.log
+-rw-r-----+ 1 root   root         0 Oct  5 03:44 spooler-20251012
+-rw-r-----+ 1 root   root         0 Oct  5 03:44 secure-20251012
+-rw-r-----+ 1 root   root         0 Oct  5 03:44 maillog-20251012
+-rw-r-----+ 1 root   tm_dsa    5.1M Oct  7 18:52 vmware-vmtoolsd-root.5.log
+-rw-r--r--+ 1 root   root      3.6K Oct 12 02:12 hawkey.log-20251012
+-rw-r-----+ 1 root   root      177K Oct 12 03:02 cron-20251012
+-rw-r-----+ 1 root   root      616K Oct 12 03:02 messages-20251012
+-rw-r-----+ 1 root   root         0 Oct 12 03:08 spooler-20251019
+-rw-r-----+ 1 root   root         0 Oct 12 03:08 maillog-20251019
+-rw-r-----+ 1 root   tm_dsa    5.1M Oct 12 20:23 vmware-vmtoolsd-root.4.log
+-rw-r-----+ 1 root   root       55K Oct 17 16:14 secure-20251019
+-rw-r-----+ 1 root   tm_dsa    5.1M Oct 18 12:13 vmware-vmtoolsd-root.3.log
+-rw-r--r--+ 1 root   root      3.6K Oct 19 00:01 hawkey.log-20251019
+-rw-r-----+ 1 root   root      177K Oct 19 03:10 cron-20251019
+-rw-r-----+ 1 root   root      1.2M Oct 19 03:39 messages-20251019
+-rw-r-----+ 1 root   root         0 Oct 19 03:40 maillog-20251026
+-rw-r-----+ 1 root   root         0 Oct 19 03:40 spooler-20251026
+-rw-r-----+ 1 root   root      1.4K Oct 22 16:49 secure-20251026
+-rw-r-----+ 1 root   tm_dsa    5.1M Oct 25 07:36 vmware-vmtoolsd-root.2.log
+-rw-r--r--+ 1 root   root      1.0M Oct 25 17:55 dnf.log.1
+-rw-r--r--+ 1 root   root      3.5K Oct 26 02:30 hawkey.log-20251026
+-rw-r-----+ 1 root   root      177K Oct 26 03:10 cron-20251026
+-rw-r-----+ 1 root   root      1.3M Oct 26 03:20 messages-20251026
+-rw-r-----+ 1 root   root         0 Oct 26 03:23 maillog-20251102
+-rw-r-----+ 1 root   root         0 Oct 26 03:23 spooler-20251102
+-rw-r--r--+ 1 root   root       244 Oct 29 17:30 vmware-network.1.log
+-rw-r--r--+ 1 root   root       189 Oct 29 17:32 vmware-network.log
+-rw-r-----+ 1 root   root       15K Oct 29 17:32 kdump.log
+-rw-r-----+ 1 root   addmitam  2.9K Oct 29 17:35 vmware-vmtoolsd-addmitam.log
+-rw-r-----+ 1 root   addmitam  7.9K Oct 29 17:35 vmware-vmusr-addmitam.log
+-rw-r-----+ 1 root   root       11K Oct 30 03:32 boot.log-20251030
+-rw-r-----+ 2 root   root         0 Oct 30 03:32 boot.log
+drwxr-x---+ 2 sssd   sssd        87 Oct 30 03:32 sssd
+drwxr-x---+ 2 root   root        99 Oct 30 22:00 audit
+-rw-rw----+ 1 root   utmp       384 Oct 31 11:52 btmp-20251101
+-rw-r-----+ 1 root   root       24K Oct 31 12:54 vmware-vgauthsvc.log.0
+-rw-r-----+ 1 root   root       71K Oct 31 12:54 vmware-vmsvc-root.log
+-rw-r--r--+ 1 root   root      4.4K Nov  2 02:50 hawkey.log-20251102
+-rw-r-----+ 1 root   root       23K Nov  2 03:12 secure-20251102
+-rw-r-----+ 1 root   root      177K Nov  2 03:12 cron-20251102
+-rw-r-----+ 1 root   root      2.5M Nov  2 03:18 messages-20251102
+drwxr-xr-x+ 2 root   root      4.0K Nov  2 03:19 rhsm
+-rw-r-----+ 1 root   root         0 Nov  2 03:19 maillog
+-rw-r-----+ 1 root   root         0 Nov  2 03:19 spooler
+-rw-rw----+ 1 root   utmp      3.8K Nov  3 04:48 btmp
+-rw-r-----+ 1 root   root     1020K Nov  3 21:23 kern.log
+drwxr-xr-x+ 2 root   root      4.0K Nov  6 00:07 sa
+-rw-r-----+ 1 root   tm_dsa    5.1M Nov  6 08:33 vmware-vmtoolsd-root.1.log
+-rw-r--r--+ 1 root   root      910K Nov  6 10:25 dnf.rpm.log
+-rw-r--r--+ 1 root   root      2.3K Nov  6 10:25 hawkey.log
+-rw-r--r--+ 1 root   root      935K Nov  6 10:25 dnf.librepo.log
+-rw-r--r--+ 1 root   root      578K Nov  6 10:25 dnf.log
+-rw-r-----+ 1 root   root      384K Nov  6 11:41 secure
+-rw-rw-r--+ 1 root   utmp      441K Nov  6 11:41 wtmp
+-rw-rw-r--+ 1 root   utmp      287K Nov  6 11:41 lastlog
+-rw-r-----+ 1 root   tm_dsa    123K Nov  6 11:58 vmware-vmtoolsd-root.log
+-rw-r-----+ 1 root   root      124M Nov  6 11:59 daemon.log
+-rw-r-----+ 1 root   root      111K Nov  6 11:59 cron
+-rw-r-----+ 1 root   root       14M Nov  6 11:59 syslog
+-rw-r-----+ 1 root   root      1.3M Nov  6 11:59 messages
+[root@VVMPPWEB02 log]# cd audit/
+[root@VVMPPWEB02 audit]# ls -lrrt
+htotal 36676
+-r--r-----+ 1 root root 8388671 Jun 28 21:50 audit.log.4
+-r--r-----+ 1 root root 8388676 Aug  8 13:10 audit.log.3
+-r--r-----+ 1 root root 8388838 Sep 20 10:50 audit.log.2
+-r--r-----+ 1 root root 8388738 Oct 30 22:00 audit.log.1
+-rw-r-----+ 1 root root 3963644 Nov  6 11:58 audit.log
+[root@VVMPPWEB02 audit]#  
+11-06-2025 11:59:01.406 +0530 WARN  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Current dest host connection 10.176.227.64:9997, oneTimeClient=0, _events.size()=141, _refCount=2, _waitingAckQ.size()=0, _supportsACK=1, _lastHBRecvTime=Thu Nov  6 11:59:01 2025 is using 7282887 bytes. Total tcpout queue size is 7340032. Warningcount=1
+11-06-2025 11:59:04.315 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 11:59:04.388 +0530 INFO  BackgroundJobRestarter [2291798 DispatchReaper] - inspect_count=0, restart_count=0
+11-06-2025 11:59:29.387 +0530 INFO  BackgroundJobRestarter [2291798 DispatchReaper] - inspect_count=0, restart_count=0
+11-06-2025 11:59:31.252 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.58:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 11:59:34.254 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 11:59:38.991 +0530 INFO  ChunkedLBProcessor [2291832 parsing] - Failed to find EVENT_BREAKER regex in props.conf for sourcetype::syslog. Reverting to the default EVENT_BREAKER regex for now.
+11-06-2025 11:59:56.169 +0530 INFO  TailReader [2291843 batchreader0] - Batch input finished reading file='/opt/splunkforwarder/var/log/splunk/metrics.log.3'
+11-06-2025 12:00:01.089 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.38:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:00:04.354 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:00:31.050 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.191.240.54:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:00:34.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:01:00.808 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.66:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:01:04.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:01:29.336 +0530 INFO  DC:DeploymentClient [2291790 PhonehomeThread] - channel=tenantService/handshake Will retry sending handshake message to DS; err=not_connected
+11-06-2025 12:01:30.801 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.191.240.58:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:01:34.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:01:36.313 +0530 INFO  TailReader [2291843 batchreader0] - Batch input finished reading file='/opt/splunkforwarder/var/log/splunk/metrics.log.1'
+11-06-2025 12:02:00.591 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.67:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:02:04.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:02:30.443 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.41:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:02:34.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:03:00.436 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.191.240.28:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:03:04.354 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:03:15.259 +0530 INFO  TailReader [2291843 batchreader0] - Batch input finished reading file='/opt/splunkforwarder/var/log/splunk/metrics.log.2'
+11-06-2025 12:03:30.324 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.191.240.70:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:03:34.355 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:04:00.100 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.60:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:04:04.339 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:04:29.336 +0530 INFO  DC:DeploymentClient [2291790 PhonehomeThread] - channel=tenantService/handshake Will retry sending handshake message to DS; err=not_connected
+11-06-2025 12:04:30.132 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.191.240.60:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:04:34.354 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+11-06-2025 12:04:59.897 +0530 INFO  AutoLoadBalancedConnectionStrategy [2291834 TcpOutEloop] - Connected to idx=10.176.227.56:9997:0, pset=0, reuse=0. using ACK. autoBatch=1
+11-06-2025 12:05:04.354 +0530 INFO  TailReader [2291842 tailreader0] - Batch input finished reading file='/opt/splunkforwarder/var/spool/splunk/tracker.log'
+
