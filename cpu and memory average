@@ -1,0 +1,17 @@
+for i in {25..29}; do
+  date_str=$(date -d "2025-11-$i" +%F)
+
+  # --- Time Frame 1: 10:00 - 11:30 ---
+  cpu1=$(sar -u -f /var/log/sa/sa$i -s 10:00:00 -e 11:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem1=$(sar -r -f /var/log/sa/sa$i -s 10:00:00 -e 11:30:00 | grep "Average" | awk '{printf("%.2f", $5)}')
+
+  # --- Time Frame 2: 13:00 - 14:30 ---
+  cpu2=$(sar -u -f /var/log/sa/sa$i -s 13:00:00 -e 14:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem2=$(sar -r -f /var/log/sa/sa$i -s 13:00:00 -e 14:30:00 | grep "Average" | awk '{printf("%.2f", $5)}')
+
+  # --- Time Frame 3: 17:00 - 18:30 ---
+  cpu3=$(sar -u -f /var/log/sa/sa$i -s 17:00:00 -e 18:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem3=$(sar -r -f /var/log/sa/sa$i -s 17:00:00 -e 18:30:00 | grep "Average" | awk '{printf("%.2f", $5)}')
+
+  echo "$date_str | CPU(10-11:30)=${cpu1}% Mem=${mem1}% | CPU(13-14:30)=${cpu2}% Mem=${mem2}% | CPU(17-18:30)=${cpu3}% Mem=${mem3}%" >> cpu_mem_report.txt
+done
