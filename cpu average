@@ -1,0 +1,11 @@
+#!/bin/bash
+
+> cpu_report.txt  # clear previous report
+
+for i in {25..29}; do
+  date_str=$(date -d "2025-11-$i" +%F)
+  t1=$(sar -u -f /var/log/sa/sa$i -s 10:00:00 -e 11:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  t2=$(sar -u -f /var/log/sa/sa$i -s 13:00:00 -e 14:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  t3=$(sar -u -f /var/log/sa/sa$i -s 17:00:00 -e 18:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  echo "$date_str | 10-11:30=$t1% | 13-14:30=$t2% | 17-18:30=$t3%" >> cpu_report.txt
+done
