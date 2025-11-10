@@ -15,3 +15,27 @@ for i in {25..29}; do
 
   echo "$date_str | CPU(11:30-12)=${cpu1}% Mem=${mem1}% | CPU(15:30-16:00)=${cpu2}% Mem=${mem2}% | CPU(18-19:30)=${cpu3}% Mem=${mem3}%" >> cpu_mem_report.txt
 done
+=======================================================================================================================================================================================================================
+
+
+
+#!/bin/bash
+
+> cpu_mem_report.txt  # clear previous report
+for i in {01..05}; do
+  date_str=$(date -d "2025-11-$i" +%F)
+
+  # --- Time Frame 1: 11:30 - 12:00 ---
+  cpu1=$(sar -u -f /var/log/sa/sa$i -s 11:30:00 -e 12:00:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem1=$(sar -r -f /var/log/sa/sa$i -s 11:30:00 -e 12:00:00 | awk '/Average/ {used=$4-($6+$7); total=$4+$2; real_used=(used/total)*100; printf "%.2f%%", real_used}')
+
+  # --- Time Frame 2: 15:30 - 16:00 ---
+  cpu2=$(sar -u -f /var/log/sa/sa$i -s 15:30:00 -e 16:00:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem2=$(sar -r -f /var/log/sa/sa$i -s 15:30:00 -e 16:00:00 | awk '/Average/ {used=$4-($6+$7); total=$4+$2; real_used=(used/total)*100; printf "%.2f%%", real_used}')
+
+  # --- Time Frame 3: 18:00 - 19:30 ---
+  cpu3=$(sar -u -f /var/log/sa/sa$i -s 18:00:00 -e 19:30:00 | grep "Average" | awk '{printf("%.2f", 100 - $8)}')
+  mem3=$(sar -r -f /var/log/sa/sa$i -s 18:00:00 -e 19:30:00 | awk '/Average/ {used=$4-($6+$7); total=$4+$2; real_used=(used/total)*100; printf "%.2f%%", real_used}')
+
+  echo "$date_str | CPU(11:30-12)=${cpu1}% Mem=${mem1}% | CPU(15:30-16:00)=${cpu2}% Mem=${mem2}% | CPU(18-19:30)=${cpu3}% Mem=${mem3}%" >> cpu_mem_report.txt
+done
