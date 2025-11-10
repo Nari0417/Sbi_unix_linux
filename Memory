@@ -1,0 +1,1 @@
+sar -r -f /var/log/sa/sa10 -s 11:00:00 -e 12:30:00 | awk '/Average/ {used=$4-($6+$7); total=$3+$2; real_used=(used/total)*100; printf "Real Memory Used (excl. cache+buffers): %.2f%%\n", real_used}'
