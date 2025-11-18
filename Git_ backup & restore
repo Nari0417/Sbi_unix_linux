@@ -1,0 +1,55 @@
+
+
+link https://gitlab.com/gitlab-org/gitlab/-/issues/36405
+
+My customer (internal link) was seeing this error, all the commands below were producing this error:
+
+sudo gitlab-rake gitlab:check
+sudo gitalb-rake db:reset
+sudo gitlab-rake gitlab:backup:restore
+
+
+gitalb-rake db:reset is supposed to drop and create the database, but since it was producing this error, we had to manually drop the database and create it, and that served as a workaround to the issue, we used the following snippet:
+
+# Start the database console
+gitlab-psql
+
+# Switch to another database
+\c postgres
+
+# Drop all connections to `gitlabhq_production`
+select pg_terminate_backend(pid) from pg_stat_activity where datname='gitlabhq_production';
+
+# Drop and create the DB
+drop database gitlabhq_production;
+\q 
+\q
+
+# Perform the restore
+sudo gitlab-rake gitlab:backup:restore
+
+
+Here's the snippet as part of a bash script:
+
+gitlab-psql <<EOF
+\c postgres
+select pg_terminate_backend(pid) from pg_stat_activity where datname='gitlabhq_production';
+drop database gitlabhq_production;
+create database gitlabhq_production;
+EOF
+
+
+
+
+
+====================================================================================================================================================================================================================
+
+[root@secrlmsdmgr1 ~]# crontab -l
+10 * * * * setfacl –Rm u:splunk:rX,d:u:splunk:rX /var/log
+00 05 * * * find /rlms/git_backup/*gitlab_backup*.tar -mtime +3 -exec rm -rf {} \;
+#00 04 * * * find /rlms/git_backup/* -mtime +3 -exec rm {} \;
+#55 10 * * 5 sh /opt/git.sh
+00 06 * * * sh /opt/git.sh
+00 05 * * * find /var/opt/gitlab/git-data/repositories/+gitaly/tmp/default-repositories.old.* -mtime +15 -exec rm -fr {} \;
+[root@secrlmsdmgr1 ~]#
+
