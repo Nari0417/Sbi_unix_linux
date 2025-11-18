@@ -1,4 +1,8 @@
-
+======================================================================================================================
+                      👉 DR GitLab DB is not empty (DR GitLab already has old data)
+                      👉 DB schema mismatch  (Backup taken from different GitLab version and restored on another version)
+                      👉 Restore started when GitLab was not fully stopped
+=======================================================================================================================
 
 link https://gitlab.com/gitlab-org/gitlab/-/issues/36405
 
@@ -52,4 +56,76 @@ EOF
 00 06 * * * sh /opt/git.sh
 00 05 * * * find /var/opt/gitlab/git-data/repositories/+gitaly/tmp/default-repositories.old.* -mtime +15 -exec rm -fr {} \;
 [root@secrlmsdmgr1 ~]#
+======================================================================================================================
+
+gitlab-rake restore   ------------>internally works
+       │
+       ├── 1) Stop GitLab services (NOT PostgreSQL)
+       ├── 2) Extract backup tar
+       ├── 3) Check version compatibility
+       ├── 4) Drop + Recreate database
+       ├── 5) Restore SQL file into PostgreSQL
+       ├── 6) Restore repositories
+       ├── 7) Restore uploads, artifacts, registry
+       ├── 8) Reconfigure GitLab
+       │
+       └── GitLab comes online with restored data
+
+==========================================================================================================
+                    script
+============================================================================================================
+#!/bin/bash
+
+# ====== CONFIG ======
+BACKUP_FILE="$1"   # pass backup name as argument
+LOGFILE="/var/log/gitlab_dr_restore.log"
+DATE=$(date '+%Y-%m-%d %H:%M:%S')
+
+echo "===== DR Restore Started at $DATE =====" >> "$LOGFILE"
+
+if [ -z "$BACKUP_FILE" ]; then
+    echo "ERROR: Backup file name required" | tee -a "$LOGFILE"
+    exit 1
+fi
+
+echo "Stopping GitLab services..." | tee -a "$LOGFILE"
+gitlab-ctl stop >> "$LOGFILE" 2>&1
+
+echo "Killing active PostgreSQL sessions..." | tee -a "$LOGFILE"
+gitlab-psql <<EOF >> "$LOGFILE" 2>&1
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname='gitlabhq_production';
+EOF
+
+echo "Dropping existing gitlabhq_production DB..." | tee -a "$LOGFILE"
+gitlab-psql <<EOF >> "$LOGFILE" 2>&1
+DROP DATABASE IF EXISTS gitlabhq_production;
+CREATE DATABASE gitlabhq_production;
+EOF
+
+echo "Starting GitLab restore..." | tee -a "$LOGFILE"
+gitlab-rake gitlab:backup:restore BACKUP=$BACKUP_FILE >> "$LOGFILE" 2>&1
+
+if [ $? -eq 0 ]; then
+    echo "Restore SUCCESS at $DATE" | tee -a "$LOGFILE"
+else
+    echo "Restore FAILED at $DATE" | tee -a "$LOGFILE"
+    exit 1
+fi
+
+echo "Reconfiguring GitLab..." | tee -a "$LOGFILE"
+gitlab-ctl reconfigure >> "$LOGFILE" 2>&1
+
+echo "Starting GitLab..." | tee -a "$LOGFILE"
+gitlab-ctl start >> "$LOGFILE" 2>&1
+
+echo "===== DR Restore Completed Successfully =====" | tee -a "$LOGFILE"
+
+
+
+
+
+
+
 
