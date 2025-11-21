@@ -1,0 +1,13 @@
+tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log
+nc -vz 10.191.240.29 9997
+cd /var/log/
+ls -lrth
+crontab -l
+
+setfacl -Rm u:splunk:rX,d:u:splunk:rX /var/log
+
+/opt/splunkforwarder/bin/splunk status
+
+/opt/splunkforwarder/bin/splunk restart
+
+tail -f /opt/splunkforwarder/var/log/splunk/splunkd.log
