@@ -1,0 +1,52 @@
+                              Kibana
+
+======================= 10.191.148.237 (elkapp1)  =================================
+
+
+Prod ELK
+
+[root@elkapp1 ~]# /rlms/apps/redis-7.2.4/src/redis-cli
+127.0.0.1:6379> AUTH "rlms123"
+(error) ERR Client sent AUTH, but no password is set
+127.0.0.1:6379>  CONFIG get requirepass
+1) "requirepass"
+2) ""
+127.0.0.1:6379> CONFIG set requirepass "rlms123"
+OK
+127.0.0.1:6379> CONFIG get requirepass
+(error) NOAUTH Authentication required.
+127.0.0.1:6379> AUTH "rlms123"
+OK
+127.0.0.1:6379> GET mykey
+(nil)
+
+
+127.0.0.1:6379> CONFIG get requirepass
+1) "requirepass"
+2) ""
+
+127.0.0.1:6379> CONFIG set requirepass "rlms123"
+OK
+
+127.0.0.1:6379> AUTH "rlms123"
+OK
+127.0.0.1:6379> SET mykey "rlms"
+OK
+127.0.0.1:6379> GET mykey
+"rlms"
+=================================================================================
+10.191.148.237 >>cd /rlms/shell  
+[root@elkapp1 shell]# ls -lrth 
+total 9.0G
+-rwxr-xr-x. 1 rlms rlms  141 Jul  4  2020 4.startKibana.sh
+-rwxr-xr-x. 1 rlms rlms  144 Jul  4  2020 3.startElasticSearch.sh
+-rwxr-xr-x. 1 rlms rlms  134 Jul  4  2020 2.startLogstash.sh
+-rwxr-xr-x. 1 rlms rlms    0 Jul 31  2021 nohup.out
+-rwxr-xr-x  1 rlms rlms  834 Oct 17  2022 progressbar.sh
+-rwxr-xr-x  1 rlms rlms  504 Oct 17  2022 progressbar1.sh
+-rwxr-xr-x. 1 rlms rlms  277 Sep  6  2024 1.startRedisServer.sh
+-rw-r-----  1 rlms rlms  105 Oct 10 23:12 dump.rdb
+-rw-r-----  1 rlms rlms  97M Oct 16 11:26 redis_log_nohup.out
+-rw-r-----  1 rlms rlms 3.2G Oct 16 11:30 logstash_log_nohup.out
+-rw-r-----  1 rlms rlms  85M Oct 16 11:32 elastic_log_nohup.out
+-rw-r-----  1 rlms rlms 5.6G Oct 16 11:39 kibana_log_nohup.out
