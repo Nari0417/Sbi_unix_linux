@@ -1,0 +1,95 @@
+                                   Rlms scheduler 
+
+======================================Rlms scheduler=====================================================================
+
+10.191.145.227 (d1intapp1) >> cd /rlms/RLMS/Nesl/neslBackupFiles 
+
+sftp -P2201 6692389@sfg.sbi.bank.in >> passwd:- Statebank@1310 
+
+cd /Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/ 
+
+Two files need to copy those are   RLMS_DDE_Stamp_Duty_14102025.csv.enc  and  RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+
+put RLMS_DDE_Stamp_Duty_14102025.csv.enc 
+
+put RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+
+================================================================================================================
+
+
+
+
+#Rabale
+#sftp.host=10.189.250.18
+#Gacchibowli
+#sftp.host=10.176.36.125
+sftp.host=sfg.sbi
+sftp.user=6692389
+sftp.password=Statebank@1310
+#sftp.password=StateBank1#45
+sftp.remote.directory=/Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/
+sftp.port=2201
+
+Statebank@1310
+
+
+sftp.host=sfg.sbi.bank.in
+sftp.user=6692389
+sftp.password=Statebank@1310
+
+=====================================================================================================================
+
+
+-rw-rw----+ 1 root root   689 Oct 13 23:15 RLMS_DDE_Stamp_Duty_13102025.csv.enc_a46c8b8a5d11372db6ee02eb1c84183050f2443af4fab9fa7d385def74742fd0
+-rw-rw----+ 1 root root  1.7M Oct 14 23:15 RLMS_DDE_Stamp_Duty_14102025.csv
+-rw-rw----+ 1 root root  2.3M Oct 14 23:15 RLMS_DDE_Stamp_Duty_14102025.csv.enc
+-rw-rw----+ 1 root root   689 Oct 14 23:15 RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+(reverse-i-search)`cf': rm -vf /tmp/SCDMClient/53982-3f351870-64cf-486c-bda3-d756ac253739/aa9da555-fe92-4ecb-a099-1c8018f2f769.sh;rm -vf /tmp/SCDMClient/53982-3f351870-64^C-486c-bda3-d756ac253739/aa9da555-fe92-4ecb-a099-1c8018f2f769.xml;
+[root@d1intapp1 neslBackupFiles]# sftp -P2201 6692389@sfg.sbi.bank.in
+
+6692389@sfg.sbi.bank.in's password:
+Connected to sfg.sbi.bank.in.
+sftp> cd /Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/
+sftp>
+sftp>
+sftp> put RLMS_DDE_Stamp_Duty_14102025.csv.enc
+Uploading RLMS_DDE_Stamp_Duty_14102025.csv.enc to /Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/RLMS_DDE_Stamp_Duty_14102025.csv.enc
+RLMS_DDE_Stamp_Duty_14102025.csv.enc                                                                                                                                                                       100% 2265KB  27.6MB/s   00:00
+sftp> put RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+Uploading RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1 to /Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1                                                                                                      100%  689   175.9KB/s   00:00
+sftp> exit
+[root@d1intapp1 neslBackupFiles]# pwd
+/rlms/RLMS/Nesl/neslBackupFiles
+[root@d1intapp1 neslBackupFiles]# pwd
+/rlms/RLMS/Nesl/neslBackupFiles
+[root@d1intapp1 neslBackupFiles]# sftp -P2201 6692389@sfg.sbi.bank.in^C
+[root@d1intapp1 neslBackupFiles]# pwd^C
+[root@d1intapp1 neslBackupFiles]# sftp -P2201 6692389@sfg.sbi.bank.in
+
+6692389@sfg.sbi.bank.in's password:
+Connected to sfg.sbi.bank.in.
+sftp>
+sftp> cd /Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/
+sftp> ls -lrt
+-rw------- 1 200      100            18924 Oct 05 23:15 RLMS_DDE_Stamp_Duty_05102025.csv.enc
+-rw------- 1 200      100              689 Oct 05 23:15 RLMS_DDE_Stamp_Duty_05102025.csv.enc_ae8b52109d8b43738cef9f33c06c4df4e7924c9922b9a38e51a1af34382d7a7c
+-rw------- 1 200      100          1385216 Oct 06 23:15 RLMS_DDE_Stamp_Duty_06102025.csv.enc
+-rw------- 1 200      100              689 Oct 06 23:15 RLMS_DDE_Stamp_Duty_06102025.csv.enc_910589e4528e2d6e6cbb85b3c6546b693d4840e36a122c2a911a70decd72bea4
+-rw------- 1 200      100          1144940 Oct 07 23:15 RLMS_DDE_Stamp_Duty_07102025.csv.enc
+-rw------- 1 200      100              689 Oct 07 23:15 RLMS_DDE_Stamp_Duty_07102025.csv.enc_2f37492aa23f7365e589ad3e4d2bbb72b35639d618ae43b0bebfe83b45c036de
+-rw------- 1 200      100          1848960 Oct 08 23:16 RLMS_DDE_Stamp_Duty_08102025.csv.enc
+-rw------- 1 200      100              689 Oct 08 23:16 RLMS_DDE_Stamp_Duty_08102025.csv.enc_427c063ffbe70909679196678a6e98aa35013d54a8fc31c24217d67d052c367d
+-rw------- 1 200      100          1884568 Oct 09 23:15 RLMS_DDE_Stamp_Duty_09102025.csv.enc
+-rw------- 1 200      100              689 Oct 09 23:15 RLMS_DDE_Stamp_Duty_09102025.csv.enc_1427c1eb150b675b5c9ff5e4e09176f345b9182aab63254f53b11019905023df
+-rw------- 1 200      100          1924864 Oct 10 23:15 RLMS_DDE_Stamp_Duty_10102025.csv.enc
+-rw------- 1 200      100              689 Oct 10 23:15 RLMS_DDE_Stamp_Duty_10102025.csv.enc_29045fa0aaddf95fd2f62eab30a1e260061b8e5ec43826736ad2631f5f90c1fc
+-rw------- 1 200      100              689 Oct 11 23:15 RLMS_DDE_Stamp_Duty_11102025.csv.enc_4d375310b7af61bcbd0859c3179b9d598503ae05c69f1571d31033b7fa6fa976
+-rw------- 1 200      100           116888 Oct 11 23:15 RLMS_DDE_Stamp_Duty_11102025.csv.enc
+-rw------- 1 200      100            55852 Oct 13 15:55 RLMS_DDE_Stamp_Duty_12102025.csv.enc
+-rw------- 1 200      100              689 Oct 13 15:55 RLMS_DDE_Stamp_Duty_12102025.csv.enc_efbeb0ae71b1765ce3199e5bbb7150a006fe557ec64c1a6c06ec468e2862c38b
+-rw------- 1 200      100          2186456 Oct 14 12:13 RLMS_DDE_Stamp_Duty_13102025.csv.enc
+-rw------- 1 200      100              689 Oct 14 12:13 RLMS_DDE_Stamp_Duty_13102025.csv.enc_a46c8b8a5d11372db6ee02eb1c84183050f2443af4fab9fa7d385def74742fd0
+-rw------- 1 200      100          2318912 Oct 15 11:57 RLMS_DDE_Stamp_Duty_14102025.csv.enc
+-rw------- 1 200      100              689 Oct 15 11:57 RLMS_DDE_Stamp_Duty_14102025.csv.enc_12d788db7316e592f4dd023855dac5d26d126e42dcad89c8dedd1500d31a76b1
+sftp>
