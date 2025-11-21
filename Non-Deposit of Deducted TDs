@@ -1,0 +1,49 @@
+Subject: Final Escalation: Non-Deposit of Deducted TDS – Immediate Resolution Required
+
+I am writing to you directly as a matter of professional escalation concerning a serious compliance issue that has remained unresolved despite multiple follow-ups with your HR and Finance teams.
+During my tenure with Aarav Global Products & Services Pvt. Ltd, ₹92,000 was deducted from my salary as TDS. However, only ₹31,386 will be(not till date) deposited and is reflecting in my Form 26AS. Several reminders have been sent, yet no challan copies or confirmation of deposit have been provided to date.
+This is a significant statutory matter, as non-deposit of deducted TDS violates the provisions of the Income Tax Act and exposes both the organization and the affected employees to unnecessary compliance risks. Another employee who reported to me during that period is also facing a similar discrepancy, suggesting a larger issue in TDS handling.
+I wish to highlight that:
+The concern is not about declaration or regime selection, but about non-deposit of TDS already deducted.
+Despite patience and multiple reminders, there has been no formal response or action plan from your team.
+Given that Aarav Global Products & Services Pvt. Ltd is now my organization’s service provider, I am raising this as a matter requiring immediate and transparent resolution.
+I request your urgent intervention to:
+Provide proof of deposit (challan copies) for the TDS amount deducted from my salary.
+Ensure the correct reflection of the full TDS in Form 26AS.
+Confirm what corrective measures are being implemented to prevent recurrence.
+Please treat this as a final escalation before I am compelled to initiate a formal complaint with the Income Tax Department, as this directly affects compliance credibility and the integrity of our professional association.
+I trust you will address this on priority and confirm the corrective action taken.
+
+
+G0382:V1010133@corp.ad.sbi
+
+10.191.147.210
+10.191.147.210
+10.189.199.201
+
+
+ALL_rlms_pr_dr
+
+
+- name: Run command
+
+  hosts: ALL_NON_PROD
+  tasks:
+   - name: Run command
+     register: output
+     #script: /rlms/shell/ansibleplaybook/script/CPU_ram_data_day.sh
+     #ansible.builtin.shell: echo "G0476:1085068@corp.ad.sbi                           rw,map=root,tcptunnel" >> /etc/rsc/users;systemctl restart rscd
+     ansible.builtin.shell: systemctl restart rscd
+   - name: Print output to console
+     debug:
+      var: output.stdout_lines
+
+
+
+
+10.176.38.242 done
+10.189.68.138 done 
+10.191.148.237 done
+
+
+70 06 1990
