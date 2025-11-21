@@ -1,0 +1,22 @@
+
+
+
+/bin/sh Dynatrace-OneAgent-Linux-1.317.69.20251105-194131.sh --set-monitoring-mode=fullstack --set-app-log-content-access=true --set-host-group=VVM_PROD_WEB
+
+
+
+/bin/sh Dynatrace-OneAgent-Linux-1.317.69.20251105-194131.sh --set-monitoring-mode=fullstack --set-app-log-content-access=true --set-host-group=VVM_PROD_APP
+
+
+
+/bin/sh Dynatrace-OneAgent-Linux-1.317.69.20251105-194131.sh --set-monitoring-mode=infra-only --set-app-log-content-access=true --set-host-group=VVM_PROD_DB
+
+
+
+
+
+
+10.176.36.239 --------done  web
+10.176.34.62   --------done  web
+10.176.43.243    --------done app
+10.176.44.178                db
