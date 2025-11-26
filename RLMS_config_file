@@ -1,0 +1,312 @@
+[root@d1intapp1 rlms_config]# ^C
+[root@d1intapp1 rlms_config]# ^C
+[root@d1intapp1 rlms_config]# ^C
+[root@d1intapp1 rlms_config]# cat rlms-scheduler-config.properties
+spring.batch.job.enabled=false
+
+
+#Logging properties
+logging.file.path=/rlms/RLMS/logs
+logging.level.root=INFO
+
+#Datasource properties
+spring.datasource.url= jdbc:oracle:thin:@rlmspr-scan.statebanktimes.in:1570/RLMSPROD
+spring.datasource.username=RLMS_BATCH
+spring.datasource.password=Zoziba$#2022
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.jpa.database-platform=org.hibernate.dialect.Oracle12cDialect
+
+#Quartz Scheduler properties
+spring.quartz.job-store-type = jdbc
+spring.quartz.jdbc.initialize-schema=ALWAYS
+#The number of Jobs run parallelly
+org.quartz.threadPool.threadCount=8
+#org.quartz.threadPool.threadCount=4
+
+# Trigger time in HHMM (24 hour format)
+pmay.clap.get-status.trigger.time=0600
+# Repeat interval in Mins - 24(hours in a day)*60=1440
+pmay.clap.get-status.trigger.repeat-interval-mins=1440
+pmay.clap.get-status.batch-chunk-size=10
+pmay.clap.get-status-url=https://intlb.rlms.sbi/rlmsIntegration/rest/clap/app/status
+getAadhaarVaultURL =https://intlb.rlms.sbi/rlmsIntegration/rest/eis/uid/store
+
+#### RLMS Integration Project Payload Encryption #######
+rlmsInt.aesAlgorithm.padding=AES/CBC/PKCS5Padding
+rlmsInt.aesKeySize=256
+rlmsInt.rsaAlgorithm.padding=RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING
+key.path =/rlms/RLMS/rlms_config/encryption_key/public_key.pub
+
+# VVM props start
+vvm.int.send-pfdtls-url=https://intlb.rlms.sbi/rlmsIntegration/rest/vvm/application/sendPfDetails
+#vvm.int.send-pfdtls.trigger.time=1209
+vvm.int.send-pfdtls.trigger.time=0300
+#vvm.int.send-pfdtls.trigger.time=1555
+#vvm.int.send-pfdtls.trigger.time=1722
+#vvm.int.send-pfdtls.trigger.time=1600
+#vvm.int.send-pfdtls.trigger.time=1300
+
+#vvm.int.send-pfdtls.trigger.time=1154
+# Repeat interval in Mins - 6(repeat interval 6 hours)*60=1440
+vvm.int.send-pfdtls.trigger.repeat-interval-mins=360
+
+# vvm props end
+
+# DWH props start
+dwh.int.fetch-dwhdtls.trigger.time=0030
+#dwh.int.fetch-dwhdtls.trigger.time=1410
+#dwh.int.fetch-dwhdtls.trigger.time=0030
+#dwh.int.fetch-dwhdtls.trigger.time=1818
+# Repeat interval in Mins - 24(hours in a day)*60=1440
+dwh.int.fetch-dwhdtls.trigger.repeat-interval-mins=1440
+# Repeat interval in days (0 means current ,1 means next day)
+dwh.int.fetch-dwhdtls.trigger.repeat-interval-days=365
+dwh.encrypt.cmd=java -jar /rlms/RLMS/rlms_config/common/keys/dwh-scheduler/recon-encryption-util-1.0.jar ENCRYPTION
+dwh.signing.secret.key=/rlms/RLMS/rlms_config/common/keys/dwh-scheduler/signing-secret.asc
+dwh.public.key=/rlms/RLMS/rlms_config/common/keys/dwh-scheduler/public.asc
+dwh.signing.secret.pass=rlms@1234
+dwh.fileserver.source.path=/rlms/RLMS/dwh/data/
+dwh.fileserver.backup.path=/rlms/RLMS/dwh/backup/
+dwh.error.logs=extJar_error_log.txt
+#DWH FileServer Configuration - Test server
+#dwhfileserver.hostname=10.191.153.87
+#dwhfileserver.username=rlms
+#dwhfileserver.morsecode=rlms123
+#dwhfileserver.port=22
+#dwhfileserver.uploadPath=/home/rlms/dwh_batch/encrypt_data
+
+
+dwhfileserver.hostname=dwhsfg.statebanktimes.in
+dwhfileserver.username=6692389
+#dwhfileserver.morsecode=!@h669238934
+dwhfileserver.port=2202
+dwhfileserver.uploadPath=
+#fileserver_filepermission=0644
+#fileserver_folderPermission=0744
+
+
+dwh.private.key=/rlms/RLMS/rlms_config/common/keys/dwh-scheduler/id_rsa
+#
+
+#########NEsl-BGL###############
+
+
+generated.file.path =/rlms/RLMS/Nesl/neslGeneratedFiles/
+encrypted.file.path =/rlms/RLMS/Nesl/neslEncryptedFiles/
+backup.file.path =/rlms/RLMS/Nesl/neslBackupFiles/
+
+
+rlms.private.key=/rlms/RLMS/rlms_config/common/keys/nesl/rlms-private-key.pem
+nesl.public.key=/rlms/RLMS/rlms_config/common/keys/nesl/recon-prod-nesl-public-certificate.pem
+
+nesl.bgl.transfer.trigger.time=2315
+#nesl.bgl.transfer.trigger.time=1410
+#nesl.bgl.transfer.trigger.time=1828
+nesl.bgl.transfer.trigger.repeat-interval-mins=1440
+
+
+#Rabale
+#sftp.host=10.189.250.18
+#Gacchibowli
+#sftp.host=10.176.36.125
+sftp.host=sfg.sbi.bank.in
+sftp.user=6692389
+sftp.password=Statebank@1310
+#sftp.password=StateBank1#45
+sftp.remote.directory=/Generic_Recon/E-Sign/RLMS/Input_Files/Source_Files/
+sftp.port=2201
+
+
+# RTXC application decline after 7 days - Start
+rtxc.appl.decline.trigger.repeat-interval-mins=1440
+rtxc.appl.decline.trigger.time=0000
+# RTXC application decline after 7 days - END
+
+#Email Scheduler Starts here
+email.send.job.trigger.time=0035
+email.send.job.trigger.repeat-interval-mins=1440
+#Email Scheduler Ends here
+
+
+####### JWT ##############
+jwt.secretKey=mySecret
+jwt.authLoginUrl=/api/v1/user/authorities
+jwt.logoutUrl=/api/v1/logout
+jwt.requestAuthHeader=X-ACCESS-TOKEN
+# validityInMs set to 3600000 ms == 1 hour
+jwt.validityInMs=3600000
+jwt.cbsvalidityInMs=10000
+
+## AES Encryption/Decryption secret secret, iv and passphrase
+rlms.aes.secret = u/Gu5posvwDsXUnV5Zaq4g==
+rlms.aes.iv = 5D9r9ZVzEYYgha93/aUK2w==
+rlms.aes.passphrase = RlmsAesPassphrase
+
+
+vvm.int.send-pfdtls.trigger.repeat-interval-mins=360
+
+
+## xp CRM Property
+###As per mail stopped below services 04-05-2024
+xp.int.CRM-LeadCreation-Url=
+#xp.int.CRM-LeadCreation-Url=https://intlb.rlms.sbi/rlmsIntegration/rest/crm/lead/generate
+
+xp.int.CRM-LeadCreation.trigger.time=1251
+#xp.int.CRM-LeadCreation.trigger.time=1433
+xp.int.CRM-LeadCreation.trigger.repeat-interval-mins=525600
+#xp.int.CRM-LeadCreation.trigger.repeat-interval-mins=07
+
+algorithm.mode.padding=RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING
+
+######14022025####
+rlms.email.templates.path=/rlms/RLMS/rlms_config/common/templates/mail/html/
+
+#Kafka Configurations
+#mail.sender.id= ebms-pepismtp.sbi.co.in
+mail.sender.id= noreply.rlms@alerts.sbi.co.in
+rlms.spring.kafka.path= /rlms/RLMS/rlms_shared_lib/keys/
+rlms.spring.kafka.bootstrap-servers=kafkaapp1:9043,kafkaapp1:9044,kafkaapp1:9045,kafkaapp2:9043,kafkaapp2:9044,kafkaapp2:9045,kafkaapp3:9043,kafkaapp3:9044,kafkaapp3:9045
+rlms.spring.kafka.retry.generate-alert-retry-threshold=4
+
+# SSL Authentication
+rlms.spring.kafka.security.protocol=PLAINTEXT
+rlms.spring.kafka.ssl.truststore.location=kafka.truststore.jks
+rlms.spring.kafka.ssl.truststore.password=wasadmin
+rlms.spring.kafka.ssl.keystore.location=kafka.keystore.jks
+rlms.spring.kafka.ssl.keystore.password=wasadmin
+
+app.kafka.topic.email=rlms-email
+app.kafka.topic.sms=rlms-sms
+
+#CRON Trigger Format: SS MI HH24 DM MM DW
+#SS - Seconds
+#MI - Minutes
+#HH24 - 24 Hour Format
+#DM - Day of the Month
+#MM - Month
+#DW - Day of the Week
+rlms.rehbu.control.self.trigger.cron.expression=0 0 10 ? * 2-7
+rlms.rehbu.control.escalation1.trigger.cron.expression=0 0 10 ? * 2,4,6
+rlms.rehbu.control.escalation2.trigger.cron.expression=0 0 10 ? * 2,4,6
+rlms.rehbu.control.escalation3.trigger.cron.expression=0 0 10 ? * 2
+
+#### 10 March 2025 ####
+push.rlms.vlmp-portal.trigger.time=2200
+# Repeat interval in Mins - 24(hours in a day)660=1440
+push.rlms.vlmp-portal.trigger.repeat-interval-mins=1440
+push.rlms.file.url=https://intlb.rlms.sbi/rlmsIntegration/rest/vlp/upload/zip/file
+
+rlms.vlmp.upload.status.trigger.time=0900
+rlms.vlmp.upload.trigger.repeat-interval-mins=1440
+rlms.file.status.retrieve.url=https://intlb.rlms.sbi/rlmsIntegration/rest/vlp/retrieve/zip/file/status
+
+rlms.vlmp.retrieve.error.file.trigger.time=1300
+rlms.vlmp.retrieve.error.file.repeat-interval-mins=1440
+rlms.error.file.retrieve.url=https://intlb.rlms.sbi/rlmsIntegration/rest/vlp/retrieve/error/file
+
+#####21032025###
+push.rlms.file.chunkSize=300
+
+push.rlms.dwnldAndDumpSfg.remoteHost=sfg.sbi.bank.in
+push.rlms.dwnldAndDumpSfg.remoteUser=6692389
+push.rlms.dwnldAndDumpSfg.remotePwd=Statebank@1310
+push.rlms.dwnldAndDumpSfg.remotePort=2201
+push.rlms.dwnldAndDumpSfg.trigger.time=1200
+push.rlms.dwnldAndDumpSfg.trigger.repeat-interval-mins=1440
+push.rlms.dwnldAndDumpSfg.serverFilePath=/FTPS
+push.rlms.dwnldAndDumpSfg.fileName=tlc_tlc_11470_{0}
+push.rlms.dwnldAndDumpSfg.localDwnloadFilePath=/rlms/RLMS/HRMS_SS_DATA/receivedfiles/
+
+#### 29 April 2025 HRMS SFG Scheduler Changes ####
+push.rlms.dwnldAndDumpSfg.mail.receiver=avinash.gaurav@sbi.co.in,swati.gajrani@sbi.co.in,shibu.nair@sbi.co.in,hemant.gangwar@sbi.co.in,vishal.karne.mphasis@sbi.co.in
+push.rlms.dwnldAndDumpSfg.emailTemplateId=56
+push.rlms.dwnldAndDumpSfg.applId=24064
+
+PPC#####23062025####
+db.host=10.189.202.87
+db.port=1570
+db.sid=RLMSPH2
+db.driver=jdbc:oracle:thin
+db.connection.caching.enabled=true
+db.batch.user=RLMS_BATCH
+db.batch.morsecode=RLMS_BATCH
+db.datasource.trans=RLMS_TRANS
+db.datasource.batch=RLMS_BATCH
+db.trans.user=RLMS_TRANS
+db.trans.morsecode=Zoziba$#2022
+db.batch.user=RLMS_BATCH
+db.batch.morsecode=Zoziba$#2022
+db.url=jdbc:oracle:thin:@rlmspr-scan.statebanktimes.in:1570/RLMSPROD
+log.level=info
+
+#FileServer Configuration
+fileserver.hostname=10.191.145.227
+fileserver.username=root
+fileserver.morsecode=root123
+fileserver.port=2202
+
+#PR---cppcfileserver.hostname=10.189.36.32
+#DR---cppcfileserver.hostname=10.176.39.27
+cppcfileserver.hostname=sftp.pension.sbi
+cppcfileserver.username=loscppc
+cppcfileserver.morsecode=loscppc
+cppcfileserver.port=2202
+
+#RLMS-INT URL For EDMS
+rlmsFtp.uploadPath=/rlms/RLMS/uploads
+file.server.rtdir=/rlms/
+
+#RSA Operator
+KEY_PATH=/rlms/RLMS/rlms_shared_lib/keys
+RLMS_PUBLIC_KEY_FILE_NAME=public_key.pub
+CPPC_PUBLIC_KEYFILENAME=CPPC.pub
+RSA=RSA
+RSA.ALGO.PADDING=RSA/ECB/PKCS1Padding
+AES.ALGO.PADDING=AES/CBC/PKCS5Padding
+cppc_lien_filename=RLMS_LienMarking
+cppc_lien_filetype=.txt
+cppcuploadPath=/home/loscppc/Files/CPPC_BATCH/RLMS/INPUT
+cppcresponsePath=/home/loscppc/Files/CPPC_BATCH/RLMS/OUTPUT/PROCESSED
+cppcrejectedPath=/home/loscppc/Files/CPPC_BATCH/RLMS/OUTPUT/REJECTED
+fileserver_filepermission=0644
+fileserver_folderPermission=0744
+localCppcpath=/rlms/RLMS/uploads/cppc
+
+#RLMS CPPC Batch Config properties end
+
+# CPPC props start
+
+cppc.int.readfile.trigger.time=2300
+cppc.int.readfile.trigger.repeat-interval-mins=1440
+cppc.int.readfile.trigger.repeat-interval-days=0
+
+cppc.int.writefile.trigger.time=0300
+cppc.int.writefile.trigger.repeat-interval-mins=1440
+cppc.int.writefile.trigger.repeat-interval-days=0
+
+####170925####
+#####Starts : DWH Properties#####
+dwh.int.fetch-dwhdtls.emailTemplateId=57
+dwh.int.fetch-dwhdtls.applId=24064
+dwh.int.fetch-dwhdtls.subjectQute=DWH Scheduler
+dwh.int.fetch-dwhdtls.alertQute=DWH Scheduler
+#####End : DWH Properties#####
+
+#####Starts : NESL Properties#####
+nesl.bgl.transfer.emailTemplateId=57
+nesl.bgl.transfer.applId=24064
+nesl.bgl.transfer.subjectQute=Nesl Scheduler
+nesl.bgl.transfer.alertQute=Nesl Scheduler
+#####End : NESL Properties#####
+# CPPC props end
+
+#####18102025####
+tat.rlms.alMonitoringTAT.emailTemplateId=60
+tat.rlms.alMonitoringTAT.trigger.time=1312
+tat.rlms.alMonitoringTAT.trigger.repeat-interval-mins=1440
+tat.rlms.alMonitoringTAT.smsEnabled=true
+tat.rlms.alMonitoringTAT.alert.emailTemplateId=57
+tat.rlms.alMonitoringTAT.applId=24067
+tat.rlms.alMonitoringTAT.subjectQuote= Auto Loan TAT Job
+tat.rlms.alMonitoringTAT.alertQuote= Auto Loan TAT Job
+[root@d1intapp1 rlms_config]#
