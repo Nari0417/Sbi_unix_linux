@@ -1,0 +1,14 @@
+---
+- name: Reboot target servers
+  hosts: DEV1  # Target all hosts in your inventory or a specific group
+  gather_facts: false # Optional: facts can be gathered after reboot if needed
+
+  tasks:
+    - name: Ensure all systems are rebooted and wait for them to come back
+      ansible.builtin.reboot:
+        reboot_timeout: 600  # Maximum time in seconds to wait for the host to come back (default is 600s/10m)
+        msg: "Reboot initiated by Ansible" # Message to display to logged-in users
+        test_command: uptime # Command to run to verify the host is up and ready (default is 'whoami')
+====================================================================================================================================
+ansible all -i dyanamicinventory -m ansible.builtin.shell -a "uptime ; uname -r"
+ansible-playbook reboot_playbook.yml -i dyanamicinventory
