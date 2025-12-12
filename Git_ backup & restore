@@ -133,7 +133,7 @@ echo "===== DR Restore Completed Successfully =====" | tee -a "$LOGFILE"
 EXIT_STATUS=echo $?
 
 if [ $EXIT_STATUS -ne 0 ]; then
-    echo "/opt/git.sh failed. Running alternative commands for database reset and restore."  >>/tmp/git/git.log
+    echo "/opt/git.sh failed. Running alternative commands for database reset and restore." | tee -a /var/log/gitlab_dr_restore.log
     gitlab-psql  <<EOF
 \c postgres
 select pg_terminate_backend(pid) from pg_stat_activity where datname='gitlabhq_production';
@@ -144,7 +144,7 @@ EOF
 
 gitlab-rake gitlab:backup:restore force=yes
 else
-    echo "/opt/git.sh executed successfully. No alternative actions taken."  >>/tmp/git/git.log
+    echo "/opt/git.sh executed successfully. No alternative actions taken."| tee -a /var/log/gitlab_dr_restore.log
 fi
 
 
