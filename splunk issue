@@ -31,6 +31,10 @@ nameserver 10.189.37.138
 ------------------------------------------------------------------
 nc -v 10.189.37.137 53 (check the three name servers )
 
+/opt/splunkforwarder/bin/splunk enable boot-start -user splunk -------->>it is generate the init file (systemctl status splunk.service)
+
+/etc/rc.d/init.d | init files path
+/etc/init.d/     |
 
 
 crontab -l
