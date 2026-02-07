@@ -1,0 +1,35 @@
+#!/bin/bash
+
+PRE_CMD="your_command_here"
+SCRIPT="script.sh"
+
+paths=(
+  /opt/app1
+  /opt/app2
+  /opt/app3
+)
+
+for dir in "${paths[@]}"; do
+  echo "===== Processing $dir ====="
+
+  cd "$dir" || {
+    echo "Failed to cd into $dir"
+    exit 1
+  }
+
+  echo "Running pre-command..."
+  $PRE_CMD || {
+    echo "Pre-command failed in $dir"
+    exit 1
+  }
+
+  echo "Running script..."
+  sh "$SCRIPT" || {
+    echo "Script failed in $dir. Stopping execution."
+    exit 1
+  }
+
+  echo "Completed successfully in $dir"
+done
+
+echo "All paths processed successfully ✅"
