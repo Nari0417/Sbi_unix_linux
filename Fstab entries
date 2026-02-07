@@ -1,0 +1,15 @@
+DEV=$(findmnt -n -o SOURCE /home/shm) && \
+FSTYPE=$(findmnt -n -o FSTYPE /home/shm) && \
+echo "$DEV  /home/shm  $FSTYPE  nodev,nosuid  0 0" >> /etc/fstab
+
+mount -fav
+findmnt /home/shm
+lsblk -f
+blkid
+
+
+
+
+UUID=$(findmnt -n -o UUID /home/shm) && \
+FSTYPE=$(findmnt -n -o FSTYPE /home/shm) && \
+echo "UUID=$UUID  /home/shm  $FSTYPE  defaults  0 0" >> /etc/fstab
