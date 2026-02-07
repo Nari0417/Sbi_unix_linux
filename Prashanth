@@ -1,0 +1,26 @@
+----------------------------------------------Patching ---------------------------
+systemctl status rscd.service
+systemctl restart rscd.service
+File path: 
+/etc/rsc/exports    --------> 
+/etc/rsc/users
+
+/opt/bmc/bladelogic/RSCD/Transactions/analysis_archive 
+
+cd /opt/bmc/bladelogic/RSCD/Transactions/analysis_archive/       >>>>>>after running the patch analysis one log file is created.
+
+RSCD agent port 4750   
+need 30mb /var/file system
+
+
+df -h >>>>>>>check the sufficent speace  is avalible or not.
+
+
+/var,/boot, opt  
+
+
+/var/tmp/stage/opt/bmc/bladelogic/RSCD/Transactions
+
+
+
+/opt/TrendMicro/EndpointBasecamp/logs     >>>>>>after running the patch analysis one log file is created.
