@@ -1,0 +1,65 @@
+sed -i -E 's#^(\S+[[:space:]]+/dev/shm[[:space:]]+\S+[[:space:]]+)[^[:space:]]+#\1rw,nosuid,nodev,seclabel#' /etc/fstab
+mount -o remount /dev/shm
+grep -w /dev/shm /etc/fstab
+findmnt /dev/shm
+<device> /dev/shm <fstype> rw,nosuid,nodev,seclabel 0 0
+================================================================================================================================
+[root@GANGA ansible]# cat pwhistory.yml
+- name: Enforce pwquality settings
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure pwquality parameters are set correctly
+      ansible.builtin.lineinfile:
+        path: /etc/security/pwquality.conf
+        regexp: '^\s*#?\s*{{ item.key }}\s*='
+        line: '{{ item.key }} = {{ item.value }}'
+        state: present
+        backrefs: no
+      loop:
+        - { key: 'minlen',   value: '12' }
+        - { key: 'dcredit', value: '-1' }
+        - { key: 'ucredit', value: '-1' }
+        - { key: 'lcredit', value: '-1' }
+        - { key: 'ocredit', value: '-1' }
+
+==================================================================================
+
+[root@GANGA ansible]# cat pwfailback.yml
+- hosts: all
+  become: yes
+  tasks:
+    - name: Enable silent
+      lineinfile:
+        path: /etc/security/faillock.conf
+        regexp: '^\s*#?\s*silent\b'
+        line: 'silent'
+
+    - name: Enable audit
+      lineinfile:
+        path: /etc/security/faillock.conf
+        regexp: '^\s*#?\s*audit\b'
+        line: 'audit'
+
+    - name: Set unlock_time to 900
+      lineinfile:
+        path: /etc/security/faillock.conf
+        regexp: '^\s*#?\s*unlock_time\s*='
+        line: 'unlock_time = 900'
+
+========================================================================================
+[root@GANGA ansible]# cat fstab_chages.yml
+- name: Fix /dev/shm mount options
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure /dev/shm mount options
+      ansible.posix.mount:
+        path: /dev/shm
+        src: tmpfs
+        fstype: tmpfs
+        opts: rw,exec,suid
+        state: mounted
+
+========================================================================================
