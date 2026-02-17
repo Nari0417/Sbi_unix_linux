@@ -1,0 +1,32 @@
+
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak_$(date +%F_%T)
+
+sed -i '/^X11Forwarding/d;
+/^PermitEmptyPasswords/d;
+/^AllowTcpForwarding/d;
+/^LoginGraceTime/d;
+/^ClientAliveInterval/d;
+/^ClientAliveCountMax/d;
+/^LogLevel/d;
+/^MaxAuthTries/d;
+/^Banner/d;
+/^Protocol/d;
+/^PermitRootLogin/d' /etc/ssh/sshd_config
+
+cat <<EOF >> /etc/ssh/sshd_config
+
+# SCD Hardening
+X11Forwarding no
+PermitEmptyPasswords no
+AllowTcpForwarding no
+LoginGraceTime 60
+ClientAliveInterval 300
+ClientAliveCountMax 0
+LogLevel INFO
+MaxAuthTries 4
+Banner /etc/issue.net
+Protocol 2
+PermitRootLogin yes
+EOF
+
+sshd -t && systemctl restart sshd
