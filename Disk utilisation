@@ -1,0 +1,14 @@
+---
+- name: Check Disk Usage Above 90%
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Check disk usage
+      shell: df -h | awk 'NR>1 && $5+0 > 90 {print $6 " is " $5 " full"}'
+      register: disk_output
+
+    - name: Show disks above 90%
+      debug:
+        var: disk_output.stdout_lines
