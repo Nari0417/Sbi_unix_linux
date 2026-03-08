@@ -4,6 +4,8 @@ Create GPT table:-   g
 Create partition:-   n
 save:- w
 verify:-- lsblk or fdisk -l
+
+parted /dev/sdb print free
 ================================================================================
 | Feature             | MBR                     | GPT              |
 | ------------------- | ----------------------- | ---------------- |
