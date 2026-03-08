@@ -1,0 +1,18 @@
+========================================================================================
+Start fdisk:-      fdisk /dev/sdb
+Create GPT table:-   g
+Create partition:-   n
+save:- w
+verify:-- lsblk or fdisk -l
+================================================================================
+| Feature             | MBR                     | GPT              |
+| ------------------- | ----------------------- | ---------------- |
+| Max partitions      | 4 primary               | 128              |
+| Max disk size       | 2 TB                    | 9.4 ZB           |
+| Extended partition  | Required                | Not required     |
+| Partition numbering | Logical start from sdb5 | Starts from sdb1 |
+| Boot system         | BIOS                    | UEFI             |
+
+******IMP point to remenber*************
+GPT does not use Primary / Extended / Logical partitions.
+All partitions are normal partitions.
