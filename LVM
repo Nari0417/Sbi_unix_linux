@@ -16,3 +16,6 @@ verify:-- lsblk or fdisk -l
 ******IMP point to remenber*************
 GPT does not use Primary / Extended / Logical partitions.
 All partitions are normal partitions.
+
+MBR → Old → 4 partitions
+GPT → New → 128 partitions
