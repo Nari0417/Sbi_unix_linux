@@ -1,4 +1,6 @@
 ========================================================================================
+fdisk /dev/sdb ,g,n,w
+========================================================================================
 Start fdisk:-      fdisk /dev/sdb
 Create GPT table:-   g
 Create partition:-   n
@@ -21,3 +23,10 @@ All partitions are normal partitions.
 
 MBR → Old → 4 partitions
 GPT → New → 128 partitions
+===========================================================================================
+✅ Simple memory trick
+
+83 → Storage
+82 → Swap RAM
+8e → LVM
+ef → EFI Boot
