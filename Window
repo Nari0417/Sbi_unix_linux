@@ -68,6 +68,21 @@ Get-ChildItem "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL
 
 Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\Server"
 Enabled = 0
+============================================================================================================================================
+Disable-TlsCipherSuite -Name "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+Disable-TlsCipherSuite -Name "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+Disable-TlsCipherSuite -Name "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+Disable-TlsCipherSuite -Name "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+Disable-TlsCipherSuite -Name "TLS_RSA_WITH_AES_256_CBC_SHA"
+Disable-TlsCipherSuite -Name "TLS_RSA_WITH_AES_128_CBC_SHA"
+
+----------------
+Enable-TlsCipherSuite -Name "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA"
+Enable-TlsCipherSuite -Name "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA"
+Enable-TlsCipherSuite -Name "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA"
+Enable-TlsCipherSuite -Name "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA"
+Enable-TlsCipherSuite -Name "TLS_RSA_WITH_AES_256_CBC_SHA"
+Enable-TlsCipherSuite -Name "TLS_RSA_WITH_AES_128_CBC_SHA"
 
 
 
