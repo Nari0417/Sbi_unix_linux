@@ -1,0 +1,3 @@
+Get-TlsCipherSuite | Where-Object {
+$_.Name -match "AES_256_CBC_SHA$|AES_128_CBC_SHA$"
+}
