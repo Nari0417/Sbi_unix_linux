@@ -1,0 +1,16 @@
+Hi Team,
+
+Patching activity for the non-production servers has been completed successfully. We now need to proceed with the reboot activity for the production environment to complete the patching process.
+
+Kindly assist and confirm if we can proceed with the production server reboot.
+
+Please note that services may be temporarily unavailable during the reboot activity.
+
+======••=====
+Hi Team,
+
+Patching activity for the non-production servers has been completed successfully. We need to proceed with the reboot activity for the production environment to complete the patching process.
+
+Kindly check the feasibility and confirm if we can proceed with the production server reboot.
+
+Services may be temporarily unavailable during the reboot activity.
