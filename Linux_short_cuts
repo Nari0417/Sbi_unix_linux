@@ -1,0 +1,14 @@
+grep -q '^audit' /path/to/configfile || echo "audit" >> /path/to/configfile; sed -i 's/^#audit/audit/' /path/to/configfile
+grep -q '^[#]*\s*deny' /path/to/configfile && sed -i 's/^[#]*\s*deny\s*=.*/deny = 3/' /path/to/configfile || echo "deny = 3" >> /path/to/configfile
+
+sed -i '/^[# ]*ram[ ]*=/c\ram = 5' /path/to/configfile; grep -q '^[# ]*ram[ ]*=' /path/to/configfile || echo "ram = 5" >> /path/to/configfile
+
+echo ": ALL" | sudo tee /etc/sudoers.d/osadmin >/dev/null && sudo chmod 440 /etc/sudoers.d/osadmin
+
+===••=• check the previsouly exits or not ========
+sudo grep -q '^osadmin ' /etc/sudoers /etc/sudoers.d/* 2>/dev/null || { echo "osadmin ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/osadmin >/dev/null && sudo chmod 440 /etc/sudoers.d/osadmin; }
+sudo -l -U osadmin
+=====================================
+sed -i '/umask=0227/!b;n;/umask=0227/d' /path/to/configfile
+------------------------
+awk '/ALL=\(ALL\) NOPASSWD/{u=u?u","$1:$1;next}1 END{if(u)print u" ALL=(ALL) NOPASSWD: ALL"}' /etc/sudoers > /tmp/sudoers && mv /tmp/sudoers /etc/sudoers
