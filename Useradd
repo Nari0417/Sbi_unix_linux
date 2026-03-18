@@ -86,6 +86,21 @@ ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password'
 ssh -q $i 2>/dev/null "/usr/sbin/usermod -F -p $(perl -e "print crypt('password','xxxxxxxx')" ) kumarpra;passwd -x 90 kumarpra;passwd -n 0 kumarpra;userdbset -d -a auth_failures;userdbget -a auth_failures"
 done
 
+==================================================================================================================
+#!/bin/bash
+i=osadmin
+groupadd "$i"
+useradd -g "$i" -c "osadmin User" "$i"
+echo "$i" | passwd --stdin "$i"
+chage -m 0 "$i"
+sed -i '/'$i'/d' /etc/sudoers;
+echo "$i    ALL=(ALL)      NOPASSWD: ALL" >> /etc/sudoers
+echo $i
+mkdir -p /home/osadmin/.ssh;chown osadmin:osadmin /home/osadmin/.ssh;chmod 755 /home/osadmin/.ssh
+touch /home/osadmin/.ssh/authorized_keys;chown osadmin:osadmin /home/osadmin/.ssh/authorized_keys;chmod 600 /home/osadmin/.ssh/authorized_keys
+sed -i '/^AllowUsers/s/$/ osadmin/' /etc/ssh/sshd_config;sed -i '/^AllowGroups/s/$/ osadmin/' /etc/ssh/sshd_config
 
+systemctl restart sshd.service
+=======================================================================================================================================================================
 
 
