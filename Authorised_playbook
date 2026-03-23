@@ -1,0 +1,45 @@
+Works in ALL versions
+ 
+- name: Ensure SSH key is present for rlms user
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure .ssh directory exists
+      file:
+        path: /home/rlms/.ssh
+        state: directory
+        owner: rlms
+        group: rlms
+        mode: '0700'
+
+    - name: Ensure authorized_keys file exists
+      file:
+        path: /home/rlms/.ssh/authorized_keys
+        state: touch
+        owner: rlms
+        group: rlms
+        mode: '0600'
+
+    - name: Add public key only if not present
+      authorized_key:
+        user: rlms
+        state: present
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC..."
+
+
+---------------------------------
+
+- name: Add key (auto handles most cases)
+  authorized_key:
+    user: rlms
+    state: present
+    key: "ssh-rsa AAAA..."
+
+This will:
+	•	Create .ssh if missing ✅
+	•	Create authorized_keys if missing ✅
+	•	Add key only if needed ✅
+
+-------------------------------
+
