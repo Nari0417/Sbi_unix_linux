@@ -1,0 +1,5 @@
+We are planning to disable root login in Production, Dynatrace, and SIT environments. Appropriate privileges will be provided to the RLMS user for administrative activities.
+
+Kindly check the feasibility from the application side and confirm.
+
+Please provide your confirmation and approval at the earliest.
