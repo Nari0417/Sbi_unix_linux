@@ -1,0 +1,130 @@
+- name: WebSphere Multi-Profile Patch
+  hosts: all
+  become: yes
+
+  vars:
+    was_home: /rlms/IBM/WebSphere/AppServer
+    dmgr_profile: Dmgr01
+    app_profiles:
+      - AppSrv01
+      - AppSrv02
+
+    dmgr_host: 10.191.154.127
+
+    imcl: /opt/IBM/InstallationManager/eclipse/tools/imcl
+    repo: /rlms/shell/
+
+    cacerts_src: "{{ was_home }}/java/8.0/jre/lib/security/cacerts"
+    cacerts_backup: /rlms/soft/cacerts_backup
+    backup_dir: /rlms/soft/backup
+
+  tasks:
+
+  # =========================
+  # BACKUP
+  # =========================
+
+  - name: Backup cacerts
+    copy:
+      src: "{{ cacerts_src }}"
+      dest: "{{ cacerts_backup }}/cacerts_{{ inventory_hostname }}"
+      remote_src: yes
+
+  - name: Backup each profile
+    shell: >
+      {{ was_home }}/bin/backupConfig.sh
+      {{ backup_dir }}/{{ item }}.zip
+      -profileName {{ item }}
+    loop: "{{ app_profiles + [dmgr_profile] }}"
+
+  # =========================
+  # STOP APP SERVERS (ALL PROFILES)
+  # =========================
+
+  - name: Stop App Servers (profile-wise)
+    shell: |
+      for s in $(ls {{ was_home }}/profiles/{{ item }}/servers); do
+        if [ "$s" != "nodeagent" ]; then
+          {{ was_home }}/bin/stopServer.sh $s -profileName {{ item }} -username wasadmin -password xxxx || true
+        fi
+      done
+    loop: "{{ app_profiles }}"
+
+  # =========================
+  # STOP NODE AGENTS
+  # =========================
+
+  - name: Stop Node Agents
+    shell: "{{ was_home }}/bin/stopNode.sh -profileName {{ item }}"
+    loop: "{{ app_profiles }}"
+    ignore_errors: yes
+
+  # =========================
+  # STOP DMGR
+  # =========================
+
+  - name: Stop DMGR
+    shell: "{{ was_home }}/bin/stopManager.sh -profileName {{ dmgr_profile }}"
+    ignore_errors: yes
+
+  # =========================
+  # PATCH
+  # =========================
+
+  - name: Apply Fix Pack
+    shell: >
+      {{ imcl }} install com.ibm.websphere.ND.v90
+      -repositories {{ repo }}
+      -installationDirectory {{ was_home }}
+      -acceptLicense
+
+  # =========================
+  # RESTORE CACERTS
+  # =========================
+
+  - name: Restore cacerts
+    copy:
+      src: "{{ cacerts_backup }}/cacerts_{{ inventory_hostname }}"
+      dest: "{{ cacerts_src }}"
+      remote_src: yes
+
+  # =========================
+  # START DMGR FIRST
+  # =========================
+
+  - name: Start DMGR
+    shell: "{{ was_home }}/bin/startManager.sh -profileName {{ dmgr_profile }}"
+
+  - name: Wait for DMGR
+    wait_for:
+      host: "{{ dmgr_host }}"
+      port: 8879
+      timeout: 180
+
+  # =========================
+  # START NODE + SYNC (PER PROFILE)
+  # =========================
+
+  - name: Start Node Agents
+    shell: "{{ was_home }}/bin/startNode.sh -profileName {{ item }}"
+    loop: "{{ app_profiles }}"
+
+  - name: Sync Nodes
+    shell: >
+      {{ was_home }}/bin/syncNode.sh {{ dmgr_host }} 8879
+      -profileName {{ item }}
+      -username wasadmin -password xxxx
+    loop: "{{ app_profiles }}"
+
+  # =========================
+  # START APP SERVERS
+  # =========================
+
+  - name: Start App Servers (profile-wise)
+    shell: |
+      for s in $(ls {{ was_home }}/profiles/{{ item }}/servers); do
+        if [ "$s" != "nodeagent" ]; then
+          {{ was_home }}/bin/startServer.sh $s -profileName {{ item }} || true
+        fi
+      done
+    loop: "{{ app_profiles }}"
