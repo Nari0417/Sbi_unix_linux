@@ -1,0 +1,153 @@
+- name: WebSphere Patch (Simple + Safe + Verified)
+  hosts: all
+  become: yes
+
+  vars:
+    was_home: /rlms/IBM/WebSphere/AppServer
+    imcl: /rlms/IBM/InstallationManager/eclipse/tools/imcl
+
+    repo_was: /rlms/soft/Fix5.26/repository.config
+    repo_java: /rlms/soft/JAVA_8.0.8.55/repository.config
+    shared_dir: /rlms/IBM/InstallationManager/IMShared
+
+    dmgr_profile: Dmgr01
+    app_profiles:
+      - AppSrv01
+      - AppSrv02
+
+    dmgr_host: 10.191.154.127
+
+    # ✅ CONTROLLED VERSION
+    was_fixpack: com.ibm.websphere.ND.v90_9.0.5026.20251114_1520
+    java_fixpack: com.ibm.java.jdk.v8_8.0.8055.20251007_2253
+
+    cacerts_src: "{{ was_home }}/java/8.0/jre/lib/security/cacerts"
+    cacerts_backup: /rlms/soft/cacerts_backup
+
+  tasks:
+
+  # =========================
+  # BACKUP
+  # =========================
+
+  - name: 📦 Backup cacerts
+    debug:
+      msg: "Backing up cacerts file..."
+
+  - name: Backup cacerts
+    copy:
+      src: "{{ cacerts_src }}"
+      dest: "{{ cacerts_backup }}/cacerts_{{ inventory_hostname }}"
+      remote_src: yes
+
+  # =========================
+  # STOP SERVICES
+  # =========================
+
+  - name: 🔻 Stopping Application Servers
+    debug:
+      msg: "Stopping application servers in {{ item }}"
+    loop: "{{ app_profiles }}"
+
+  - name: Stop App Servers
+    shell: |
+      for s in $(ls {{ was_home }}/profiles/{{ item }}/servers); do
+        if [ "$s" != "nodeagent" ]; then
+          echo "Stopping server: $s (Profile: {{ item }})"
+          {{ was_home }}/bin/stopServer.sh $s -profileName {{ item }} -username wasadmin -password xxxx || true
+        fi
+      done
+    loop: "{{ app_profiles }}"
+
+  - name: 🔻 Stopping Node Agents
+    debug:
+      msg: "Stopping NodeAgent for {{ item }}"
+    loop: "{{ app_profiles }}"
+
+  - name: Stop Node
+    shell: |
+      echo "Stopping NodeAgent (Profile: {{ item }})"
+      {{ was_home }}/bin/stopNode.sh -profileName {{ item }} || true
+    loop: "{{ app_profiles }}"
+
+  - name: 🔻 Stopping DMGR
+    debug:
+      msg: "Stopping DMGR"
+
+  - name: Stop DMGR
+    shell: |
+      echo "Stopping DMGR (Profile: {{ dmgr_profile }})"
+      {{ was_home }}/bin/stopManager.sh -profileName {{ dmgr_profile }} || true
+
+  # =========================
+  # PATCH + VALIDATION + START
+  # =========================
+
+  - name: PATCH + START (SAFE EXECUTION)
+    block:
+
+      - name: ⚙️ Applying Fixpack
+        shell: |
+          echo "Applying WAS + JAVA Fixpack..."
+          {{ imcl }} install \
+          {{ was_fixpack }} \
+          {{ java_fixpack }} \
+          -repositories {{ repo_was }},{{ repo_java }} \
+          -installationDirectory {{ was_home }} \
+          -sharedResourcesDirectory {{ shared_dir }} \
+          -acceptLicense -sVP -silent
+
+      # ✅ PATCH VALIDATION STEP (NEW)
+      - name: 🔍 Validate Patch Applied
+        shell: "{{ was_home }}/bin/versionInfo.sh"
+        register: version_output
+
+      - name: Check WAS Version Updated
+        fail:
+          msg: "Patch NOT applied correctly!"
+        when: "'9.0.5.26' not in version_output.stdout"
+
+      - name: ▶️ Start DMGR
+        shell: "{{ was_home }}/bin/startManager.sh -profileName {{ dmgr_profile }}"
+
+      - name: ⏳ Wait for DMGR
+        wait_for:
+          host: "{{ dmgr_host }}"
+          port: 8879
+          timeout: 120
+
+      - name: ▶️ Start Node
+        shell: "{{ was_home }}/bin/startNode.sh -profileName {{ item }}"
+        loop: "{{ app_profiles }}"
+
+      - name: 🔄 Sync Node
+        shell: >
+          {{ was_home }}/bin/syncNode.sh {{ dmgr_host }} 8879
+          -profileName {{ item }}
+          -username wasadmin -password xxxx
+        loop: "{{ app_profiles }}"
+
+      - name: ▶️ Start App Servers
+        shell: |
+          for s in $(ls {{ was_home }}/profiles/{{ item }}/servers); do
+            if [ "$s" != "nodeagent" ]; then
+              echo "Starting server: $s (Profile: {{ item }})"
+              {{ was_home }}/bin/startServer.sh $s -profileName {{ item }} || true
+            fi
+          done
+        loop: "{{ app_profiles }}"
+
+    rescue:
+
+      - name: ❌ Patch Failed
+        debug:
+          msg: "Patch failed! Check /tmp/was_patch.log"
+
+      - name: ⚠️ Attempt DMGR Recovery
+        shell: "{{ was_home }}/bin/startManager.sh -profileName {{ dmgr_profile }}"
+        ignore_errors: yes
+
+      - name: ⚠️ Attempt Node Recovery
+        shell: "{{ was_home }}/bin/startNode.sh -profileName {{ item }}"
+        loop: "{{ app_profiles }}"
+        ignore_errors: yes
