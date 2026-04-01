@@ -1,3 +1,12 @@
+
+cat /proc/sys/net/ipv4/ip_forward;
+sysctl net.ipv4.ip_forward;
+sysctl -a | grep -i forward; 
+grep -R "ip_forward" /etc/sysctl.conf /etc/sysctl.d/ /usr/lib/sysctl.d/ 2>/dev/null;
+sysctl -a | grep net.ipv4.conf.*.forwarding;
+firewall-cmd --query-masquerade 2>/dev/null; 
+ps -ef | grep -i docker | grep -v grep; cat /etc/rc.d/rc.local 2>/dev/null;
+journalctl -b | grep -i forward
 =================================================================================================
 [root@pprlmsdmgr2 ~]# cat /etc/sysctl.conf
 # sysctl settings are defined through files in
