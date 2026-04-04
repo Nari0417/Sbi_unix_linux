@@ -1,0 +1,1 @@
+mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && grep -qxF "ssh-rsa AAAA...yourkey..." ~/.ssh/authorized_keys || echo "ssh-rsa AAAA...yourkey..." >> ~/.ssh/authorized_keys
