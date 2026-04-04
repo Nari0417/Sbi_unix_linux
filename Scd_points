@@ -176,6 +176,8 @@ sed -i -E 's/^#?(PermitRootLogin)[[:space:]].*/\1 no/' /etc/ssh/sshd_config
 sshd -t
 systemctl restart sshd.service
 ====================================================================================
+fuser -cu mountpoint, fuser -cku mountpoint
+umount -l mountpoint
 
 
 
