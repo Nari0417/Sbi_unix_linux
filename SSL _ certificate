@@ -1,5 +1,22 @@
 How to create SSl certificate
 -------------------------------
+===================================================================
+1.sudo dnf install openssl
+openssl version -a
+------------------------------------------------
+2.Generate a Self-Signed Certificate 
+openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out example.crt -keyout example.key
+------------------------------------------------
+3. Generate a Certificate Signing Request (CSR).
+  1.Generate a Private Key
+    openssl genrsa -out server.key 2048
+  2. Generate the CSR
+     openssl req -new -key server.key -out server.csr
+    You will be prompted for details like Country Name, Organization, and Common Name (which must be your server's FQDN or IP address).
+  3. Submit the CSR: Send the server.csr file to your chosen CA to receive a signed certificate. 
+--------------------------------------------------------------------------------------------
+4.Verify the Certificate
+openssl x509 -in example.crt -text -noout
 
 keytool -genkey -alias amlockessdr1 -keyalg RSA -keysize 2048 -validity 1460 -sigalg SHA256withRSA -ext SAN=dns:10.176.18.149,dns:10.176.18.150 -dname "CN=dom-dr-ess-1, OU=ITSP2-ESS-DR, O=STATE BANK OF INDIA, L=NAVI MUMBAI, ST=MAHARASHTRA, C=IN" -keypass AmlockEss@123 -keystore amlockessdr.jks -storepass AmlockEss@123
 
