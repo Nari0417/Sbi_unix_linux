@@ -181,6 +181,8 @@ umount -l mountpoint
 ===================================================================================
 Public key generate by using private key.
 ssh-keygen -y -f path/to/private_key > new_public_key.pub
+==================================================================================
+mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys && grep -qxF "ssh-rsa AAAA...yourkey..." ~/.ssh/authorized_keys || echo "ssh-rsa AAAA...yourkey..." >> ~/.ssh/authorized_keys
 
 ======================================================================================================================
 sed -i -E 's#^(\S+[[:space:]]+/dev/shm[[:space:]]+\S+[[:space:]]+)[^[:space:]]+#\1rw,nosuid,nodev,seclabel#' /etc/fstab
