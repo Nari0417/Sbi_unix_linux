@@ -178,8 +178,9 @@ systemctl restart sshd.service
 ====================================================================================
 fuser -cu mountpoint, fuser -cku mountpoint
 umount -l mountpoint
-
-
+===================================================================================
+Public key generate by using private key.
+ssh-keygen -y -f path/to/private_key > new_public_key.pub
 
 ======================================================================================================================
 sed -i -E 's#^(\S+[[:space:]]+/dev/shm[[:space:]]+\S+[[:space:]]+)[^[:space:]]+#\1rw,nosuid,nodev,seclabel#' /etc/fstab
