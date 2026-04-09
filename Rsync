@@ -1,0 +1,4 @@
+ssh -p 2201 rlms@10.191.148.188 \
+"sudo rsync -avh -e 'ssh -p 2201' \
+/rlms/.m2/repository/com/sbi/rims/rules/ \
+rlms@10.176.41.85:/rlms/.m2/repository/com/sbi/rlms/rules/"
