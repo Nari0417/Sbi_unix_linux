@@ -110,10 +110,20 @@ install vfat /bin/true ------> remove parameters
 install udf /bin/true
 install usb-storage /bin/true
 install vfat /bin/true
-=====================firewalll ==================================
+==================================firewalll ========================================================================================
 systemctl --now enable firewalld.service
 firewall-cmd --add-port=1-65535/tcp --permanent
 firewall-cmd --add-port=1-65535/udp --permanent
+firewall-cmd --reload
+----------------------------
+firewall-cmd --set-log-denied=all
+firewall-cmd --permanent --zone=trusted --add-interface=lo
+firewall-cmd --reload
+-----------------------------
+sudo firewall-cmd --set-log-denied=off
+firewall-cmd --get-active-zones
+firewall-cmd --zone=public --query-forward
+firewall-cmd --zone=public --remove-forward
 firewall-cmd --reload
 =====================================================================================================================================
 0 5 * * * /usr/sbin/aide --check
