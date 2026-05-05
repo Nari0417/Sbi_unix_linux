@@ -1,0 +1,16 @@
+ethernet.mtu = short cut
+802-3-ethernet.mtu = full form
+
+
+nmcli connection modify enp0s3 802-3-ethernet.mtu 9000          or nmcli con mod enp0s3 ethernet.mtu 9000        
+nmcli connection down enp0s3 && nmcli connection up enp0s3
+ip link show <interface>
+ping -M do -s 8972 <remote_ip>        (9000 (MTU) - 28 (ICMP header) = 8972) 
+-----------------------Rollback---------------------------------------------
+nmcli connection modify <connection_name> 802-3-ethernet.mtu 1500
+nmcli connection up <connection_name>
+
+===========================Temporary================================
+ip link set dev eth0 mtu 9000
+ip link set dev <interface> mtu 1500
+
