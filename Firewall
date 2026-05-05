@@ -1,3 +1,5 @@
+
+
 firewall-cmd --set-default-zone=public
 
 firewall-cmd --permanent --zone=public --add-interface=eth0
@@ -14,8 +16,8 @@ firewall-cmd --permanent --zone=public --add-service=ntp
 ----------------------Rich rules-----------------------
 
 firewall-cmd --permanent --zone=public --list-rich-rules
-firewall-cmd --permanent --zone=public --add-rich-rule="rule family=\"ipv4\" source address=\192.168.1.10\" accept"
-firewall-cmd --permanent --zone=public --add-rich-rule="rule family=\"ipv4\" source address=\192.168.1.11\" accept"
+firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address=192.168.1.10" accept"
+firewall-cmd --permanent --zone=public --add-rich-rule="rule family="ipv4" source address=192.168.1.11" accept"
 
 firewall-cmd --permanent --zone=public --add-icmp-block-inversion=no
 
