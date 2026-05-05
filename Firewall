@@ -1,29 +1,40 @@
-bash -c '
-ZONE=public
-IFACE=eth0
-NODE1_IP=192.168.1.10
-NODE2_IP=192.168.1.11
+firewall-cmd --set-default-zone=public
 
-firewall-cmd --set-default-zone=$ZONE
+firewall-cmd --permanent --zone=public --add-interface=eth0
+firewall-cmd --permanent --zone=public --add-interface=lo
 
-firewall-cmd --permanent --zone=$ZONE --add-interface=$IFACE
-firewall-cmd --permanent --zone=$ZONE --add-interface=lo
+firewall-cmd --permanent --zone=public --add-port=1521/tcp
+firewall-cmd --permanent --zone=public --add-port=5500/tcp
+firewall-cmd --permanent --zone=public --add-port=5404/udp
+firewall-cmd --permanent --zone=public --add-port=5405/udp
 
-firewall-cmd --permanent --zone=$ZONE --add-port=1521/tcp
-firewall-cmd --permanent --zone=$ZONE --add-port=5500/tcp
-firewall-cmd --permanent --zone=$ZONE --add-port=5404/udp
-firewall-cmd --permanent --zone=$ZONE --add-port=5405/udp
+firewall-cmd --permanent --zone=public --add-service=ssh
+firewall-cmd --permanent --zone=public --add-service=ntp
 
-firewall-cmd --permanent --zone=$ZONE --add-service=ssh
-firewall-cmd --permanent --zone=$ZONE --add-service=ntp
+----------------------Rich rules-----------------------
 
-firewall-cmd --permanent --zone=$ZONE --add-rich-rule="rule family=\"ipv4\" source address=\"$NODE1_IP\" accept"
-firewall-cmd --permanent --zone=$ZONE --add-rich-rule="rule family=\"ipv4\" source address=\"$NODE2_IP\" accept"
+firewall-cmd --permanent --zone=public --list-rich-rules
+firewall-cmd --permanent --zone=public --add-rich-rule="rule family=\"ipv4\" source address=\192.168.1.10\" accept"
+firewall-cmd --permanent --zone=public --add-rich-rule="rule family=\"ipv4\" source address=\192.168.1.11\" accept"
 
-firewall-cmd --permanent --zone=$ZONE --add-icmp-block-inversion=no
+firewall-cmd --permanent --zone=public --add-icmp-block-inversion=no
 
 firewall-cmd --reload
 
-echo "✅ Firewall configuration applied successfully"
-firewall-cmd --zone=$ZONE --list-all
-'
+firewall-cmd --zone=public --list-all
+
+---------------------- Allow Traffic from a Specific IP/Subnet (Source)-------------------------
+
+sudo firewall-cmd --zone=trusted --add-source=192.168.1.50/32 --permanent
+
+
+----------------------Set zone to trusted (Allow all)-----------------------------------------
+
+sudo firewall-cmd --permanent --zone=public --set-target=ACCEPT
+
+---------------------------specific source ip add port range-----------------------------------
+firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192.168.1.0/24" port port="5000-6000" protocol="tcp" accept'
+
+
+----------------------verify changes -------------------------------------------------------
+sudo firewall-cmd --zone=public --list-all
