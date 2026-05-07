@@ -13,4 +13,6 @@ nmcli connection up <connection_name>
 ===========================Temporary================================
 ip link set dev eth0 mtu 9000
 ip link set dev <interface> mtu 1500
-
+====================================================================
+tracepath -n -p 9000 [destination_IP]
+traceroute --mtu [destination_IP]
