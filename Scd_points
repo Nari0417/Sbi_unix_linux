@@ -264,4 +264,6 @@ findmnt /dev/shm
 
 ========================================================================================
 
+-a exclude,always -F path=/Oracle/OSW/oswbb/OSWatcher.sh
+-a never,exit -F dir=/Oracle/OSW/oswbb -k oswbb_exclude
 
