@@ -6,6 +6,7 @@ sudo tcpdump -i any -w /tmp/capture.pcap
 sudo tcpdump -i eth0 -c 1000 -w /tmp/capture.pcap # Captures 1000 packets
 sudo tcpdump -i eth0 -s 0 -w /tmp/capture.pcap
 sudo tcpdump -i any port 8080 -w /tmp/capture.pcap
+tcpdump -i any host 10.10.10.5 and port 8080 or tcpdump -i any host 10.10.10.5
 
 
 sudo timeout 60 tcpdump -i any -s 0 -w /tmp/capture_8080.pcap 'dst host 192.168.1.10 and dst port 8080'
