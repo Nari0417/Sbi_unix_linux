@@ -1,0 +1,18 @@
+for host in /sys/class/scsi_host/*; do echo "- - -" > $host/scan; done
+
+
+Rescan a Specific Disk
+echo 1 | sudo tee /sys/class/block/sdX/device/rescan
+3. Update the Partition Table
+sudo partprobe
+========================================
+[root@rlmsnewapp1 ~]# cd /sys/class/scsi_host/
+[root@rlmsnewapp1 scsi_host]# ls -lrt
+total 0
+lrwxrwxrwx 1 root root 0 Apr  4 12:55 host2 -> ../../devices/pci0000:00/0000:00:07.1/ata2/host2/scsi_host/host2
+lrwxrwxrwx 1 root root 0 Apr  4 12:55 host1 -> ../../devices/pci0000:00/0000:00:07.1/ata1/host1/scsi_host/host1
+lrwxrwxrwx 1 root root 0 Apr  4 12:55 host0 -> ../../devices/pci0000:00/0000:00:15.0/0000:03:00.0/host0/scsi_host/host0
+[root@rlmsnewapp1 scsi_host]#
+[root@rlmsnewapp1 scsi_host]# pwd
+/sys/class/scsi_host
+[root@rlmsnewapp1 scsi_host]#
