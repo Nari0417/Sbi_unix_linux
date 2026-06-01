@@ -1,0 +1,52 @@
+---
+- name: Remove old kernels safely
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Get running kernel
+      command: uname -r
+      register: running_kernel
+      changed_when: false
+
+    - name: Get installed kernels
+      shell: rpm -q kernel | sort -V
+      register: installed_kernels
+      changed_when: false
+
+    - name: Set latest and previous kernels
+      set_fact:
+        latest_kernel: "{{ installed_kernels.stdout_lines[-1] }}"
+        previous_kernel: "{{ installed_kernels.stdout_lines[-2] }}"
+
+    - name: Build keep list when running kernel is latest
+      set_fact:
+        kernels_to_keep:
+          - "{{ latest_kernel }}"
+          - "{{ previous_kernel }}"
+      when: latest_kernel == 'kernel-' + running_kernel.stdout
+
+    - name: Build keep list when running kernel is not latest
+      set_fact:
+        kernels_to_keep:
+          - "{{ latest_kernel }}"
+          - "kernel-{{ running_kernel.stdout }}"
+      when: latest_kernel != 'kernel-' + running_kernel.stdout
+
+    - name: Determine kernels to remove
+      set_fact:
+        kernels_to_remove: "{{ installed_kernels.stdout_lines | difference(kernels_to_keep) }}"
+
+    - name: Show kernels to keep
+      debug:
+        var: kernels_to_keep
+
+    - name: Show kernels to remove
+      debug:
+        var: kernels_to_remove
+
+    - name: Remove old kernels
+      shell: yum -y remove {{ item }}
+      loop: "{{ kernels_to_remove }}"
+      when: kernels_to_remove | length > 0
