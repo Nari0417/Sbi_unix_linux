@@ -1,0 +1,30 @@
+---
+- name: Remove old kernels safely
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Get running kernel
+      command: uname -r
+      register: running_kernel
+      changed_when: false
+
+    - name: Get installed kernels
+      shell: rpm -q kernel | sort -V
+      register: installed_kernels
+      changed_when: false
+
+    - name: Determine kernels to keep
+      set_fact:
+        kernels_to_keep: "{{ [ 'kernel-' + running_kernel.stdout ] + (installed_kernels.stdout_lines | sort | reverse)[0:1] }}"
+
+    - name: Determine kernels to remove
+      set_fact:
+        kernels_to_remove: "{{ installed_kernels.stdout_lines | difference(kernels_to_keep) }}"
+
+    - name: Remove old kernels
+      dnf:
+        name: "{{ kernels_to_remove }}"
+        state: absent
+      when: kernels_to_remove | length > 0
