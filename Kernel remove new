@@ -1,0 +1,26 @@
+---
+- name: Remove old kernel-core packages
+  hosts: all
+  become: yes
+
+  tasks:
+
+    - name: Get running kernel
+      command: uname -r
+      register: running_kernel
+      changed_when: false
+
+    - name: Find old kernel-core packages
+      shell: |
+        rpm -q kernel-core | grep -v "{{ running_kernel.stdout }}" | sort -V | head -n -1
+      register: kernels_to_remove
+      changed_when: false
+
+    - name: Show kernels to remove
+      debug:
+        var: kernels_to_remove.stdout_lines
+
+    - name: Remove old kernel-core packages
+      shell: yum -y remove {{ item }}
+      loop: "{{ kernels_to_remove.stdout_lines }}"
+      when: kernels_to_remove.stdout_lines | length > 0
