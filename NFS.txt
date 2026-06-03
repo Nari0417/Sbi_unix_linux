@@ -14,11 +14,11 @@ ip is the client server ip(remember)
 
 server vs clinet(server ip →← client ip)
 =======================================================================
-sudo exportfs -a
-sudo exportfs -r
+sudo exportfs -a ( all exports)
+sudo exportfs -r  ( refresh -re read)
 sudo systemctl start nfs-server
 sudo systemctl enable nfs-server
-sudo exportfs -v
+sudo exportfs -v (verbose)
 ========================================================================================================================================
 sudo yum install nfs-utils
 sudo mkdir -p /mnt/nfs_client
