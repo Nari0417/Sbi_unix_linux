@@ -204,3 +204,35 @@ fi
 
 
 
+
+================================================================================================
+
+gitlab-psql --version
+psql (PostgreSQL) 11.7
+---------------------
+gitlab-ctl pg-upgrade --check
+Traceback (most recent call last):
+        6: from /opt/gitlab/embedded/bin/omnibus-ctl:23:in `<main>'
+        5: from /opt/gitlab/embedded/bin/omnibus-ctl:23:in `load'
+        4: from /opt/gitlab/embedded/lib/ruby/gems/2.6.0/gems/omnibus-ctl-0.6.0/bin/omnibus-ctl:31:in `<top (required)>'
+        3: from /opt/gitlab/embedded/lib/ruby/gems/2.6.0/gems/omnibus-ctl-0.6.0/lib/omnibus-ctl.rb:746:in `run'
+        2: from /opt/gitlab/embedded/lib/ruby/gems/2.6.0/gems/omnibus-ctl-0.6.0/lib/omnibus-ctl.rb:204:in `block in add_command_under_category'
+        1: from /opt/gitlab/embedded/service/omnibus-ctl/pg-upgrade.rb:105:in `block in load_file'
+/opt/gitlab/embedded/service/omnibus-ctl/lib/gitlab_ctl/pg_upgrade.rb:168:in `parse_options': invalid option: --check (OptionParser::InvalidOption)
+---------------------
+
+[root@secrlmsdmgr1 ~]# gitlab-rake gitlab:env:info | grep -i version
+Ruby Version:   2.6.6p146
+Gem Version:    2.7.10
+Bundler Version:1.17.3
+Rake Version:   12.3.3
+Redis Version:  5.0.7
+Git Version:    2.26.2
+Sidekiq Version:5.2.7
+Go Version:     unknown
+Version:        12.10.14-ee
+DB Version:     11.7
+Version:        12.2.0
+
+
+
