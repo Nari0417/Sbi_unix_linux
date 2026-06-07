@@ -1,22 +1,38 @@
 0) Before Starting, Check Disk Space
 /var/opt/gitlab has enough free space (at least database size + backup size).
 Backup completes successfully.
+Check Current PostgreSQL Version Used by GitLab
+gitlab-psql -d gitlabhq_production -c "select version();"
+
+| GitLab Version | Minimum PostgreSQL |               |
+| -------------- | ------------------ | ------------- |
+| 13.x           | 11                 |               |
+| 14.x           | 12.7               |               |
+| 15.x           | 12.10              |               |
+| 16.x           | 13.6               |               |
+| 17.x           | 14.9+              | ([GitLab][1]) |
+
+[1]: https://gitlab.com/gitlab-org/gitlab/-/blob/v15.11.11-ee/doc/install/requirements.md?utm_source=chatgpt.com "doc/install/requirements.md · v15.11.11-ee · GitLab.org / GitLab · GitLab"
+
 
 12.10.14-ee >> 13.0.x >> 13.12.x >> 14.0.x >>14.10.x >> 15.0.x >>  15.11.x >> 16.0.x >> 16.11.x  >> 17.0.x >>  17.11.x >>  18.x  >> 19.0
+12.10.14-ee  >> 13.0.14-ee  >> 13.12.15-ee
+https://packages.gitlab.com/gitlab/gitlab-ee/el/8/x86_64/Packages/g/?utm_source=chatgpt.com
 
 
 1) Check Current Version
 gitlab-rake gitlab:env:info
 gitlab-rake gitlab:check
+gitlab-psql --version
+gitlab-rake gitlab:env:info | grep "DB Version"
 2) Take Backup
 gitlab-backup create
-gitlab-ctl stop puma
-gitlab-ctl stop sidekiq
+
 Backup configuration files:
 cp -rp /etc/gitlab /root/gitlab_backup/
 cp -rp /var/opt/gitlab /root/gitlab_var_backup/
 
-
+3) rpm -Uvh gitlab-ee-13.0.14-ee.0.el8.x86_64.rpm  (or ) yum localinstall gitlab-ee-13.0.14-ee.0.el8.x86_64.rpm
 
 After installation:
 gitlab-ctl reconfigure
@@ -36,6 +52,13 @@ yum install gitlab-ee-13.12.15-ee.0.el8
 gitlab-ctl reconfigure
 gitlab-ctl restart
 
+
+
+======================================================================================================
+ gitlab-ee-13.12.15-ee.0.el8 to  gitlab-ee-14
+gitlab-backup create
+gitlab-psql --version
 gitlab-ctl pg-upgrade
-
-
+gitlab-ctl reconfigure
+gitlab-rake gitlab:check
+gitlab-rake gitlab:env:info | grep "DB Version"
