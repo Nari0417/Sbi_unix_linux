@@ -1,0 +1,247 @@
+            
+RHEL 7.9 to 8.8 migration 
+
+
+Please find the attachment for SOP and the leapp packages which are required to upgrade the server.
+
+Please do the pre-requisite for the same on the VM's.
+ 
+1) We required the machines to be updated (i.e. RHEL 7.9) so we can upgrade it to 8.* .
+ 
+2) Need to install “httpd” rpm on the RHEL7.9 and enable the service.
+ 
+3) We required port 9090 enable on source (desktop) to destination (to the server). 
+ 
+4) We required free disk space at least in / 25GB free and in /var, /usr 10GB free.
+ 
+5) “Leapp” rpm needs to be installed on the server.
+ 
+6) mount the RHEL 8.* ISO after the above steps.
+ 
+7) Take Backup/Snapshot of the Server before doing activity.
+
+8) Reboot the System before upgradation to RHEL 8.
+
+Note: Please check with the APP team and if there is database then check with DB also whether they are comfortable with the RHEL 8.*.
+
+link for reference 
+
+https://learningtechnix.wordpress.com/2021/10/18/linux-upgrading-from-redhat-7-to-8/
+
+======================================================================
+
+This are the packages for leapp utils
+
+cockpit-195.10-1.el7.x86_64.rpm     
+cockpit-bridge-195.10-1.el7.x86_64.rpm    
+cockpit-leapp-0.1.6-2.el7_9.noarch.rpm    
+cockpit-system-195.10-1.el7.noarch.rpm    
+cockpit-ws-195.10-1.el7.x86_64.rpm  
+dnf-4.0.9.2-2.el7_9.noarch.rpm      
+dnf-data-4.0.9.2-2.el7_9.noarch.rpm 
+leapp-0.15.0-2.el7_9.noarch.rpm     
+leapp-deps-0.15.0-2.el7_9.noarch.rpm      
+leapp-repository-0.14.0-4.el7_9.noarch.rpm
+leapp-repository-deps-0.14.0-4.el7_9.noarch.rpm
+leapp-upgrade-el7toel8-0.18.0-1.el7_9.noarch.rpm
+leapp-upgrade-el7toel8-deps-0.18.0-1.el7_9.noarch.rpm
+libcomps-0.1.8-14.el7.x86_64.rpm    
+libdnf-0.22.5-2.el7_9.x86_64.rpm    
+libmodulemd-1.6.3-1.el7.x86_64.rpm  
+librepo-1.8.1-8.el7_9.x86_64.rpm    
+librhsm-0.0.3-3.el7_9.x86_64.rpm    
+libsolv-0.6.34-4.el7.x86_64.rpm     
+python2-dnf-4.0.9.2-2.el7_9.noarch.rpm    
+python2-hawkey-0.22.5-2.el7_9.x86_64.rpm  
+python2-leapp-0.15.0-2.el7_9.noarch.rpm   
+python2-libcomps-0.1.8-14.el7.x86_64.rpm  
+python2-libdnf-0.22.5-2.el7_9.x86_64.rpm  
+python-enum34-1.0.4-1.el7.noarch.rpm      
+python-requests-2.6.0-10.el7.noarch.rpm   
+python-urllib3-1.10.2-7.el7.noarch.rpm  
+
+==========================================================================
+
+== 1st copy the packages tar file on server ==
+
+tar -xzf Packages.tar.gz -C /rlms/  && rm -rf Packages.tar.gz
+
+mkdir -p /etc/yum.repos.d/backup
+mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup
+
+touch local2
+echo "[local2]" >>  /etc/yum.repos.d/local2.repo
+echo "name=local2" >>  /etc/yum.repos.d/local2.repo
+echo "baseurl=file:///rlms/Packages" >>  /etc/yum.repos.d/local2.repo
+echo "enabled=1" >> /etc/yum.repos.d/local2.repo
+echo "gpgcheck=0" >> /etc/yum.repos.d/local2.repo
+
+createrepo /rlms/Packages
+
+yum clean all 
+yum repolist all
+
+==========================
+
+yum install httpd* -y
+yum install python-urllib3 -y
+yum install python-requests* -y
+yum install python-enum34* -y
+yum install python2-libdnf* -y
+yum install python2-libcomps* -y
+yum install python2-leapp* -y
+yum install python2-hawkey* -y 
+yum install libsolv*-y
+yum install librhsm* -y
+yum install librepo -y
+yum install libmodulemd* -y
+yum install libdnf* -y
+yum install libcomps* -y
+yum install leapp-upgrade-* -y
+yum install leapp-repository* -y
+yum install leapp-deps* -y
+yum install leapp-0.15* -y 
+yum install cockpit-ws* -y
+yum install cockpit-system* -y
+yum install cockpit-leapp* -y
+yum install cockpit-bridge* -y
+yum install cockpit-195* -y
+
+rpm -qa | grep -i leapp
+rpm -qa | grep -i cockpit
+rpm -qa | grep -i httpd 
+
+systemctl enable --now httpd
+
+
+mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup
+
+
+=================================================================
+
+now mount iso image of rhel8.8
+
+
+
+mkdir /var/www/html/rhel8
+
+mount /rlms/rhel-8.8-x86_64-dvd.iso /var/www/html/rhel8
+
+### mount /dev/sr0 /var/www/html/rhel8
+
+mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup
+
+echo "[BaseOS]" >>  /etc/yum.repos.d/local.repo
+echo "name=BaseOS" >>  /etc/yum.repos.d/local.repo
+echo "baseurl=http://server ip/rhel8/BaseOS " >>  /etc/yum.repos.d/local.repo
+echo "enabled=1" >> /etc/yum.repos.d/local.repo
+echo "gpgcheck=0" >> /etc/yum.repos.d/local.repo
+
+echo " " >> /etc/yum.repos.d/local.repo
+
+echo " " >> /etc/yum.repos.d/local.repo
+
+
+echo "[AppStream]" >> /etc/yum.repos.d/local.repo
+echo "name=AppStream" >> /etc/yum.repos.d/local.repo
+echo "baseurl=http://server ip/rhel8/AppStream" >> /etc/yum.repos.d/local.repo
+echo "enabled=1" >> /etc/yum.repos.d/local.repo
+echo "gpgcheck=0" >> /etc/yum.repos.d/local.repo
+
+
+tar -xzf leapp-data-22.tar.gz -C /etc/leapp/files && rm leapp-data-22.tar.gz
+
+leapp preupgrade --no-rhsm --enablerepo BaseOS --enablerepo AppStream
+
+
+Possible errors which I reported.
+1- Direct root login enabled (Disabled the direct root login in the sshd.conf file)
+2- Kernel modules unsupported in RHEL8 (Remove the listed kernel modules like modprobe -r <modulename>)
+3- There is also one file that is generated i.e. /var/log/leapp/answerfile, 
+cat this file it will list the some modules which needs to be removed. 
+In my case it was remove_pam_krb5_module_check.confirm, so to remove this module run below command.
+
+leapp answer --section remove_pam_krb5_module_check.confirm=True
+
+Likewise you can remove the modules listed in /var/log/leapp/answerfile.
+
+
+
+==========================================================================
+4. == error  ==
+
+cat /var/log/leapp/answerfile
+
+(# Title:              None
+# Reason:             Confirmation
+# =================== remove_pam_pkcs11_module_check.confirm ==================
+# Label:              Disable pam_pkcs 11 module in PAM configuration? If no, the upgrade process will be interrupted.
+# Description:        PAM module pam_pkcs11 is no longer available in RHEL-8 since it was replaced by SSSD.
+# Reason:             Leaving this module in PAM configuration may lock out the system.
+# Type:               bool
+# Default:            None
+# Available choices: True/False
+# Unanswered question. Uncomment the following line with your answer
+# confirm = 
+
+sulotion = leapp answer --section remove_pam_pkcs11_module_check.confirm=True
+
+======================================================================
+5. check inhibitor 
+
+cat  /var/log/leapp/leapp-report.txt |grep -i inhibitor
+
+# rmmod pata_acpi
+
+
+6- Risk Factor: high (inhibitor)
+Title: OpenSSH configured to use removed mac
+Summary: OpenSSH is configured to use removed mac hmac-ripemd160. This MAC was removed from OpenSSH and if present the sshd daemon will not start in RHEL 8
+Remediation: [hint] Remove the following MACs from sshd_config: hmac-ripemd160
+Key: 5e212f4c38746acafd30e981b42b6a61b5802e77
+
+hmac-ripemd160
+
+solution - make changes in sshd file
+
+
+
+=====================================================================
+
+4- Once all the issues are resolved, rerun the preupgrade.
+
+leapp preupgrade --no-rhsm --enablerepo BaseOS --enablerepo AppStream
+
+If there are no more errors/issues, then you will see a message “REPORT” or “VIEW REPORT” in green color, this means the system is ready for upgrade.
+
+
+# leapp upgrade --no-rhsm --enablerepo BaseOS --enablerepo AppStream
+
+
+6- Once the upgrade is completed, reboot the system.
+
+
+# reboot
+
+# cat /etc/redhat-release
+
+# uname -r
+
+
+systemctl enable ds_agent --now
+
+systemctl enable rscd.service --now
+
+systemctl restart splunk
+
+systemctl disable httpd --now
+
+systemctl status httpd
+
+==================================================================================
+
+
+
+
+
+
