@@ -1,0 +1,21 @@
+leapp
+leapp-deps
+python3-leapp
+leapp-upgrade-el8toel9
+leapp-upgrade-el8toel9-deps
+======================================
+/ (root) → minimum 10 GB
+/boot → minimum 500 MB free
+/var → if separate filesystem minimum 5 GB free
+
+dnf install leapp-upgrade -y
+dnf install leapp-upgrade-el8toel9-fapolicyd -y
+dnf install vdo -y
+vi /etc/leapp/files/leapp_upgrade_repositories.repo
+leapp answer --section check_vdo.confirm=True
+cat /var/log/leapp/answerfile
+less /var/log/leapp/leapp-report.txt
+leapp preupgrade --no-rhsm
+leapp upgrade --no-rhsm
+reboot
+Red Hat Enterprise Linux release 8.10 (Ootpa)
