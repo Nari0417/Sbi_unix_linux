@@ -1,0 +1,45 @@
+Extend /boot Using New Disk (/dev/sdb) - Complete
+Procedure
+1. Verify disks
+lsblk
+fdisk -l
+2. Create partition on new disk
+fdisk /dev/sdb
+Inside fdisk:
+n
+p
+1
+<Enter>
+<Enter>
+w
+3. Create filesystem
+mkfs.ext4 /dev/sdb1
+4. Create mount point
+mkdir /mnt/newboot
+5. Mount new partition
+mount /dev/sdb1 /mnt/newboot
+6. Copy boot contents
+cp -ax /boot/* /mnt/newboot/
+7. Get UUID
+blkid /dev/sdb1
+8. Backup fstab
+cp -p /etc/fstab /etc/fstab.bkp
+9. Modify /etc/fstab
+Replace old /boot UUID with UUID of /dev/sdb1
+10. Unmount temporary mount
+umount /mnt/newboot
+11. Mount using fstab
+mount -a
+Verify:
+df -h /boot
+mount | grep boot
+12. BIOS systems
+grub2-install /dev/sda
+grub2-mkconfig -o /boot/grub2/grub.cfg
+13. Reboot
+reboot
+14. Verify
+df -h /boot
+lsblk
+Note:
+Current /boot has approximately 660 MB free, which is generally sufficient for RHEL 8.10 to RHEL 9.7 
