@@ -1,0 +1,50 @@
+[root@secrlmsdmgr1 ~]# gitlab-psql -d gitlabhq_production -c "\d project_features"
+                                                  Table "public.project_features"
+             Column             |            Type             | Collation | Nullable |                   Default
+--------------------------------+-----------------------------+-----------+----------+----------------------------------------------
+ id                             | integer                     |           | not null | nextval('project_features_id_seq'::regclass)
+ project_id                     | integer                     |           | not null |
+ merge_requests_access_level    | integer                     |           |          |
+ issues_access_level            | integer                     |           |          |
+ wiki_access_level              | integer                     |           |          |
+ snippets_access_level          | integer                     |           | not null | 20
+ builds_access_level            | integer                     |           |          |
+ created_at                     | timestamp without time zone |           |          |
+ updated_at                     | timestamp without time zone |           |          |
+ repository_access_level        | integer                     |           | not null | 20
+ pages_access_level             | integer                     |           | not null |
+ forking_access_level           | integer                     |           |          |
+ metrics_dashboard_access_level | integer                     |           |          |
+Indexes:
+    "project_features_pkey" PRIMARY KEY, btree (id)
+    "index_project_features_on_project_id" UNIQUE, btree (project_id)
+    "index_project_features_on_project_id_bal_20" btree (project_id) WHERE builds_access_level = 20
+    "index_project_features_on_project_id_ral_20" btree (project_id) WHERE repository_access_level = 20
+Foreign-key constraints:
+    "fk_18513d9b92" FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
+
+[root@secrlmsdmgr1 ~]#
+[root@secrlmsdmgr1 ~]# gitlab-psql -d gitlabhq_production -c "\d project_features"
+                                                  Table "public.project_features"
+             Column             |            Type             | Collation | Nullable |                   Default
+--------------------------------+-----------------------------+-----------+----------+----------------------------------------------
+ id                             | integer                     |           | not null | nextval('project_features_id_seq'::regclass)
+ project_id                     | integer                     |           | not null |
+ merge_requests_access_level    | integer                     |           |          |
+ issues_access_level            | integer                     |           |          |
+ wiki_access_level              | integer                     |           |          |
+ snippets_access_level          | integer                     |           | not null | 20
+ builds_access_level            | integer                     |           |          |
+ created_at                     | timestamp without time zone |           |          |
+ updated_at                     | timestamp without time zone |           |          |
+ repository_access_level        | integer                     |           | not null | 20
+ pages_access_level             | integer                     |           | not null |
+ forking_access_level           | integer                     |           |          |
+ metrics_dashboard_access_level | integer                     |           |          |
+Indexes:
+    "project_features_pkey" PRIMARY KEY, btree (id)
+    "index_project_features_on_project_id" UNIQUE, btree (project_id)
+    "index_project_features_on_project_id_bal_20" btree (project_id) WHERE builds_access_level = 20
+    "index_project_features_on_project_id_ral_20" btree (project_id) WHERE repository_access_level = 20
+Foreign-key constraints:
+    "fk_18513d9b92" FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
