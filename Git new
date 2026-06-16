@@ -1,0 +1,36 @@
+gitlab-psql -d gitlabhq_production -c "\dn"
+
+gitlab-psql -d gitlabhq_production -c "DROP SCHEMA IF EXISTS gitlab_partitions_dynamic CASCADE;"
+
+gitlab-psql -d gitlabhq_production -c "DROP SCHEMA IF EXISTS gitlab_partitions_dynamic CASCADE;"
+
+
+gitlab-psql -d gitlabhq_production -c "
+ALTER DATABASE gitlabhq_production OWNER TO \"gitlab-psql\";
+GRANT ALL PRIVILEGES ON DATABASE gitlabhq_production TO \"gitlab-psql\";
+"
+
+
+
+gitlab-psql -d gitlabhq_production -c "
+SELECT current_user,
+has_database_privilege(current_user,'gitlabhq_production','CREATE');
+"
+
+
+
+if return t
+
+gitlab-psql -d gitlabhq_production -c "
+CREATE SCHEMA gitlab_partitions_dynamic AUTHORIZATION \"gitlab-psql\";
+"
+
+
+gitlab-psql -d gitlabhq_production -c "
+ALTER TABLE project_features
+ADD COLUMN IF NOT EXISTS analytics_access_level integer DEFAULT 20;
+"
+
+gitlab-rake db:migrate
+
+
