@@ -1,0 +1,4 @@
+gitlab-psql -d gitlabhq_production -c "
+SELECT current_user,
+has_database_privilege(current_user,'gitlabhq_production','CREATE');
+"
