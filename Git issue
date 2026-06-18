@@ -1,0 +1,51 @@
+grep -Ei "CipherError|Can't find a repository" /var/log/gitlab/sidekiq/current
+
+grep -Ei "CipherError|Can't find a repository" /var/log/gitlab/sidekiq/current | tail -50
+
+gitlab-rails console
+Project.find(110)
+
+Project.find(110).full_path
+Project.find(110).full_path
+Example output:
+
+=> "source/nxt/commons/rlms-service"
+
+
+Method 2: Directly from PostgreS
+gitlab-psql -d gitlabhq_production
+
+SELECT id, path, name FROM projects
+WHERE id = 110;
+
+SELECT id, path_with_namespace
+FROM projects
+WHERE id = 110;
+Method 3: Find multiple project IDs
+
+Project.where(id: [97,110,124,153]).pluck(:id, :full_path)
+
+Case 3: Retry individual projects
+
+gitlab-rails console
+
+project = Project.find(PROJECT_ID)
+project.migrate_to_hashed_storage!
+
+
+
+
+ids = [97,110,124,150]
+Project.where(id: ids).each do |p|
+  p.migrate_to_hashed_storage!
+end
+
+
+
+
+ls -l /etc/gitlab/gitlab-secrets.json
+
+
+
+
+
