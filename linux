@@ -1,0 +1,1774 @@
+#Linux___
+
+1.Lab Desgin
+  Option - A
+  PC -> Virtualization S/W -> VM -> Linux
+  
+  Option - B
+  PC -> Cloud Services ex.AWS,GOOGLE Cloud -> VM -> Linux 
+  
+  1.chrome -> www.virtualbox.com
+  2.Download page -> Download recent s/w
+  3.Install
+
+# Keyboard Keys in Linux 
+
+Arrow Keys: Navigate through text, commands, and menus
+Home/End: Move the cursor to the beginning/end of a line
+Page Up/Page Down: Scroll through pages of content
+Ctrl + C: Copy selected text or terminate a running process in the terminal
+Ctrl + V: Paste copied text
+Ctrl + X: Cut selected text
+Ctrl + Z: Undo the last action
+Ctrl + A: Select all 
+
+Terminal-Specific Shortcuts:
+Ctrl + Alt + T: Open a new terminal window.
+Ctrl + Shift + T: Open a new tab within the current terminal window.
+Ctrl + Shift + V: Paste into the terminal.
+Ctrl + L: Clear the terminal screen.
+Ctrl + U: Cut everything to the left of the cursor.
+Ctrl + K: Cut everything to the right of the cursor.
+Ctrl + R: Search through command history.
+  
+System and Desktop Control:
+Alt + F4: Close the current window.
+Alt + Tab: Switch between open applications.
+Ctrl + Alt + Del: Often used to bring up a system menu for shutdown/reboot options or to access the task manager.
+Super key (Windows key): Opens the application launcher or activities overview in many desktop environments.
+Ctrl + Alt + F1-F6: Switch to virtual consoles (text-based terminals).
+Ctrl + Alt + F7: Switch back to the graphical desktop environment.
+Ctrl + Alt + L: Lock the screen
+
+
+# Module 3 : System Acess and File System.
+
+Root :
+      linux has super user account called Root.
+	  root is the most powerful user a/c which can add, delete, modify, create accounts and can make changes to the system configuration.
+
+Linux is case sensetive.
+Spaces not allowed while creating folder and directory name
+Linux Kernal is not operating system. Its simply application which takes cmd from user and pass them to the system.
+Linux is mostly CLI based not GUI based.
+
+Acess Linux:
+1.Console : using HDMI,VDA cable
+2.Remote  : using network connected to your device ex. RDP / Putty / For Windows v10/v11 cmd->ssh-> ssh <ip_add_the linux you want to connect> 
+
+*Putty : This is the remote application which is used to connect windows to the linux operating system remotely.
+
+# Command Prompt
+Its the short text appeard on the CLI when powerd on 
+ex - [root@myFirstlinux_Vm~]#   root -> username myFirstlinux_Vm~ -> HostName  # -> prompt style
+
+To get propmt back type -> ctrl + c 
+
+root :
+1.root account : root is the account or username in the linux which is most powerful account in the linux
+2.root directory : '/' is the first directry of root 
+2.root home directory : /root is the roots home directory or very first directory of the root user
+
+/root/newfolder/home/home3
+
+Chnage password:
+-You should change pw as soon as you log in.
+-cmd : passwd <userid>
+passwd abhay
+old password :
+new password :
+retype new password : 
+
+if you want to set new passwd for another user then you should need root privillages for that following cmd use:
+sudo passwd <username>
+
+# File System Linux :
+File system is used by the operating system to manage files. The system controls how data is saved and retrived.
+Operating system stores files and directory in structured and organized manner.
+Linux uses ext3,ext4,xfs file system.
+
+File System Structure:
+1. /boot : This file contains boot loader files ie grub.cfg this load everytime when the os is powerd up.
+           this the first thing which load when the system is powerd up
+2. /root : This is the root users home directory.Its not same as /
+3. /dev  : System devices infomation is stored here like disk,rom,flashdrive,keyboard etc
+4. /etc  : all system configuration files are stored here 
+           User and Group Management: Files like /etc/passwd, /etc/shadow, and /etc/group manage user accounts, passwords, and group memberships.
+           Network Configuration: Files in /etc/sysconfig/network-scripts (for older systems) or managed by NetworkManager control network interfaces, 
+		   IP addresses, and routing.
+           Service Configuration: Files within /etc/systemd/system or /etc/init.d (for older systems) configure how services start, stop, and behave.
+           Boot Settings: Files like /etc/fstab define how file systems are mounted during boot, and GRUB configuration files control the boot loader.
+           Application Settings: Many applications store their global configuration settings within subdirectories of /etc, such as /etc/ssh for SSH server 
+		   settings or /etc/cups for CUPS printer settings. 
+5. /bin  : everyday use cmds are stored here           or cd /usr/bin
+6. /sbin : system configuration cmds are stored here   or cd /usr/sbin 
+7. /opt  : this folder store optional or third party file data ex.oracal , SAP etc 
+8. /proc : Its shows the services runing in the memory / live services 
+
+# cp : copy file or directory in linux using this cmd
+cp <source> <destination>
+ex -  cp file1.txt file2.txt
+this cmd will create the copy of source file at the destination with same content inside file with the name provide[file2.txt] at the destination 
+location. in same directory only.
+if you want to copy file to another directory you can give absolute path for the same.
+ex - cp file1.txt /home/userland/Desktop
+To copy directory we have to provide -r/-R ie recursion as a option this will copy all subdirectories and files present inside the directory 
+ex - cp folder /home/userland/Desktop
+   note: if you are not specifying -r linux will not copy the directory.
+   
+# Find Files and Directories :
+1.find :- 
+  This cmd used to find files and directories in the file system. 
+  find <path> <experssion> <name>
+If file is present in the current directory then use . 
+ex- find . -name "file1.txt"
+If you dont know whrer file is use /
+ex- find / -name "file.txt"
+You can also specify the type 
+-d type : for directory 
+-f type : file 
+ex- find . -type d  -name "folder" 
+ex- find . -type f  -name "file1.txt"
+-inmame can perform case-insesetive search
+ex- find /home/userland/Desktop -iname "*.txt"
+   
+# locate :-
+  This is cmd used pre-built data to find files and directories. This will not sreach for most recent files because file system take time to update 
+  recently added data.
+  locate is faster than find.
+  ex- locate <filename>
+  locate file with specific extension
+ ex- locate '.config'
+
+Differnace between locate and find 
+find :
+       Sreaches in real time 
+       always accurate 
+       shows newly created files also
+       more powerful : can search by name, type, size, permissions, time, owner, etc 
+       slower than locate 
+locate / plocate : 
+       uses pre-built database only 
+       very fast 
+       
+*If locate in not present in the linux then we have to manually add the pkg.
+-> sudo apt update 
+-> sudo apt install plocate
+-> sudo updatedb
+After this you can allowd to use locate/plocate cmd 
+
+# wildcards:
+Wildcards are the one or more charactors used as the substitute.ie if you want to search any file but you dont know how many chartars are present in 
+the name you can simply put * 
+ie locate abc* and this * will give all files which have abc at the begining in there name.
+following are the various wildcards are used in the linux.
+1. * : represent zero or more charactars.
+2. ? : represent single charctar
+3. {..} : represent range of charactars 
+
+ex- 
+  ->touch abc{1..10}.txt 
+  -> abc1.txt abc2.txt abc3.txt abc4.txt ... abc10.txt 
+  
+->find a?c{1..4}.txt
+-> abc1.txt .. abc5.txt 
+
+# Linux File Types 
+     - : regular file
+	 d : directory
+	 l : link 
+	 c : special file / device file i.e h/w device
+	 s : socket 
+	 p : named pipe 
+	 b : block file 
+
+# soft and hard links 
+inode : Pointer / number of file on harddrive / harddisk 
+link : Its the shortcut or referance to the another file 
+1.Hard link :- 
+    Its the duplicate referance to the same files data.
+	Both duplicate file and hardlink share the same inode number.
+	If you delete the original file hard link still exist.
+	cannot be created for directories.
+	cmd :-  ln <source_file> <destination file>
+	ex-touch file1.txt 
+	   echo 'hello linux' > file1.txt 
+	   ln file1.txt /tmp/hard_link 
+       -> ls -il /tmp/hard_link  (This will give the inode number of the file )
+	*the inode number for both hardlink and txt will be same*
+2.Soft link / Symbolic link:
+    Its the shortcut to another file 
+    Has its own inode ie for softlink and txt file inode is differant 
+    If the original file deleted soft link will be broken
+    can be created for directories
+    cmd : ln -s <source> <destination>
+	
+Hard link :
+file1.txt ---> inode : 123 ---> Data : 'Hello' ---> hard_link . 
+Soft link :
+file1.txt ---> inode : 123 ---> Data : 'Hello' ---> soft_link ---> path to file1.txt 	
+
+# command syntax : 
+   cmd option parameter
+ex  ls -ltr /home/userland/Desktop 
+
+Q.How to install package in Linux {KALI ENV.}?
+~]# sudo apt install <package_name>
+
+# File Permissions :
+Linux is the multiuser account system.
+You can give and take out permissions from differant files and users.
+in linux, every file and directory have permissions that can control who can read,write and execute them.
+ls -l commnad used to display file permissions
+ 
+~]#  -rwxrwxrwx  	
+	- : file of the type 
+    rwx : user permissions
+    rwx : group permissions
+    rwx : others permissions 	
+	   
+	r : read
+    w : write 
+	x : execute 
+	- : no permissions
+	
+	ex: lr-x--x-wx  : in this user have r and x permissions, group have x permissions only , others have w and x permissions only
+	
+	- : remove permissions
+	= : overwrite permissions / assgin particular permissions 
+	
+	u : user 
+	g : group 
+	o : others 
+	a : all (u + g + o)
+	
+	for chnaging the permissions chmod cmd used:
+	
+	Numerical Permissions:
+    4 : read 
+    2 : write 
+    1 : execute 
+
+    ex- 7 : r+w+x // rwx 
+        2 : 0+w+0 // --x 
+		6 : r+w+0 // rw- 
+		
+	~]# chmod u+r file1.txt 
+      # -r-------- 
+    ~]# chmod g+rx file2.txt 
+	  # -r--r-x--- 
+	~]# chmod 007 file2.txt 
+      # -r--r-xrwx 
+
+# File Ownership : 
+To view the ownership of user and group you can use cmd ls -l ,will provide the ownership status.
+~]#ls -l
+~]# -rwx--x-w- 7 user user 240 sep 1 12.30  | user - owner/who creates the file | group - group of users who have the shared acess 
+To chnage the file ownership 
+~]# chown <owner-name> <filename>
+~]# sudo chown <owner-name> <filename>
+To change owner and group together 
+~]# sudo chown <user>:<group> <file-name> 
+To change only group using chown cmd 
+~]# chown :<group> <file-name>
+To change group 
+~]# sudo chgrp <group-name> <filename>
+
+# Acess Control List :
+  ACL provides additional, more flexible permission machanism for file system.
+  Its desgined to assist with UNIX/LINUX file system.
+  ACL allows you to give file permission to any user, group to any file, directory or disk space.
+  
+  *Use of ACL:
+  Think of a scenario in which user is not a member of a group created by you , but still you want to give read and write acess to that user
+  So,you can give that user a read/write permission to that user without adding inside the group an this can done using the ACL.
+  
+  *cmd used 
+  1.setfacl : To give acess permission to user/group 
+  2.getfacl : To display information about the file
+  
+  1.To add permission for a user:
+  ~]# setfacl -m u:username:rwx /path/path/path 
+      -m : modify
+       u : user 
+      rwx: permissions you want to provide 
+  2.TO add permission to group :
+  ~]# setfacl -m g:<groupname>:rwx /path/path
+      g : group 
+  3.To allow all files and directories to inherit ACl from the diectory it is with in / from main directory 
+  ~]# setfacl -dm "entry" /path/to/dir 
+  4.To remove all permissions from specific user 
+  ~]# setfacl -x u:<username> /path/to/file 
+  5.To remove permissions from all users 
+  ~]# setfacl -b /path/to/file 
+  6. To get details of ACL 
+  ~]# getfacl /path/to/file 
+  
+  If you add ACL permission to any file/folder then it will add + sign at the end of permissions.
+  Setting 'w' permission to file will not allow you to delete/remove the file.
+
+# Help cmds:
+~]# whatis <cmd_name> : This will give shorter information about the command.
+~]# <cmd_name> --help : This will give the broader information about the cmd.
+~]# man <cmd_name>    : This will give the full listing and diecriptive info about the command.
+
+# Adding text to file:
+1. vi editor - 
+2. redirect cmd op > or >> - 
+   ~]# ls -ltr 
+   ~]# drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+       drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 config 
+   ~]# touch file_dir_list 
+   ~]# cat file_dir_list
+   ~]    
+   ~]# ls -ltr > file_dir_list    [ this will copy all text data and paste in the resp folder with overwrite ]
+   ~]# cat file_dir_list
+   ~]  drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+       drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 config 
+   ~]# date 
+   ~] Thu Sep 4 07:44:56 UTC 2025 
+   ~]# date >> file_dir_list 
+   ~]  drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+       drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 config 
+       Thu Sep 4 07:44:56 UTC 2025 
+3. echo > or >> - 
+   ex - ~]# echo "hello linux"
+        ~] hello linux 
+		~]# echo "hello linux" > file.txt [ ">" This will replace alerady exist text with new text ]
+		~]# cat file1.txt 
+		~]# hello linux 
+		~]# echo ' it often indicates an issue with the manual page database' >> file1.txt ['>>' this will add new text without replacing older text]
+		~] hello linux
+            it often indicates an issue with the manual page database
+# Input - Output Redirect 
+Everything in the linux (file,directory,logs,devices etc) are consider as a file.
+When processor open any file then kernal gives number to this process called File Discriptor Number. ie 0,1,2 etc 
+A file diecriptor is a index into a preprocess table that keeeps track of the all open files.
+It allow process to read, write and manipulate file.
+    		
+	# There are 3 redirect in linux
+    1.stdin : standard input (stdin) have file discriptor as 0 
+    2.stdout: standard output have file discriptor as 1 
+    3.stderr: standard error have file discriptor as 2 
+
+A.stdout : 
+By default when ruuning a cmd the output will go to the terminal.
+If you want to route the op of cmd to the file then you run cmd :-   (previous_cmd) > (file_name) ex- ls -ltr > file1.txt 
+If you want to route the op of cmd to the file without overwriting or for append use :- prv_cmd >> file_name.txt 
+
+B.When a command is executed we use a keyboard and that is considerd as a stdin-0 
+ex- cat < test.txt 
+
+C.stderr-2 
+When a cmd is execute we use a keyboard and that is considerd as a stdin-0 
+That cmd output goes to the terminal/monitor and op is stdout-1 
+If cmd produced any error on the screen then its considerd as a stderr-2 
+   we can use redirects to route error from screen 
+    ex- ~]# telnet localhost
+        ~]# trying to connect...
+            telnet:unable to connect to remote host:connection refused.
+        ~]# telnet localhost 2 > errorfile.txt {This will append error msg to the txt file} 
+		~]# cat errorfile.txt 
+		~] telnet:unable to connect to remote host:connection refused.
+		
+You can check file discriptor number using following command.
+~]# ps aux  : this will give the process information 
+~]# ls -l /proc/<PID>/fd		
+  
+# tee :-
+ tee command use to save and view the output of the cmd at the same time.
+ this cmd is inspired from the tee, which is used is plumbing to split water from pipe into two ways.
+ 
+    ----------------
+File<--          -->console
+    ------|  |------ 
+          |  |
+		  |  |
+		  |  |
+		  |  |
+		  |  |
+		   /\ 
+
+		   cmd  
+		  
+~]# ls -ltr | tee /home/userland/file1.txt    (used to replace text in file )
+~]     drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+       drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 config 
+~]# cat file1.txt 
+~]     drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+       drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	   drwxr-xr-x 3 user group 4096 Apr 21 09:30 config     
+~]# ls -ltr | tee -a file.txt    ( -a : is used to append data)	   
+	   
+
+# pipes :
+A pipe is used by the shell to connect the output of one command to the input of another command.
+symbol -   | (vertical Bar)
+syntax-  cmd1 <parm> | cmd2 <parm>
+ex ~]# ls -ltr | tee file.txt 
+ex ~]# ls -ltr | more
+
+# We can execute multiple cmds at once using ; / semi colan 
+~]# ls ; pwd ; whoami ; hostname 
+~]# aaa a1 aw demo.txt file.txt
+    /home/userland/Desktop
+	userland 
+	localhost 
+	
+#File maintainace command:
+1.cp : copy
+2.rm : remove 
+3.mv : move or rename 
+4.mkdir : make directory
+4.rmdir / rm -r : remove directory 
+5.chgrp : change group
+6.chown : change ownership
+ 
+# File display commands :
+1.cat  : it will allow to read whole file at a time 
+        ~]# cat file.txt  
+2.more : allow to read one page at a time
+        ~]# more file.txt  
+3.less : it will give line by line text when you press 'j'.
+        ~]# less file.txt
+4.head : it give the first 10 lines 
+        ~]# head file.txt   
+5.tail : it give the last 10 lines
+        ~]# tail file.txt
+		
+# Filters / text processor commands : 
+1.cut : 
+      cut is the command which allow you to cut parts of the lines from specific files or data and print result to the cmd line. 
+      cut allow to cut line by delimeter, byte position, char etc 
+    syntax : 
+           cut <option> <file_name>
+    1.cut <file_name>    : did not work 
+    2.cut --version      : check version
+    3.cut -c1 <filename> : list first charactor of the line 
+    4.cut -c1,2,4 <filename> : list first, second , fourth char of line 
+    5.cut -c1-4 <file_name>  : list range of chars 
+    6.cut -b1-3 <file_name>  : list by byte size 
+    7.cut -d: -f 6 <file_name> : this will take : as the dilimeter and cut line from : and list first text after 6 : 
+    8.cut -d: -f 6-8 <file_name> : list first 6-8 chars seprated by : 
+    9.ls -l | cut -c2-4 <file_name> : only prints the user permission of a file 	
+
+2.awk :
+      awk is cmd/utility/language desgined for data extraction. Most of the time its used to extract filed from a file or from a output.
+	  awk is used to extract data into the column form.
+	1.awk --version : check version 
+    2.awk '{print$1}' <file_name> : this will give the first column from the file.
+    3.awk '{print$1,$6}' <file_name> : this will give the data from 1st and 6th column.
+    4.ls -l | awk '{print$1}' : this will give first field from the ls output.
+    5.ls -l | awk '{print$NF}' : this will give last field from the ls output.
+    6.echo "hello java" | awk '{$2="Python" ; print$0	}' : this will replace java with python.
+	  ~]# echo "hello java"
+	  ~] hello java
+	  ~]# echo "hello java" | awk '{$2="Python" ; print$0}' 
+	  ~] hello python 
+	7. cat file | awk '{$2="xyz" ; print$0}' : this will replace particular name with 'xyz' in any file 
+      ~]# cat file1.txt 
+      ~]# Adam Afzal
+          Chris Gayle 
+          AB Shergill 
+          RST uzzz 
+      ~]# cat file1.txt | awk '{$2="xerox" ; print$0}'
+      ~] Adam xerox
+          Chris xerox 
+          AB xerox 
+          RST xerox
+	8. ls -l | awk '{print NF}' : this will give total number of filed in ls 
+      ~]# ls -l 	
+	  ~] total 90
+	     drwxr-xr-x 3 user group 4096 Apr 21 09:30 Desktop 
+         drwxr-xr-x 3 user group 4096 Apr 21 09:30 Home 
+	     drwxr-xr-x 3 user group 4096 Apr 21 09:30 Root 
+	     drwxr-xr-x 3 user group 4096 Apr 21 09:30 bin 
+	     drwxr-xr-x 3 user group 4096 Apr 21 09:30 config
+	  ~]# ls -l | awk '{print NF}' 
+      ~] 2 
+         9	
+         9 
+         9 
+         9 
+         9		 
+	9. awk 'length ($0) > 15 ' <file_name> : this will give lines which have length greater than 15 	 
+		 
+3.grep / egrep : 
+               Its the search option provide in the linux.
+			   It process text line by line and print any line which match the specific patterns.
+			   grep stands for 'global regular experssion print'.
+			1.grep --version :
+            2.grep --help:
+            3.man grep :
+            4. grep keyword <file_name> : this cmd will search for the specific keyword and return that line 
+			  ~]# grep hello file1.txt
+              ~] hello java 
+            5. grep -c keyword <file_name> : this cmd will return number times the word in the file.
+              ~]# grep -c hello file1.txt 
+              ~] 12 
+            6. grep -i keyword <file_name> : this will search for the keyword with ignoring the case sensetivenss of the keyword.
+            7. grep -n keyword <file_name> : this will give the line number and line where keyword is matched.
+              ~]# grep -n hello file1.txt 
+              ~] 1. hello java 
+                 8. hello python 
+            8. grep -v keyword <file_name> : this cmd will give everything except keyword. 
+			   
+			   ie if we search for 'hello' it will return every line which dont have 'hello'
+              ~]# grep -vi hello file1.txt 
+            9. ls -l | grep keyword : this will give the mathed field.
+              ~]# ls -l | grep -i desktop 
+              ~] -rwx--x-w- 3 root root 4500 mar 22 09.45 Desktop 
+            10. egrep -i "keyword|keyword2" <file_name> : egrep cmd will search for the two keywords at same time.
+4.sort : 
+       sort cmd sort the alphabates or lines in alphabetical order.
+	   1.sort <filename> : sort file contents in alphabetical order
+	   2.sort -r <filename> : in reverse order 
+	   3.sort -k2 <filename> : sort filed ie column in alphalbetical order if -k2 then it will sort column 2 
+	   4.ls -ltr | sort -k9 : sort ls column 9 in alpahabetical order
+	   
+5.uniq :
+       uniq cmd filters and removed repeated lines and words.
+	   1. uniq --version :
+	   2. uniq --help : 
+	   3. sort <filename> | uniq : always sort first then apply uniq then only uniq will apply 
+	   4. sort <filename> | uniq -c : it will remove duplicates and give count 
+	   5. sort <filename> | uniq -d : it will show only repeated lines 
+
+6. Compare Files : 
+   1. diff : this command will compare files line by line 
+      ~]# diff <filename1> <filename2> 
+   2. cmp : this command will compare files byte by byte 
+      ~]# cmp <filename1> <filename2> 
+	  
+7.wc : word count 
+     The command will read standard input or list of files , directories and generates : 1. line count , 2.word count , 3.byte count 
+	1. wc --version :
+	2. wc --help :
+	3. wc <filename> : this will give line count, word count, byte count 
+	4. wc -l <filename> : this will give line count 
+	5. wc -w <filename> : this will give word count 
+	6. wc -c <filename> : this will give byte count 
+	7. ls -l | wc -l : this will give line count in ls output.
+	
+# Compress and Uncompress Files : 
+1.tar [tap archive] : tar command take bunch of files and zip them into one single file. 
+                      But the size of the files remain same.
+					  @ compression :- 
+					~]# tar -cvf <fileinwhichdatatozip.tar> <location of files want to archive>
+                    ~]# tar -cvf zipper.tar /home/userland   : this cmd will zip all files present in /home/userland to zipper.tar file 
+                           -c : create archive 
+                           -v : verbose output 
+                           -f : specify file name 		
+					  @ decompression :- 
+                    ~]# tar -xvf <file want to decompress>
+					~]# tar -xvf zipper.tar
+                           -x : extract files 
+                           -v : verbose output 
+                           -f : specify file name 						   
+						   
+gzip : 
+    gzip command compress or zip the files and reduced the file size.
+    ~]# gzip <filename> 
+    ~]# gzip zipper.tar  : this gzip will reduce the file size.
+	
+       
+gzip -d / gunzip : this commands used to decompress the files / or to get the original file size.
+    ~]# gzip -d <filename.gz>
+    ~]# gunzip <filename.gz>  	
+    ~]# gzip userland.tar.gz 
+    ~]# gunzip userland.tar.gz 
+
+
+# truncate : 
+          truncate command is used to shrink or extend the size of the file.
+          when we shrink the file data may lost.but when we again extend file size that lost data
+		  will not visible again.
+		  cmd used:
+		  1. truncate --version:
+		  2. truncate --help : 
+		  3. truncate -s <size in int> <file_name> : its used to set file size in bytes 
+		  4. truncate -c <filename> : will not create any file 
+
+# combined and split :
+combined : you can merge multiple files in a single file using commnads like cat, paste etc.
+Ex - 
+~]# cat file1.txt file2.txt file3.txt >> combined.txt		  
+        		  
+paste :
+~]# paste file1.txt file2.txt > combined.txt 
+
+splitting : you can split large files into smaller parts usnig 'split' command.
+~]# split -b 1M bigfile.txt smallfile.txt      : this cmd will split bigfile into small files of 1 MB
+~]# SPLIT -L 10 BIGFILE.TXT smallfile.txt : this cmd will split file by number of 10 lines each samll file
+
+# Module 5 # 
+@ File Administration 
+# Linux File Editor : VI 
+1.vi supplies commands for -
+   - inserting and deleting text
+   - replacing text
+   - moving around the file
+   - finding and substituting strings
+   - cutting and pasting text 
+   
+2. Most common keys used - 
+   i : insert 
+   Esc : Escape out of any mode 
+   r : replace 
+   d : delete 
+   :q! - quit without saving 
+   :qw! - quit and save 
+
+ 
+
+# talking to user :
+1.users - how many users log inn to system.
+~]# users 
+
+2.wall - we can broadcast the message to all users or live users 
+~]# wall 
+~] hello everyone...plz logg off your system for maintainace.
+   ---userland
+ctl + d 
+    
+3.write - we can talk to one particular user using 'write' command. 
+~]write <username> 
+~] hey user...
+ctrl + D 
+
+# Special Permissions : setuid , setgid , sticky bit 
+1. setuid :
+         When the file with the setuid executes, it run with the permissions of the file owner ,
+		 and not user running the files.
+		 Commonly used for the tasks which requird elevated privillages.
+		 Commonly used for the tasks which requird elevated privillages.
+		 -rwsr-xr-x  : 's' provides the special permission to the user 
+        Ex- chk if passwd uses setuid :
+        ~]# ls -l /usr/bin/passwd 
+        ~] -rwsr-xr-x 1 root root 54256 sep1 2025 /usr/bin/passwd 
+	cmd : chmod u+s <filename> 
+        ~]# chmod u+s file1.txt 
+ 
+    * To remove special permission: 
+    cmd : chmod u-s <filename> 
+	
+2. setgid :
+         For files : runs with the permissions of group owner.
+         For Directories : new files created will inherit the group ownership from the directory rather 
+		 than the users 
+		 defualt group.
+		   to add permission :
+            ~]# chmod g+s <file>
+            to remove permission :
+            ~]# chmod g-s <file> 
+		 
+3. sticky bit : 
+             This allow only owner of the file or root to delete the file. Normal users cant delete or 
+			 rename files with sticky bit ie 't' extension.
+			 Commonly used to directories like /tmp to prevent usrs from deleting others files.
+			cmd : 
+			~]# chmod +t <file> 
+			To remove :
+			cmd :
+			~]# chmod -t <file>
+*** To find all executables which have setuid or setgid permission we can use cmd :
+    ~]# find /-perm / 6000 -type f 
+
+
+
+# System utility commands :
+1.date : Displays the current system date and time.
+2.uptime : Shows from how much time the system is running, the current time, no of logged in users . 
+~] uptime
+~] 09:28:2 up 21:22 , 0 users , load avg : 0.00 , 0.00 , 0.00 
+ 
+3.hostname : displays current hostname. 
+~]# hostname
+~] localhost
+
+4.uname : print information about the currunt system. uname -a : 
+also commonly used cmd which shows all available system information.
+~]# uname 
+~] linux
+
+5.which : this command locate executable files and print its full path.
+~]# which passwd 
+~] /usr/bin/passwd 
+
+6.cal  : displays runnung months calendar
+~]# cal 
+
+7.bc : bc is the binary calculator you can perform various actions like +,-,*,/ and many more 
+~]# bc 
+~} ...
+   2 + 2 
+   4 
+   quit    
+
+
+   
+   Q. If you want to find in which package the command is listed . and you want to install that cmd/ pkg.
+   you can try the below :-
+~]# sudo apt update 
+~]# sudo apt install apt-file 
+~]# apt-file search /bin/<cmd_name> 
+OR
+~]# apt-file search /usr/bin/<cmd_name> 
+Ex - ~]# apt-file search /bin/cal 
+     ~] ncal : /usr/bin/cal 
+	 // ncal is the pkg name 
+	 follow step to install 
+	 ~]# sudo apt install ncal 
+	 
+
+# Processes and job : 
+1. Application :- / service 
+               Application is the software desgined to perform tasks.
+			   ex- firefox , VLC etc 
+			   Application can be graphical or cmd based.
+			   
+ 
+2. Script :- 
+          A script is a text file contains seris of commands that written in a scripting languages. 
+          Scripts are executed by the system in a sequences.
+          Script automated the task without user interaction.
+		  
+3. Processes :-
+             A process is a instance of a running program or script in memory
+			 Each procress have - process id , parent process , memory allocation , state 
+			 
+4. Daemon :- 
+          A daemon is background process that runs without user intercation or runs upto interruption.
+		  
+5. Threads :- 
+           A thread is the smallest unit of execution within a process.
+           Process can have multiple threads.
+           process -------> Thread 1 
+                |-----------> Thread 2 
+                |-----------> Thread 3 
+ 				
+6. job :- 
+       A job is a process or a group of a process managed by the shell.
+	   
+			 
+*  cmds used :
+1. systemctl or service :-
+                        systemctl also called system contol.
+                        Systemctl used to start the application.
+            systemctl cmd is new tool to control system services / applications.
+            Its avilable in version 7 , previouslly it was "service".
+            ex- 
+            ~]# systemctl start | stop | status <servicename.service>   :  used start, stop or know the status of command
+			Ex-
+			~]# systemctl status firewalld.service 
+			~]# systemctl start firewaald.service 
+			
+            ~]# systemctl enable <servicename.service>                  : used to enable command
+            ~]# systemctl restart | reload <servicename.service>        : restart or reload 
+            ~]# systemctl list-units --all			: list of all services or list which are avialbe  			
+    To add any service in systemctl create file for service in following path :- 
+	/etc/systemd/system/servicename.service 
+			
+2. ps :-
+       ps stands for the process status and this will show the all current running process in the linux system.
+	   ~]# ps         :  this will show all process of the current shell
+	   ~]  PID     TTY    TIME     CMD 
+           3567   pts/0  00.00.00  bash 
+           4297   pts/0  00.00.00  ps 
+        PID : process id
+        TTY : terminal type that user logged in 
+        TIME : the time from when the process has been started.
+        CMD : name of the command
+       ~]# ps -e : 	this will show all running process.
+       ~]# ps aux : this will show running process in BSD format
+       ~]# ps -ef : this will show running process in full format listing.
+       ~]# ps -u <username> : this cmd will show all process by user name.
+	   
+3. top :- 
+       top command is used to provide linux process and it gives live or runtime view of the running system.
+	   this cmd will show the summary information of the system and list the process or threads which are currently managed by linux kernal.
+	   when the top command is running you will goes into interactive mode and the only way to take outside the mode is by hitting 'q'
+	   
+	   ~]# top 
+	   ~] PID : process id 
+	      USER : username of the owner of task 
+          PR : scheduling priority 
+          NI : nice value of task. negative the value higher the priority, positvie the value lower the priority.
+          VIRT : virtual memeory used by the system.
+          RES : memory consumed by the process in RAM.
+          SHR : represent amount of shared memory used by the task
+          S : this shows the process state.
+          %CPU : represent CPU usages 
+          %MEM : shows memoey used by task
+          TIME : total time 
+       ~]# top -u <username> : shows tasks by username 
+       ~]# top then press c : this will shows commands absolute path 
+       ~]# top then press k : kill process by using PID 
+       ~]# top then M and P : to sort task according to memeory uses 	   
+ 
+4. kill :- 
+        kill cmd is used to terminate process manually.
+        It send a signal which terminates or kill the process or group of process.
+       ~]# kill [option] [PID]
+       
+       ~]# kill -l : to get list of all signal names or signal number 
+       ~]# kill PID : Kill process with default signal 
+	   ~]# kill -1 :	this will restart the process
+       ~]# kill -2 : interrupt from keyboard like ctrl + C 
+       ~]# kill -9 : forecfully kill the process 
+       ~]# kill -15 : kill process garcefully 
+       ~]# 
+
+# Process and Signal in linux :- 
+Process is the instance of the running program.
+Signal is the short message send to the process.
+ex- ctrl + C signal is used to interrupt the terminal.
+Signals are used to interrupt, control, communicate with the process.
+* process signal : means sending signal to running process to control their behaviour.
+Two types of process signal :
+1. Standard Signal - 
+This are the predefined signals send to the running process. like start, stop, interrupt etc 
+There are various types of standard signals :
+A. SIGINT - signal interrupt
+B. SIGTERM - signal terminate 
+C. SIGKILL - signal kill 
+D. SIGSTOP - signal stop 
+E. SIGCONT - signal continue 
+F. SIGSEGV - signal segmentation fault 
+
+2. real time signal : 
+this signal gives extra information along with signals.
+like message or number
+types : 
+A. SIGRTMIN :
+   This signal is the beginning of process.
+   This mark the start point of service 
+B. SIGRTMAX : 
+   This is the highest point in the process.
+   This can be the end of the service.
+C. Intermediate signals :
+   This are the signals in between this two signals.
+
+5. crontab :
+crontab commnand is ued to schedule task in linux.
+~]# crontab -e : edit the corntab
+~]# crontab -l : list the corntab entry
+~]# crontab -r : remove the corntab entry
+~]# crond : crontab daemon service that mange the cronatbs 
+~]# systemctl status crond : to mange the cron service 
+
+|------------------- minute [ 0 - 59 ]
+| |----------------- hour [ 0 - 23 ]
+| | |--------------- day of month [ 1 - 31 ]
+| | | |------------- month [ 1 - 12 ]
+| | | | |----------- day of week [ 0 - 6 ] sunday to saturday 
+| | | | |
+* * * * * < command to execute > 
+ 
+
+
+6. at : 'at' cmd is similar to corntab , but allow to schedule job at only once.
+        when the cmd run the terminal will be in the intercaive mode you exit using the ctrl + D
+    ~]# at HH:MM AM/PM   : scedule a job 
+    ~]# atq : list the at entries 
+    ~]# atrm # : remove entry 
+	~]# atd : at daemon/service that manages scheduling
+    ~]# systemctl status atd : to manage atd service	
+
+
+# Process management :-
+1. Background :
+   If you are working on any of the process and you dont want to close that process then you can hide that process in background.
+   ~]  ctrl + Z . jobs and bg 
+
+2. Foreground : 
+  If you want to unhide the process you can use fg 
+  ~]# fg 
+
+3. Run process even after the exit 
+  ~]# nohup process & 
+  Or
+  ~] nohup process > /dev/null 2>&1 $ 
+
+4. To kill process using name 
+  ~]# pkill 
+
+5. To prioritize process you can use 'nice' command.
+  ~]# nice 
+  ex- nice -n 5 process 
+  The niceness scale goes from -20 to 19. lower number more priority.
+
+6. to monitor : top 
+
+7. to list process : ps 
+
+# system monitoring commands :
+1. top 
+2. df : this will give disk partition information.
+   ~]# df 
+   ~]# df -h // gives disk information in human readbale format 
+3. dmesg : this command give information about error messages, failures , warnings , system related messages etc 
+   ~]# dmesg 
+4. iostat : input output statistics , this shows how system is communicating with input and output or system peripheral devices etc 
+  ~]# iostat 
+  ~]# iostat 1   // to refresh 
+  ctrl + C // exit 
+5. ip route : give ip route information 
+   ~]# ip route 
+   ~]# ip route | column -t 
+6. ss : this cmd is used to investigate the sockets.
+   ~]# ss 
+7. free : this gives information about the physical or virtual or shared memeory.
+   ~]# free 
+8. cat /proc/cpu : to read cpu info 
+   ~]# cat /proc/cpuinfo 
+9. cat /proc/meminfo : this will give info about memory
+   ~]# cat /proc/meminfo   
+   
+# log monitoring :
+log directory = /var/log 
+Following are the differnat logs : 
+1. boot : this logs are generated when the system is booted up.
+2. chronyd :
+3. cron :
+4. maillog : 
+5. secure :
+6. messages :
+7. httpd :    
+   
+~]# cd /var/log 
+~]# ll | more     // you can view log page by page   
+ 
+# system maintainace commands :
+1. shutdown :- power off the system.
+2. init 0-6 : 
+3. reboot : its the system restart of the system. Its takes the clean restart by putting all services down.
+4. halt  : in this state cpu remains off, but remains on, this may requird manual power off. 
+
+# chnaging system hostname :
+You change the hostname of your linux system using 'hostnamectl' command.
+~]# hostnamectl set-hostname <new host name>
+ files stored in 1. for version 7 : Edit /etc/hostname 
+ ~]# su - 
+ ~]# hostnamectl set-hostname myLinuxOS 
+
+# Finding system information 
+1.uname : give operating system information.
+~]# uname 
+~]# uname -a // gives overall information about the OS
+2. dmidecode : this cmd will give the detailed information about the hardware.
+               this mostly requird root privillages.
+			 ~]# dmidecode 
+             ~]# dmidecode -t <option>			 : can use -t to see particular information			 
+
+# finding system architecture ie 32 bit / 64 bit 
+Differnaciate between 32bit and 64 bit cpu processor.
+mostly its time take to perform specific action respect to time.ie 32 bit execute hostname in 2 sec and 65 bit processor perform same hostname in 0.5 sec 
+cmd used is :- arch 
+~]# arch 
+
+# SOS Report :-
+This used to collect dignostic and configuration information from the linux operating system and installed applicatiobs.
+file used to store info : /var/tmp/sos.83v5Hz
+~]# sosreport
+
+# Terminal commands
+1. clear  : clear the terminal
+2. exit   : exit out of shell, session , terminal 
+3. script : this cmd stores terminal activites in log file that can be nmaed by the user, when name is not provided by user the defult name'typescript' is given. 
+
+
+# Recover Root Password :-
+
+# Environment Variables : 
+Its the set of defined rules and values to build an environment.
+To view all env variables :
+~]# printenv or env 
+
+To view one env variable :
+~]# echo $<variable you want to view>
+~]# echo $shell
+
+To set the env variable :
+~]# export TEST =1
+~]# export $TEST
+
+To set env variables permanently :
+~]# vi .bashrc 
+~]# TEST ='123'
+~]# export TEST
+
+
+###  Scripting in linux   ###
+Kernal : its the interface between h/w and s/w.
+         kernal takes command from shell and gives to operating system for execution.
+		 
+Shell : 
+       Shell is a container.
+       Shell is interface between user and kernal/OS.
+       CLI , GUI etc are shells
+    
+    To find shell :
+    ~]# echo $0 
+    To see all availabe shells :
+    ~]# cat /etc/shells
+    To know you shell/ shell stored in :
+    ~]# /etc/passwd
+
+  * types of linux shell :
+  1. Gnome     -
+  2. KDE       - this two are GUI shells
+  3. sh 
+  4. bash 
+  5. csh and tcsh 
+  6. ksh
+  
+shell scripting -
+Shell script is a text file which contains multiple commands that are execute sequentially.
+The structure of file is :
+1.  shell [ #!/bin/bash ]
+2.  comments [ # ... ] 
+3.   commands
+4. statements [if,while,for etc]
+
+shell file should have x/execute permission.
+shell script should to be called from absolute path ex- /home/userdir/scrpt.sh
+
+# Operators Used :
+A. Arthmatic Operators :
++
+-
+*
+/
+++  : increment 
+--  : decrement
+
+B. Relational / Comparison Operators :
+1. -eq  : equal to
+2. -ne  : not equal to 
+3. -gt  : greater than 
+4. -lt  : less than 
+5. -le  : less than equal to 
+6. -ge  : greater than equal to 
+
+C. Boolean or logical Operators : 
+1. && : AND 
+2. || : OR 
+3. !  : NOT
+
+D. String Operators:
+1. =  : checks if strings are equal 
+2. != : checks if strings are not equal 
+3. -z : checks if string is empty 
+4. -n : checks if strings is not empty 
+5. <  : check if string 1 is less than string 2 
+       To compare string you should use < operator inside [] 
+	   ex: 
+	   if [[ "$str1" > "$str2" ]];
+	   then 
+	          echo " "
+       else 
+              echo " "
+       fi 
+	   
+6. >  : check if string 1 is greater than string 2
+
+E.  File Test Operators: Used to check properties of files and directories. 
+-b file: Checks if file is a block special file.
+-c file: Checks if file is a character special file.
+-d file: Checks if file exists and is a directory.
+-e file: Checks if file exists.
+-f file: Checks if file exists and is a regular file.
+-r file: Checks if file has read permission.
+-w file: Checks if file has write permission.
+-x file: Checks if file has execute permission.
+-s file: Checks if file has a size greater than zero.    
+ 
+Following are the various ways to write script :
+
+1. display message using 'echo'
+
+~]#  vi  scriptnew.sh
+~]#  #!/bin/bash 
+    
+	 # This is the practice script for the displyaing messages 
+	 
+	 echo "hello to the linux users"
+	 
+~]# chmod a+x scriptnew.sh    // you should provide the x / execute permission to the file 
+~]# ./scriptnew.sh 
+~] hello to the linux users
+
+2. use of variables in script 
+
+~]# vi scriptvar.sh
+~]# #./bin/bash
+
+    # use variables in your script
+    # there should be no space in between key and values name.
+
+    name="SAMIR"
+    lname="SHAKTI"
+    age="45"
+  
+    echo "My name is $name $lname and my age is $age"
+
+~]# chmod 777 scriptvar.sh
+~]# ./scriptvar.sh 
+~]# /home/uswerland/scriptvar.sh 
+~] My name is SAMIR SHAKTI my age is 45 
+
+3. Create script to take input from user :
+'read' is used to take input from the user.
+
+~]# vi scriptinput.sh 
+~]# #!/bin/bash 
+
+    echo "Hello My name is SAMIR"
+	echo "What is your name?"
+	read name 
+	echo "Hello $name"
+	echo 
+	
+~]# chmod 777 scriptinput.sh 
+~]# ./scriptinput.sh 
+~] Hello My Namw is SAMIR 
+   What is your name?
+   Shakti 
+   Hello Shakti
+   
+**If you want to copy file from src to dest.
+~]# vi scriptscr.sh
+~]# #!/bin/bash 
+    echo
+    echo "What is the source?"
+    read src 
+    echo
+    echo "What is the destination?"
+    read dest 
+    cp "$src" "$dest"
+    echo "Operation Completed...!!!"
+
+~]# chmod 700 scriptsrc.sh 
+~]# ./scriptsrc.sh 
+~]  What is the source?
+    /home/userland/source/file.txt 
+    
+	What is the destination?
+    /home/userland/destination
+    
+    Operation Completed...!!!
+
+4. if --- then :
+ This is similar to conditonal if stmt.
+ if thi true ---> []
+ else ---> [ ]
+ 
+ ~]# vi scriptifthen.sh
+ ~]# #!/bin/bash 
+ ~]  count = 100 
+     if [ count -eq 100 ]
+	 then 
+         echo " count equel to 100 "
+     else 
+         echo " count is not equal to 100 "
+     fi 
+5. for loops :
+Keeps runing until the condition is satisfied.
+
+# Aliases : 
+This are the shortest names given to the long commands.
+~]# alias l="ls -ltr"
+~]# l 
+
+~]# alias p="pwd; ls"
+~]# p 
+
+~]# alias hello="whoami; hostname; ipaddr"
+~]# hello 
+
+This are the local alias ie this are created for user only. the location for this alias is : /home/user/.bashrc   [.bashrc is hiden file thats why . extension is used]
+To remove alias you can use command "unalias <alias name>"
+~]# unalias l 
+~]# unalias p 
+~]# unalias hello 
+
+There are two types of alias:
+1. local/user alias : 
+2. Global Alias : this alias are applicable to every account on the system.  /etc/bashrc 
+   ex- ~]# alias hh="hostname"
+       ~]# hh 
+       ~] localhost
+
+# shell history 
+All commands you run on your linux operating system are stored or recorded called shell history.
+Useful for troubleshooting and dignosis when system is down
+~]# history
+~] 1. pwd 
+   2. ls 
+   3. whoami  
+   4. history
+If you want to rerun any of the history cmd you can use ! with user name 
+~]# !3 
+~] userland 
+
+# Networking :-
+IP : internet protocol
+~]# ip addr 
+~]# ip a 
+
+* Network Files and Commands :
+Interface configuration files:
+1./etc/nsswitch.conf 
+2./etc/hosts : 
+3./etc/sysconfig/network-scripts : 
+4./etc/sysconfig/network : file in Linux is a global configuration file that defines general network settings applicable to all network interfaces on the system   
+5./etc/resolv.conf :  file is known as the configuration file for DNS queries.  
+ 
+A. ping : this command is used to check the connectivity to the targeted device by sending data packets and waiting for the responce.  
+   ex :
+   ~]# ping <ip or hostname>
+   ~]# ping www.google.com 
+   ~]# ping 127.0.0.1 
+   ~]# ping 127.0.0.1 
+
+B. ip a : used to display ip address , MAC address and other useful network information of system.
+   ex :
+   ~]# ip a 
+   
+C. ifup : to activate interface and allow it to send and recive data or packets 
+   ex :
+   ~]# ifup <interface name>
+   ~]# ifup eth0 
+   
+D. ifdown : to deactive interface.
+   ex :
+   ~]# ifdown <interface name>
+   ~]# ifdown eth0 
+
+E. netstat : this will display netwrok connections, routing tables , routing protocols
+   ~]# netstat 
+   ~]# netstat -vfa 
+
+F. tcpdump : used to capture and analyz netwrok packets travelling on network interface.
+  ~]# tcpdum -i <interface name>
+  ~]# tcpdump -i eth0
+
+# NIC : Netwrok Interface Card 
+How to find to which NIC the system is connected.
+Run cmd ~]# ifconfig / ip a / ip addr 
+This will show NIC like 
+                        1. enp0s3 : this used by OS to connect to the internet or outside neywrok.
+						
+                        2. lo : the loopback device used by computer to communicate with itself.
+                                its mailny useful for troubleshooting and dignostics.
+                                to connect server running on local machine 
+
+                        3. virb0 : the virb0 or 'Virtual Bridge 0' intrface used for NAT.
+                                   virtual n/w somwtimes used to connect with outside network.
+follwoing cmd is used for information about NIC 
+~]# ethtool <NIC name>
+~]# ethtool enp0s3 
+~] ...
+~]# ethtool lo :
+~] link connnected : No  								   
+~]# ethtool verb0 
+~] link connected : yes 
+
+ * NIC Bonding : the combination of multiples NIC into single bond called NIC bonding.
+                 miain purpose is to provide high avilability and redundancy.
+				 
+# Network utilites :
+ Network Manager : Its the utility which used to mangae network on the linux.
+ Netwoek configuration methods :
+1. nmtui :- network manager text user interface. 
+            this tool can run on any terminal window and netwrok chnages can made by making menu selection and entering data.
+2. nmcli :- network manager command line interface.
+            this method is useful when the GUI iss not availabe and you can make chnages into the network using the CLI / scripts .
+3. nm-connection-editor :- its the full GUI based.
+                           provides full acess to all netwrok configuration services. 
+                           It can only acess through desktop or consloe.
+4. GNOME settings :- Desktop setting application. 
+                     Allow basic n/w mgmt jobs or tasks to perform.					
+
+
+# SSH : secure shell
+shell takes commands from the user or OS and takes that commands to kernal.
+its the CLI based interface.
+
+SSh is itself secure,
+SSH communication is always encrypted.
+Following are some additional configurations of the SSH :
+A. Add time interval 
+-> Become root 
+~]# su - 
+-> Edit your /etc/ssh/sshd_config file and add following file 
+~]# vi /etc/ssh/sshd_config 
+~] clientAliveInternal 600 
+   clientAliveCountMax 0
+~]# systemctl restart sshd 
+
+  sshd is the daemon. 
+  The idle timeout interval you are setting is in seconds [ 600 seconds = 10 min ] after 10 mins the idle user will be automatically logged out.   
+
+B. Disable root login :
+   It will disable any other user to log in as a root user.
+-> Become root 
+~]# su - 
+-> Edit /etc/ssh/sshd_config file and replace PermitRootLogin yes to no
+~]# vi /etc/ssh/sshd_config 
+~] PermitRootLogin no 
+~]# systemctl restart sshd 
+
+C. Disable Empty passwords 
+   You need to prevent logins from account with empty passsword for added security.
+   
+~]# su - 
+~]# vi /etc/ssh/sshd_config 
+~] ...
+   PermitEmptyPasswords no    [Remove #]
+~]# systemctl restart sshd    
+   
+D. Limit users SSH acess :
+   To provide another layer of security, you should limit your SSH logins to only certain users who need remote acess. 
+~]# su -
+~]# vi /etc/ssh/sshd_config
+~] ...
+   AllowUsers user1 user2 
+~]# systemctl restart sshd
+
+E. Use differnat port :
+  Normally ssh is running on port 22. you can chnage that port for added security.
+
+~]# su - 
+~]# vi /etc/ssh/sshd_config 
+~] Port 22 [remove # and chnage port number]
+~]# systemctl restart sshd  [ restart the service daemon ]  
+   
+# SSH keys - Acess remote server without password
+ Two reasons to acess remote machine without p/w.
+ 1. repetative log ins 
+ 2. Automation through scripts 
+
+Keys are generated at user level. 
+
+Follwowing step by step method should follow :
+Step 1 : Generate Key 
+~]# ssh-keygen
+
+step 2 : copy keys to the server 
+~]# ssh-copy-id root@server_ip 
+
+Step 3 : login from client to server 
+~]# ssh root@server_ip  
+
+# "ss" command 
+The "ss" command prints the statistical information about the sockets in linux.
+Display open connections and ports 
+TCP
+UDP 
+~]# ss
+~]# ss -t [shows only tcp connections]
+~]# ss -u [shows only udp connections]
+~]# ss -x [shows only UNIX connections] 
+~]# ss -l [shows all incoming connections that are ready to accept connections ]
+
+# curl and ping command :
+this commands are used to chk connectivity by sending packets and detecting reciving packets.
+~]# curl <service/server/ip>
+~]# curl -o <..>   [ To download a file ]
+~]# ping <ip/server/service> 
+
+~]# curl www.google.com
+
+~]# ping www.google.com 
+
+# FTP : File Transfer Protocol 
+  FTP is a netwrok protocol used to transfer computer files between a client and server on a computer network.
+  FTP built on a client-server model use seprate data control and connections between the client and server.
+  
+  FTP port : 21 
+  
+  Install and configure FTP on the remote server : 
+  # Become Root 
+  ~]# su - 
+  # check FTP is present or not
+  ~]# rpm -qa | grep ftp 
+  # check connectivity 
+  ~]# ping 8.8.8.8 
+  # install ftp 
+  ~]# sudo apt insatll vsftpd 
+  ~]# vi /etc/vsftpd/vsftpd.conf     [Before edit take one copy for backup]
+    Find the following lines and make the changes as shown below:
+    ##Disable anonymous login## 
+    . anonymous_enable=NO 
+    
+    ##uncomment## 
+    . ascii_upload_enable=YES 
+    . ascii_upload_enable=YES 
+   
+    ##uncomment display your welcome msg this is optional##
+    . ftpd_banner=Welcome to UNIXMEN FTP service
+   
+    ## Add this to end of the file ## 
+    . use_locltime=YES
+
+    ~]# systemctl start vsftpd
+    ~]# systemctl enable vsftpd
+    ~]# systemctl stop firewalld 
+    ~]# systemctl disable firewalld 
+	~]# useradd userland   [if account not exist]
+	
+    Install FTP on on client server 
+    ~]# su - 
+	~]# sudo apt install ftp  [this is not vsftp because we are insatlling client part]
+    ~]# su -userland
+	~]# touch file.txt [create file]
+	
+	
+    command to transfer files :
+    ~]# ftp <ip address> 
+    ~]# ftp 192.168.1.58 	
+    ~] Enter username and passwd 
+	~]bi 
+	~]hash 
+	~]# put file.txt 
+	~]bye 
+	
+# SCP : Secure Copy Protocol 
+      Helps to transfer computer files secretly from a local computer to a remote host.
+      Its similar to FTP but its more secure and authenticated.
+    port : 22 
+	
+	
+# rsync : Remote Synchronization 
+  rsync is a utility to transfering and synchronizing files within the same computer or to a remote computer by comparing the modification time and size of the files.
+  rsync is faster than SCP & FTP.
+  if you transfer file of 2 MB again the size of file inceses upto 10 MB thn rsync will transfer only 10-2 = 8 MB this time and remaining 2 MB will be merge to create 10 MB.
+  port = 22 
+  command 
+  ~]# rsync [options] [source] [destination]  
+	
+Install rysnc
+~]# rpm -qa | grep rsync 
+~]# sudo apt install rsync 
+
+rsync a file on a local machine [ send files between one dir to another dir ]
+~]# tar cvf backup.tar /home/userland       // This will tar / archive the whiole home directory into the backup.tar file 
+~]# mkdir /tmp/backup 
+~]# rsync -zvh backup.tar /tmp/backup     
+
+rsync file on a remote machine 
+~]# rsync -avzh backup.tar  root@192.168.1.58:/tmp/backups 
+
+rsync file from a remote server 
+~]# rsync -avzh root@192.168.1.57:/home/userland/file.txt /tmp/backup 	
+	
+# Downloading Files and Apps [wget] : 
+~]# wget <webiste_name>
+~]# wget https://name/.com
+
+# sustem update and repositories [ dnf  & rpm ] :
+~]# dnf
+
+~]# rpm  
+Red hat package manager.
+Its the low level package manager for updating, installing, querying, verifying and remving packeges in RHEL env.
+works with .rpm 
+
+~]# rpm -i <pkg_name> : install pkg 
+~]# rpm -U <pkg_name> : update pkg 
+~]# rpm -e <pkg_name> : remove pkg 
+~]# rpm -q <pkg_name> : Query pkg 
+~]# rpm -qa <pkg_name> : list all insatlled pkg 
+~]# rpm -V <pkg_name> : verify pkg
+
+Kali Linux is runs on Debian env so its used "dpkg" pkg 
+dpkg 
+~]# dpkg -i <pkg_name> : install
+~}# dpkg -r <pkg_name> : remove 
+~]# dpkg -l            : list 
+~]# dpkg -s <pkg_name> : show pkg details 
+~]# dpkg -L <pkg_name> : show files insatlled by pkg 
+
+
+# System upgrade and patch mgmt :
+Types of upgrade :
+1. major version upgrade -  7, 8, 9 
+2. minor version - 8.1 , 8.2 etc 
+
+# NTP : Network Time Protocol
+This protocl used to sync time of your computer with the network.
+NTP is time synchronization protocol.
+
+File : /etc/ntp.conf
+set up your server for google dns ie server 8.8.8.8
+Service : systemctl restart ntpd 
+
+command : ntpd 
+
+pkg : sudo apt install ntp 
+
+port : 123 
+
+# chronyd : This is the latest version of the NTP 
+purpose : time synchronization
+pkg : sudo apt insatll chrony 
+file : /etc/chronyd.conf 
+go to server and define server 8.8.8.8 
+log file : /var/log/chrony 
+service : systemctl start/restart chronyd 
+command : chronyc 
+~]# chronyc 
+~] > sources 
+
+# System utility command : "timedatectl" 
+~]# timedatectl 
+Its replacement of old date command.
+timedatectl shows time, date, timezone 
+   . you can make ntpd or chronyd option yes in timedatectl 
+   . systemd-timesyncd deamon used 
+~]# timedatectl
+To list all time zones 
+~]# timedatectl list-timezones 
+To set diff time zone 
+~]# timedatectl set-timezone "America/New_York" 
+To set date 
+~]# timedatectl set-time YYYY-MM-DD 
+To set time and date 
+~]# timedatectl set-time YYYY-MM-DD HH:MM:SS 
+To start automatic time sync with NTP 
+~]# timedatectl set-ntp true 
+
+# Mail transfer agent 
+.storage 
+.processing 
+.delivery of mails 
+
+emial used - postfix  
+file : /etc/postfix 
+~]# systemctl restard postfix 
+this service dont have 'd' at the postfix still daemon is runnig in the background.
+mail -s option  
+
+To send emails and write emails on terminal we requird "s-nail" package 
+
+Mail Relay Server : this is some kind of thing which transfer mails from user 1 mailbox to user 2 mail box.
+Mail Relay Server presnt in "/etc/main.cf" file 
+
+~]# mail -s "mail setup" abhayjadhav045@gmail.com 
+To : abhayjadhav045@gmail
+Subject : mail Setup 
+
+Hello 
+
+... 
+
+bye 
+ 
+send : y 
+
+
+# Web Server : Apache-httpd 
+purpose : serve webpages 
+service : httpd 
+files   : /etc/httpd/conf/httpd
+port    : 80 
+HTTPs Port : 443 
+
+/conf/httpd.conf 
+        : /var/www/html/index.html  
+servic  : systemctl restart httpd 
+          systemctl enable httpd 
+pkg     : sudo apt install http 		  
+
+ 
+# tar : 
+
+
+# Tracing Netwrok Traffic [ traceroute ]:
+traceroute : cmd is used to trace the jouerny of packets from source to the destination.
+             we can use this cmd when the packet loss is happend.
+			 It also show the slow point which affect the nw traffic.
+			 
+			 ~]# traceroute <ip/url/hostname> 
+			 ~]# traceroute www.google.com 
+			 ~]# traceroute 8.8.8.8
+			 ~]# traceroute localhost 
+			 
+
+# How to open image file using CLI 
+
+
+# Firewalls 
+
+Types 
+1. Software : Runs on OS 
+2. Hardware : A dedicated appliance with firewall setup 
+
+There are two tools which are used to mange firewalls in linux :
+1. iptables : for older linux 
+2. firewalld : v7 
+
+ * iptables : 
+ The function of iptables is packet filtering.
+ The packet filtering machenism is organised in 3 diff structure :
+ A. Tables : 
+    Table is something that allow you packet traffic in a specific way.
+	Four diff tables :
+	I. Filter 
+	II. mangle 
+	III. nat 
+	IV. raw 
+ B. Chains : 
+    This chains are attached to the tables .
+    Chains allow you to inspect traffic at various points.
+    Three main chnais are used 
+    1. INPUT : Incomming Traffic 
+    2. OUTPUT : Outgoing Traffic  
+    3. FORWARD : Going to router from one device to another 
+ C. Targets : 
+    This defined the future of the packets.
+    1. Accept : connection accept 
+    2. REJECT : send rejection msg 
+    3. DROP : drop connection without sending any response 
+	
+ Disable / stop the another service ie firewalld 
+ ~}# systemctl stop firewalld 
+ ~]# systemctl disable firewalld 
+ ~]# systemctl mask firewalld   [ To prevent accidental activation or running by other programs ] 
+ Now check you have iptables or not 
+ ~]# dpkg -l | grep iptables-services 
+ ~]# sudo apt install iptables-services 
+ Start the service 
+ ~]# systemctl start iptables 
+ ~]# systemctl enable iptables 
+ To check iptables rules 
+ ~]# iptables -L 
+ To flush iptables  
+ ~]# iptables -F
+	 
+ * Firewalld :
+ Firewalld is smilar to iptables
+ ~]# firewall -cmd  
+ Firewalld has also following 
+ 1. table 
+ 2. chains 
+ 3. rules 
+ 4. targets 
+ 
+ Start firewalld 
+ ~]# systemctl start firewalld 
+ CHeck the rules 
+ ~~]# firewalld-cmd --list-all 
+      
+ To add any of the service inside firewall 
+ ~]# firewall-cmd --add-service=<service_name>
+ ~]# firewall-cmd --add-service=http 
+ To remove thse service 
+ ~]# firewalld-cmd --remove-service=<service_name>
+ To reload services 
+ ~]# firewall-cmd --relaod 
+ To add/remove service permmanetly 
+ ~]# firewall-cmd --add-service=<service_name> --permanent 
+ ~]# firewall-cmd --remove-service=<service_name> --permanent
+
+ To add a service that is not pre-defined 
+ /usr/lib/firewalld/services/allservices.xml 
+ simply cp any .xml file test.xml and chnage the service and port number [32]
+ ~}# systemctl restart firewalld 
+ ~]# firewall-cmd --get-services     [ to verify new services ]
+ ~]# firewall-cmd --add-service=test 
+
+ To add port 
+~]# firewall-cmd --add-port=22/tcp 
+ To remove port 
+ ~]# firewall-cmd --remove-port=22/tcp 
+ To reject incominng traffic from a IP add.
+ ~]# firewall-cmd --add-rich-rule='rule family="ipv4" source address="192.168.0.25" reject'
+ To block ICMP incomming traffic 
+ ~]# firewall-cmd --add-icmp-block-inversion 
+ To unblock ICMP incomming traffic 
+ ~]# firewall-cmd --remove-icmp-block-inversion
+  
+# Tune System:
+~]# tuned 
+Tune used for system tunning and d is daemon
+Based on the selected profile tuned system automatically adjust the system performance.
+Ex- tuned will automatically adjust the speed if you are downloading any large file.~]
+~]# dpkg -l | grep tuned 
+~]# sudo apt install tuned 
+~]# systemctl status | enable | start tuned 
+Command to change settings for tuned
+~]# tuned-adm <option>
+~]# tuned-adm active 
+To list avilable profiles 
+~]# tuned-adm list 
+To chnage to another profile 
+~] tuned-adm profile <profile_name> 
+To check recommended tuned profile 
+~]# tuned-adm recommend 
+To turn off daemon
+~]# tuned-adm off 
+
+Another way of tuned your process is using 'nice' and 'renice' command.
+If server have 1 CPU then it can execute only one process at a time, but if you want to prioritize the process or want to give preferance then you can use nice and renice command.
+The priority can set at 40 differnat levels.
+The nice level values ranges from -20 to 19 .
+Defult priority value is 0 
+
+To check process priority 
+~]# top 
+
+To set priority of a process 
+~]# nice -n <actual no> <process-name> 
+~]# nice -n -15 top 
+
+To chnage the process priority 
+~]# renice -n <no> <process-id>
+~]# renice -n 20 PID 
+
+# linux OS hardening / provide security for linux 
+1. user account 
+2. remove unwanted pkgs 
+3. stop un used servies
+4. check on listing ports 
+5. seure SSH connection 
+6. enable firewalls 
+7. enable SElinux
+8. Cnaging listing services port numbers 
+9. keep your system up to date 
+
+ 
+ 	  
+		
+	 
+   
+   
+
+        	  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
+			  
