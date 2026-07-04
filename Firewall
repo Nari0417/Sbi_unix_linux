@@ -40,3 +40,6 @@ firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="192
 
 ----------------------verify changes -------------------------------------------------------
 sudo firewall-cmd --zone=public --list-all
+
+===================================================================
+netstat -s -p tcp | grep retrans
