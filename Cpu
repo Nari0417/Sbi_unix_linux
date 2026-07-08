@@ -1,0 +1,11 @@
+sar -u -f /var/log/sa/sa$i -s 11:15:00 -e 11:35:00 | awk '
+$1 ~ /^[0-9]/ {
+    cpu = 100 - $NF
+    if (cpu > max) {
+        max = cpu
+        time = $1
+    }
+}
+END {
+    printf "Max CPU Usage = %.2f%% at %s\n", max, time
+}'
