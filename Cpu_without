@@ -1,0 +1,1 @@
+sar -r -s 16:45:00 -e 17:15:00 | awk '/Average:/ {total=$2+$4; printf "%.2f%%\n", ((total-$3)/total)*100}'
