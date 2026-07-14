@@ -1,0 +1,190 @@
+Component
+
+Configuration File
+
+Mandatory?
+
+Purpose
+
+Redis
+
+/etc/redis/redis.conf
+
+✅ Yes
+
+Redis settings (port, bind, password)
+
+Elasticsearch
+
+/etc/elasticsearch/elasticsearch.yml
+
+✅ Yes
+
+Cluster, node, network, discovery
+
+Elasticsearch
+
+/etc/elasticsearch/jvm.options
+
+✅ Yes
+
+JVM heap memory (-Xms, -Xmx)
+
+Logstash
+
+/etc/logstash/logstash.yml
+
+Optional
+
+Logstash service settings
+
+Logstash
+
+/etc/logstash/conf.d/*.conf
+
+✅ Yes
+
+Input, Filter, Output pipeline
+
+Kibana
+
+/etc/kibana/kibana.yml
+
+✅ Yes
+
+Connect Kibana to Elasticsearch
+===========
+Minimum mandatory files (5):
+
+1. /etc/redis/redis.conf
+2. /etc/elasticsearch/elasticsearch.yml
+3. /etc/elasticsearch/jvm.options
+4. /etc/logstash/conf.d/logstash.conf (or another .conf file in conf.d)
+5. /etc/kibana/kibana.yml
+
+Additional commonly configured file:
+6. /etc/logstash/logstash.yml
+------
+/etc/redis/redis.conf
+bind 0.0.0.0
+port 6379
+protected-mode yes
+requirepass Redis@123
+timeout 0
+tcp-keepalive 300
+daemonize yes
+loglevel notice
+dir /var/lib/redis
+
+/etc/elasticsearch/elasticsearch.yml
+cluster.name: elk-cluster
+node.name: node-1
+
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+network.host: 0.0.0.0
+http.port: 9200
+
+discovery.seed_hosts:
+  - 192.168.10.11
+  - 192.168.10.12
+
+cluster.initial_master_nodes:
+  - node-1
+
+xpack.security.enabled: true
+
+xpack.security.http.ssl.enabled: true
+xpack.security.transport.ssl.enabled: true
+
+/etc/elasticsearch/jvm.options
+
+-Xms4g
+-Xmx4g
+
+/etc/logstash/logstash.yml
+node.name: logstash-node
+
+path.data: /var/lib/logstash
+
+pipeline.workers: 4
+
+pipeline.batch.size: 125
+
+http.host: 0.0.0.0
+/etc/logstash/conf.d/logstash.conf
+
+input {
+  redis {
+    host => "192.168.10.20"
+    port => 6379
+    password => "Redis@123"
+    data_type => "list"
+    key => "logstash"
+  }
+}
+
+filter {
+
+}
+
+output {
+  elasticsearch {
+    hosts => ["https://192.168.10.11:9200"]
+    user => "elastic"
+    password => "Elastic@123"
+
+    ssl => true
+    cacert => "/etc/logstash/certs/http_ca.crt"
+
+    index => "application-%{+YYYY.MM.dd}"
+  }
+
+  stdout {
+    codec => rubydebug
+  }
+}
+==========
+
+/etc/kibana/kibana.yml
+server.port: 5601
+
+server.host: "0.0.0.0"
+
+elasticsearch.hosts:
+  - "https://192.168.10.11:9200"
+
+elasticsearch.username: "kibana_system"
+
+elasticsearch.password: "Kibana@123"
+
+elasticsearch.ssl.certificateAuthorities:
+  - /etc/kibana/certs/http_ca.crt
+
+-----------
+
+Application
+      │
+      ▼
+Redis (6379)
+      │
+      ▼
+Logstash (5044)
+      │
+      ▼
+Elasticsearch (9200)
+      │
+      ▼
+Kibana (5601)
+
+
+
+
+
+
+
+
+
+
+
