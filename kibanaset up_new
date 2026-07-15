@@ -1,0 +1,162 @@
+===========================/rlms/apps/redis-7.2.4/redis.conf====================================
+bind 10.176.41.125
+protected-mode no
+port 6379
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+daemonize no
+supervised no
+pidfile /var/run/redis_6379.pid
+loglevel notice
+logfile "/rlms/redis/logs/redis-server.log"
+databases 16
+always-show-logo yes
+save 900 1
+save 300 10
+save 60 10000
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+dir /rlms/redis/data
+replica-serve-stale-data yes
+replica-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+repl-disable-tcp-nodelay no
+replica-priority 100
+requirepass rlms123
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+appendonly no
+appendfilename "appendonly.aof"
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events ""
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-size -2
+list-compress-depth 0
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+stream-node-max-bytes 4096
+stream-node-max-entries 100
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+dynamic-hz yes
+aof-rewrite-incremental-fsync yes
+rdb-save-incremental-fsync yes
+==================================/rlms/apps/elk-7.6.1/elasticsearch-7.6.1/config/elasticsearch.yml===============
+
+xpack.security.enabled: true
+xpack.security.http.ssl.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.http.ssl.key: certs/elk.key
+xpack.security.http.ssl.certificate: certs/elk.crt
+xpack.security.http.ssl.certificate_authorities: certs/ca.crt
+xpack.security.transport.ssl.key: certs/elk.key
+xpack.security.transport.ssl.certificate: certs/elk.crt
+xpack.security.transport.ssl.certificate_authorities: certs/ca.crt
+cluster.name: rlms-elastic-cluster
+node.name: node-1
+path.data: /rlms/elk/data
+path.logs: /rlms/elk/logs
+network.host: elk.rlms.sbi
+discovery.seed_hosts: ["10.176.41.125","127.0.0.1"]
+cluster.initial_master_nodes: ["node-1"]
+=================================/rlms/apps/elk-7.6.1/elasticsearch-7.6.1/config/jvm.options===============================
+-Xms8g
+-Xmx8g
+8-13:-XX:+UseConcMarkSweepGC
+8-13:-XX:CMSInitiatingOccupancyFraction=75
+8-13:-XX:+UseCMSInitiatingOccupancyOnly
+14-:-XX:+UseG1GC
+14-:-XX:G1ReservePercent=25
+14-:-XX:InitiatingHeapOccupancyPercent=30
+-Djava.io.tmpdir=/rlms/elk/tmp
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=data
+-XX:ErrorFile=logs/hs_err_pid%p.log
+8:-XX:+PrintGCDetails
+8:-XX:+PrintGCDateStamps
+8:-XX:+PrintTenuringDistribution
+8:-XX:+PrintGCApplicationStoppedTime
+8:-Xloggc:logs/gc.log
+8:-XX:+UseGCLogFileRotation
+8:-XX:NumberOfGCLogFiles=32
+8:-XX:GCLogFileSize=64m
+
+=========================================================
+[root@drelkapp1 ~]# cat /rlms/apps/elk-7.6.1/logstash-7.6.1/conf.d/logstash.conf | grep -v "#"
+
+input {
+  redis {
+    host => "127.0.0.1"
+    password => "rlms123"
+    key => "rlms"
+    data_type => "list"
+  }
+  redis {
+    host => "127.0.0.1"
+    password => "rlms123"
+    key => "d1rlmsapiapp1"
+    data_type => "list"
+  }
+}
+
+
+output {
+  elasticsearch {
+    hosts => ["https://elk.rlms.sbi:9200"]
+    user => "elastic"
+    password => "rlms123"
+    ssl => true
+    cacert => '/rlms/apps/elk-7.6.1/elasticsearch-7.6.1/config/certs/ca.crt'
+    sniffing => true
+    manage_template => false
+    index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+    document_type => "%{[@metadata][type]}"
+  }
+}
+
+filter {
+  if [type] == "syslog" {
+    grok {
+      match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      add_field => [ "received_at", "%{@timestamp}" ]
+      add_field => [ "received_from", "%{host}" ]
+    }
+    syslog_pri { }
+    date {
+      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+    }
+  }
+}
+[root@drelkapp1 ~]#
+
+========================================/rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/kibana.yml========================================================
+server.host: elk.rlms.sbi
+elasticsearch.hosts: ["https://elk.rlms.sbi:9200"]
+kibana.index: ".kibana"
+elasticsearch.username: "kibana"
+elasticsearch.password: "GDAMv5VNosvbWi6vcvf4"
+elasticsearch.ssl.certificateAuthorities: [ "/rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/ca.crt" ]
+server.ssl.enabled: true
+server.ssl.certificate: /rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/kibana.crt
+server.ssl.key: /rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/kibana.key
