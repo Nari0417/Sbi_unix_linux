@@ -1,0 +1,187 @@
+Redis (redis.conf)
+
+-----------
+bind 10.176.41.125
+protected-mode no
+port 6379
+daemonize no
+dir /rlms/redis/data
+logfile "/rlms/redis/logs/redis-server.log"
+
+requirepass rlms123
+
+appendonly no
+save 900 1
+save 300 10
+save 60 10000
+
+# Memory settings
+maxmemory 8gb
+maxmemory-policy allkeys-lru
+
+# Optional
+tcp-keepalive 300
+timeout 0
+
+-----------
+Check configuration
+redis-server /rlms/apps/redis-7.2.4/redis.conf --test-memory 1024
+systemctl restart redis
+redis-cli -a rlms123 INFO memory
+--------------
+elasticsearch.yml
+
+cluster.name: rlms-elastic-cluster
+node.name: node-1
+
+path.data: /rlms/elk/data
+path.logs: /rlms/elk/logs
+
+network.host: 10.176.41.125
+http.port: 9200
+
+discovery.seed_hosts:
+  - 10.176.41.125
+
+cluster.initial_master_nodes:
+  - node-1
+
+xpack.security.enabled: true
+
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.key: certs/elk.key
+xpack.security.http.ssl.certificate: certs/elk.crt
+xpack.security.http.ssl.certificate_authorities:
+  - certs/ca.crt
+
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.key: certs/elk.key
+xpack.security.transport.ssl.certificate: certs/elk.crt
+xpack.security.transport.ssl.certificate_authorities:
+  - certs/ca.crt
+============
+jvm.options
+-Xms8g
+-Xmx8g
+
+-Djava.io.tmpdir=/rlms/elk/tmp
+
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=data
+-XX:ErrorFile=logs/hs_err_pid%p.log
+
+14-:-XX:+UseG1GC
+=============
+Logstash (logstash.yml)
+
+======•=======
+http.host: 0.0.0.0
+
+path.data: /rlms/elk/logstash-data
+
+pipeline.workers: 8
+pipeline.batch.size: 125
+pipeline.batch.delay: 50
+
+queue.type: memory
+
+log.level: info
+=====••••••=•••••
+
+Logstash JVM (jvm.options)
+
+-Xms2g
+-Xmx2g
+===========
+Logstash pipeline (logstash.conf)
+input {
+  redis {
+    host => "127.0.0.1"
+    password => "rlms123"
+    key => "rlms"
+    data_type => "list"
+    threads => 4
+  }
+
+  redis {
+    host => "127.0.0.1"
+    password => "rlms123"
+    key => "d1rlmsapiapp1"
+    data_type => "list"
+    threads => 4
+  }
+}
+
+filter {
+}
+
+output {
+  elasticsearch {
+    hosts => ["https://10.176.41.125:9200"]
+    user => "elastic"
+    password => "rlms123"
+
+    ssl => true
+
+    cacert => "/rlms/apps/elk-7.6.1/elasticsearch-7.6.1/config/certs/ca.crt"
+
+    sniffing => false
+
+    manage_template => false
+
+    index => "logstash-%{+YYYY.MM.dd}"
+  }
+}
+
+
+====••••••••••••
+
+kibana.yml
+
+
+===========
+server.host: "10.176.41.125"
+
+server.ssl.enabled: true
+server.ssl.certificate: /rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/kibana.crt
+server.ssl.key: /rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/kibana.key
+
+elasticsearch.hosts:
+  - "https://10.176.41.125:9200"
+
+elasticsearch.username: kibana
+elasticsearch.password: "your_password"
+
+elasticsearch.ssl.certificateAuthorities:
+  - /rlms/apps/elk-7.6.1/kibana-7.6.1-linux-x86_64/config/certs/ca.crt
+
+kibana.index: ".kibana"
+
+======••••••===•
+vi /etc/sysctl.conf
+
+vm.max_map_count=262144
+vm.swappiness=1
+net.core.somaxconn=65535
+
+redis-cli -a rlms123 INFO memory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
