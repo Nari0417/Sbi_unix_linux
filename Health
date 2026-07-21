@@ -1,0 +1,22 @@
+---
+- name: Run WebSphere health check
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Execute wsadmin health check
+      shell: >
+        /rlms/IBM/WebSphere/AppServer/bin/wsadmin.sh
+        -lang jython
+        -conntype SOAP
+        -host {{ ansible_default_ipv4.address }}
+        -port 8879
+        -username wsadmin
+        -password wsadmin
+        -f /rlms/shell/health_check.py
+      register: health_check
+
+    - name: Display command output
+      debug:
+        var: health_check.stdout_lines
