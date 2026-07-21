@@ -1,0 +1,257 @@
+#=========================================================
+# WEBSPHERE HEALTH CHECK
+#=========================================================
+
+GREEN = '\033[92m'
+RED = '\033[91m'
+YELLOW = '\033[93m'
+END = '\033[0m'
+
+print "==============================================================="
+print "                 WEBSPHERE HEALTH STATUS REPORT"
+print "==============================================================="
+
+#---------------------------------------------------------
+# COUNTERS
+#---------------------------------------------------------
+
+node_running = 0
+node_stopped = 0
+
+server_running = 0
+server_stopped = 0
+
+app_running = 0
+app_stopped = 0
+
+cluster_running = 0
+cluster_partial = 0
+cluster_stopped = 0
+
+#=========================================================
+# NODE STATUS
+#=========================================================
+
+print "\n========== NODE STATUS =========="
+
+nodes = AdminConfig.list('Node').splitlines()
+
+for node in nodes:
+
+    nodeName = AdminConfig.showAttribute(node,'name')
+
+    nodeAgent = AdminControl.completeObjectName(
+        'type=NodeAgent,node=' + nodeName + ',*'
+    )
+
+    if nodeAgent:
+
+        print "NODE: %-35s STATUS: %sRUNNING%s" % (
+            nodeName,
+            GREEN,
+            END
+        )
+
+        node_running += 1
+
+    else:
+
+        print "NODE: %-35s STATUS: %sSTOPPED/UNREACHABLE%s" % (
+            nodeName,
+            RED,
+            END
+        )
+
+        node_stopped += 1
+
+
+#=========================================================
+# SERVER STATUS
+#=========================================================
+
+print "\n========== SERVER STATUS =========="
+
+servers = AdminConfig.list('Server').splitlines()
+
+for server in servers:
+
+    serverName = AdminConfig.showAttribute(server,'name')
+    serverType = AdminConfig.showAttribute(server,'serverType')
+
+    if serverType == 'APPLICATION_SERVER':
+
+        serverEntry = AdminControl.completeObjectName(
+            'type=Server,name=' + serverName + ',*'
+        )
+
+        if serverEntry:
+
+            print "SERVER: %-35s STATUS: %sRUNNING%s" % (
+                serverName,
+                GREEN,
+                END
+            )
+
+            server_running += 1
+
+        else:
+
+            print "SERVER: %-35s STATUS: %sSTOPPED%s" % (
+                serverName,
+                RED,
+                END
+            )
+
+            server_stopped += 1
+
+
+#=========================================================
+# APPLICATION STATUS
+#=========================================================
+
+print "\n========== APPLICATION STATUS =========="
+
+applications = AdminApp.list().splitlines()
+
+for app in applications:
+
+    appManager = AdminControl.queryNames(
+        'type=Application,name=' + app + ',*'
+    )
+
+    if appManager:
+
+        print "APPLICATION: %-50s STATUS: %sRUNNING%s" % (
+            app,
+            GREEN,
+            END
+        )
+
+        app_running += 1
+
+    else:
+
+        print "APPLICATION: %-50s STATUS: %sSTOPPED%s" % (
+            app,
+            RED,
+            END
+        )
+
+        app_stopped += 1
+
+
+#=========================================================
+# CLUSTER STATUS
+#=========================================================
+
+print "\n========== CLUSTER STATUS =========="
+
+clusters = AdminConfig.list('ServerCluster').splitlines()
+
+for cluster in clusters:
+
+    clusterName = AdminConfig.showAttribute(cluster,'name')
+
+    clusterMBean = AdminControl.completeObjectName(
+        'type=Cluster,name=' + clusterName + ',*'
+    )
+
+    if clusterMBean:
+
+        state = AdminControl.getAttribute(
+            clusterMBean,
+            'state'
+        )
+
+        if state == "websphere.cluster.running":
+
+            print "CLUSTER: %-35s STATUS: %sRUNNING%s" % (
+                clusterName,
+                GREEN,
+                END
+            )
+
+            cluster_running += 1
+
+        elif state == "websphere.cluster.partial.start":
+
+            print "CLUSTER: %-35s STATUS: %sPARTIAL%s" % (
+                clusterName,
+                YELLOW,
+                END
+            )
+
+            cluster_partial += 1
+
+        else:
+
+            print "CLUSTER: %-35s STATUS: %sSTOPPED%s" % (
+                clusterName,
+                RED,
+                END
+            )
+
+            cluster_stopped += 1
+
+    else:
+
+        print "CLUSTER: %-35s STATUS: %sUNKNOWN%s" % (
+            clusterName,
+            RED,
+            END
+        )
+
+        cluster_stopped += 1
+
+
+#=========================================================
+# SUMMARY
+#=========================================================
+
+print "\n==============================================================="
+print "SUMMARY"
+print "==============================================================="
+
+print "Nodes        : Running=%d  Stopped=%d" % (
+    node_running,
+    node_stopped
+)
+
+print "Servers      : Running=%d  Stopped=%d" % (
+    server_running,
+    server_stopped
+)
+
+print "Applications : Running=%d  Stopped=%d" % (
+    app_running,
+    app_stopped
+)
+
+print "Clusters     : Running=%d  Partial=%d  Stopped=%d" % (
+    cluster_running,
+    cluster_partial,
+    cluster_stopped
+)
+
+print "==============================================================="
+
+if (node_stopped == 0 and
+    server_stopped == 0 and
+    app_stopped == 0 and
+    cluster_stopped == 0):
+
+    print "OVERALL STATUS : %sHEALTHY%s" % (
+        GREEN,
+        END
+    )
+
+else:
+
+    print "OVERALL STATUS : %sATTENTION REQUIRED%s" % (
+        RED,
+        END
+    )
+
+print "==============================================================="
+print "             STATUS CHECK COMPLETE"
+print "==============================================================="
