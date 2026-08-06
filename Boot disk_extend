@@ -43,3 +43,20 @@ df -h /boot
 lsblk
 Note:
 Current /boot has approximately 660 MB free, which is generally sufficient for RHEL 8.10 to RHEL 9.7 
+==================================================
+Power ON
+   ↓
+BIOS
+   ↓
+MBR (512 Bytes) ను RAM లోకి లోడ్ చేస్తుంది
+   ↓
+BIOS Boot Signature (0x55AA) ను చెక్ చేస్తుంది
+   ↓
+Signature సరైందైతే Boot Code (446 Bytes) ను Execute చేస్తుంది
+   ↓
+Boot Code అవసరమైన Partition Table ను చదువుతుంది
+   ↓
+GRUB ను లోడ్ చేస్తుంది
+   ↓
+Kernel → initramfs → Root FS → systemd → /etc/fstab
+==============================================================
