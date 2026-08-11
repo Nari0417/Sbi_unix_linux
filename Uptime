@@ -1,0 +1,23 @@
+#!/bin/bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+for server in $(cat /root/servers.txt)
+do
+    uptime_seconds=$(ssh -o ConnectTimeout=5 "$server" "awk '{print int(\$1)}' /proc/uptime" 2>/dev/null)
+
+    if [ -z "$uptime_seconds" ]; then
+        echo -e "$server : SSH connection failed"
+        continue
+    fi
+
+    uptime_days=$((uptime_seconds / 86400))
+
+    if [ "$uptime_seconds" -lt 86400 ]; then
+        echo -e "${RED}$server : Uptime = ${uptime_days} day(s) - BELOW 1 DAY${NC}"
+    else
+        echo -e "${GREEN}$server : Uptime = ${uptime_days} day(s) - ABOVE 1 DAY${NC}"
+    fi
+done
