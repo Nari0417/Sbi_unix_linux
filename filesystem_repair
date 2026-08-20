@@ -1,0 +1,12 @@
+rd.break
+######check the Mounted filesystems
+mount or findmnt
+cat /sysroot/etc/fstab
+umount -R /sysroot
+==========verify====================
+findmnt
+=====it is repair only ext4 in fs tab============
+fsck -A -t ext4 -y
+###########################
+EXT4  → fsck.ext4 / fsck
+XFS   → xfs_repair
