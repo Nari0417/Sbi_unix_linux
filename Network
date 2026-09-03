@@ -1,0 +1,26 @@
+sar -n TCP,ETCP 1 10
+sar -n DEV 1 10
+nstat -az | egrep -i 'Retrans|Timeout|TCPLost'
+tcpdump -i <interface> -nn -s 0 -w /tmp/gateway_issue.pcap
+Ctrl+C
+------------//
+Gateway → Backend Server
+       ↓
+TCP packet
+       ↓
+No ACK / delayed ACK
+       ↓
+Retransmission
+=====================
+ss -tn
+Local Address:Port       Peer Address:Port
+10.10.10.20:45678        10.20.30.40:443
+10.10.10.20:45679        10.20.30.50:8080
+------------
+nstat -az | grep -i retrans
+
+tcpdump -i any -nn -s 0 -w /tmp/gateway.pcap
+
+
+
+
