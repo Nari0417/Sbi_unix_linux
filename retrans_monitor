@@ -1,0 +1,37 @@
+#!/bin/bash
+
+LOG="/var/log/retrans_monitor.log"
+
+declare -A OLD
+
+while true
+do
+    while read -r src dst retrans
+    do
+        key="$src->$dst"
+
+        old=${OLD[$key]:-0}
+
+        if [ "$retrans" -gt "$old" ]; then
+            echo "$(date '+%Y-%m-%d %H:%M:%S') RETRANSMISSION_INCREASED SOURCE=$src DESTINATION=$dst RETRANS=$retrans PREVIOUS=$old" >> "$LOG"
+        fi
+
+        OLD[$key]=$retrans
+
+    done < <(
+        ss -tinH | awk '
+        /ESTAB/ {
+            src=$4
+            dst=$5
+        }
+
+        /retrans:/ {
+            if (match($0,/retrans:[0-9]+/)) {
+                r=substr($0,RSTART+8,RLENGTH-8)
+                print src,dst,r
+            }
+        }'
+    )
+
+    sleep 1
+done
