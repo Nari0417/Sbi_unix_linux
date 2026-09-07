@@ -1,0 +1,4 @@
+gitlab-psql -d gitlabhq_production -c \
+"SELECT extname, pg_get_userbyid(extowner) AS owner
+ FROM pg_extension
+ WHERE extname IN ('pg_trgm','btree_gist');"
