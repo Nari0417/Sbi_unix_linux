@@ -1,0 +1,13 @@
+sudo gitlab-psql -d gitlabhq_production -c \
+"ALTER EXTENSION pg_trgm OWNER TO gitlab;"
+
+
+sudo gitlab-psql -d gitlabhq_production -c \
+"ALTER EXTENSION btree_gist OWNER TO gitlab;"
+
+
+
+sudo gitlab-psql -d gitlabhq_production -c \
+"SELECT extname, pg_get_userbyid(extowner) AS owner
+ FROM pg_extension
+ WHERE extname IN ('pg_trgm','btree_gist');"
