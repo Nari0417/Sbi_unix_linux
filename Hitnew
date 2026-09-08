@@ -1,13 +1,323 @@
-sudo gitlab-psql -d gitlabhq_production -c \
-"ALTER EXTENSION pg_trgm OWNER TO gitlab;"
+/rlms/git_backup/1788809433_2026_09_08_15.0.0-ee
+2026-09-08 15:42:10 +0530 -- Unpacking backup ...
+2026-09-08 15:42:17 +0530 -- Unpacking backup ... done
+2026-09-08 15:42:17 +0530 -- Restoring database ...
+2026-09-08 10:12:17 UTC -- Cleaning the database ...
+2026-09-08 10:12:44 UTC -- done
+Restoring PostgreSQL database gitlabhq_production ... ERROR:  must be owner of extension pg_trgm
+ERROR:  must be owner of extension btree_gist
+ERROR:  must be owner of extension btree_gist
+ERROR:  must be owner of extension pg_trgm
+SET
+SET
+SET
+SET
+SET
+ set_config
+------------
+
+(1 row)
+
+SET
+SET
+SET
+SET
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+DROP INDEX
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABL
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+DROP SEQUENCE
+DROP TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+CREATE SEQUENCE
+ALTER TABLE
+ALTER SEQUENCE
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+COMMENT
+CREATE TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE TABLE
+ALTER TABLE
+--------
+      1
+(1 row)
+
+ setval
+--------
+      1
+(1 row)
+
+ setval
+--------
+      1
+(1 row)
+
+ setval
+--------
+      1
+(1 row)
+
+ setval
+--------
+      1
+(1 row)
+
+ setval
+--------
+      1
+(1 row)
+
+==============================
 
 
-sudo gitlab-psql -d gitlabhq_production -c \
-"ALTER EXTENSION btree_gist OWNER TO gitlab;"
 
 
 
-sudo gitlab-psql -d gitlabhq_production -c \
-"SELECT extname, pg_get_userbyid(extowner) AS owner
- FROM pg_extension
- WHERE extname IN ('pg_trgm','btree_gist');"
+
+
+ALTER TABLE
+ALTER TABLE
+[DONE]
+2026-09-08 15:44:06 +0530 -- Restoring database ... done
+2026-09-08 15:44:06 +0530 -- Restoring repositories ...
+{"command":"restore","gl_project_path":"source.wiki","level":"info","msg":"started restore","relative_path":"@groups/79/02/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.wiki.git","storage_name":"default","time":"2026-0
+9-08T10:14:06.686Z"}
+{"command":"restore","gl_project_path":"source/services.wiki","level":"info","msg":"started restore","relative_path":"@groups/4e/c9/4ec9599fc203d176a301536c2e091a19bc852759b255bd6818810a42c5fed14a.wiki.git","storage_name":"default","time
+":"2026-09-08T10:14:06.735Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/4e/c9/4ec9599fc203d176a301536c2e091a19bc852759b255bd6818810a42c5fed14a.wiki.bundle\": doesn't exist","gl_project_path":"
+source/services.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/4e/c9/4ec9599fc203d176a301536c2e091a19bc852759b255bd6818810a42c5fed14a.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.848Z"}
+{"command":"restore","gl_project_path":"source/subsystem.wiki","level":"info","msg":"started restore","relative_path":"@groups/94/00/9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767.wiki.git","storage_name":"default","tim
+e":"2026-09-08T10:14:06.848Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/79/02/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.wiki.bundle\": doesn't exist","gl_project_path":"
+source.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/79/02/7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.849Z"}
+{"command":"restore","gl_project_path":"source/tools.wiki","level":"info","msg":"started restore","relative_path":"@groups/f5/ca/f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b.wiki.git","storage_name":"default","time":"
+2026-09-08T10:14:06.850Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/f5/ca/f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b.wiki.bundle\": doesn't exist","gl_project_path":"
+source/tools.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/f5/ca/f5ca38f748a1d6eaf726b8a42fb575c3c71f1864a8143301782de13da2d9202b.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.873Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/94/00/9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767.wiki.bundle\": doesn't exist","gl_project_path":"
+source/subsystem.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/94/00/9400f1b21cb527d7fa3d3eabba93557a18ebe7a2ca4e471cfe5e4c5b4ca7f767.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.873Z"}
+{"command":"restore","gl_project_path":"source/test.wiki","level":"info","msg":"started restore","relative_path":"@groups/6f/4b/6f4b6612125fb3a0daecd2799dfd6c9c299424fd920f9b308110a2c1fbd8f443.wiki.git","storage_name":"default","time":"2
+026-09-08T10:14:06.873Z"}
+{"command":"restore","gl_project_path":"wireframe.wiki","level":"info","msg":"started restore","relative_path":"@groups/49/d1/49d180ecf56132819571bf39d9b7b342522a2ac6d23c1418d3338251bfe469c8.wiki.git","storage_name":"default","time":"202
+6-09-08T10:14:06.873Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/6f/4b/6f4b6612125fb3a0daecd2799dfd6c9c299424fd920f9b308110a2c1fbd8f443.wiki.bundle\": doesn't exist","gl_project_path":"
+source/test.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/6f/4b/6f4b6612125fb3a0daecd2799dfd6c9c299424fd920f9b308110a2c1fbd8f443.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.896Z"}
+{"command":"restore","gl_project_path":"db.wiki","level":"info","msg":"started restore","relative_path":"@groups/a2/18/a21855da08cb102d1d217c53dc5824a3a795c1c1a44e971bf01ab9da3a2acbbf.wiki.git","storage_name":"default","time":"2026-09-08
+T10:14:06.896Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/49/d1/49d180ecf56132819571bf39d9b7b342522a2ac6d23c1418d3338251bfe469c8.wiki.bundle\": doesn't exist","gl_project_path":"
+wireframe.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/49/d1/49d180ecf56132819571bf39d9b7b342522a2ac6d23c1418d3338251bfe469c8.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.897Z"}
+{"command":"restore","gl_project_path":"db/scripts.wiki","level":"info","msg":"started restore","relative_path":"@groups/c7/5c/c75cb66ae28d8ebc6eded002c28a8ba0d06d3a78c6b5cbf9b2ade051f0775ac4.wiki.git","storage_name":"default","time":"20
+26-09-08T10:14:06.897Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/c7/5c/c75cb66ae28d8ebc6eded002c28a8ba0d06d3a78c6b5cbf9b2ade051f0775ac4.wiki.bundle\": doesn't exist","gl_project_path":"db/scripts.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/c7/5c/c75cb66ae28d8ebc6eded002c28a8ba0d06d3a78c6b5cbf9b2ade051f0775ac4.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.919Z"}
+{"command":"restore","gl_project_path":"devops.wiki","level":"info","msg":"started restore","relative_path":"@groups/ff/5a/ff5a1ae012afa5d4c889c50ad427aaf545d31a4fac04ffc1c4d03d403ba4250a.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.919Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/a2/18/a21855da08cb102d1d217c53dc5824a3a795c1c1a44e971bf01ab9da3a2acbbf.wiki.bundle\": doesn't exist","gl_project_path":"db.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/a2/18/a21855da08cb102d1d217c53dc5824a3a795c1c1a44e971bf01ab9da3a2acbbf.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.921Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/ff/5a/ff5a1ae012afa5d4c889c50ad427aaf545d31a4fac04ffc1c4d03d403ba4250a.wiki.bundle\": doesn't exist","gl_project_path":"devops.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/ff/5a/ff5a1ae012afa5d4c889c50ad427aaf545d31a4fac04ffc1c4d03d403ba4250a.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.943Z"}
+{"command":"restore","gl_project_path":"reference/microservices.wiki","level":"info","msg":"started restore","relative_path":"@groups/7f/22/7f2253d7e228b22a08bda1f09c516f6fead81df6536eb02fa991a34bb38d9be8.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.943Z"}
+{"command":"restore","error":"manager: repository skipped: restore bundle: filesystem sink: get reader for \"@groups/7f/22/7f2253d7e228b22a08bda1f09c516f6fead81df6536eb02fa991a34bb38d9be8.wiki.bundle\": doesn't exist","gl_project_path":"reference/microservices.wiki","level":"warning","msg":"skipped restore","relative_path":"@groups/7f/22/7f2253d7e228b22a08bda1f09c516f6fead81df6536eb02fa991a34bb38d9be8.wiki.git","storage_name":"default","time":"2026-09-08T10:14:06.968Z"}
+{"command":"restore","gl_project_path":"reference/samples/ionic-ng-examples.wiki","level":"info","msg":"started restore","relat
+{"command":"restore","gl_project_path":"source/nxt/monorepo/rlms-common-repo","level":"info","msg":"completed restore","relative_path":"@hashed/1e/68/1e68ed4e3d58a51096a7feea3947f40debf1fd9246ec977eb62ab93c81823ad9.git","storage_name":"default","time":"2026-09-08T10:17:16.899Z"}
+2026-09-08 15:47:16 +0530 -- Restoring repositories ... done
+2026-09-08 15:47:16 +0530 -- Restoring uploads ...
+2026-09-08 15:47:17 +0530 -- Restoring uploads ... done
+2026-09-08 15:47:17 +0530 -- Restoring builds ...
+2026-09-08 15:47:17 +0530 -- Restoring builds ... done
+2026-09-08 15:47:17 +0530 -- Restoring artifacts ...
+2026-09-08 15:47:17 +0530 -- Restoring artifacts ... done
+2026-09-08 15:47:17 +0530 -- Restoring pages ...
+2026-09-08 15:47:17 +0530 -- Restoring pages ... done
+2026-09-08 15:47:17 +0530 -- Restoring lfs objects ...
+2026-09-08 15:47:17 +0530 -- Restoring lfs objects ... done
+2026-09-08 15:47:17 +0530 -- Restoring terraform states ...
+2026-09-08 15:47:17 +0530 -- Restoring terraform states ... done
+2026-09-08 15:47:17 +0530 -- Restoring packages ...
+2026-09-08 15:47:17 +0530 -- Restoring packages ... done
+2026-09-08 15:47:17 +0530 -- Deleting tar staging files ...
+2026-09-08 15:47:17 +0530 -- Cleaning up /rlms/git_backup/backup_information.yml
+2026-09-08 15:47:17 +0530 -- Cleaning up /rlms/git_backup/db
+2026-09-08 15:47:17 +0530 -- Cleaning up /rlms/git_backup/repositories
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/uploads.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/builds.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/artifacts.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/pages.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/lfs.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/terraform_state.tar.gz
+2026-09-08 15:47:18 +0530 -- Cleaning up /rlms/git_backup/packages.tar.gz
+2026-09-08 15:47:18 +0530 -- Deleting tar staging files ... done
+2026-09-08 15:47:18 +0530 -- Deleting backups/tmp ...
+2026-09-08 15:47:50 +0530 -- Deleting backups/tmp ... done
+2026-09-08 15:47:50 +0530 -- Warning: Your gitlab.rb and gitlab-secrets.json files contain sensitive data
+and are not included in this backup. You will need to restore these files manua
