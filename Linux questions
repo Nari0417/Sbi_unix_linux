@@ -1,0 +1,34 @@
+Please introduce yourself and explain your current role, responsibilities, and day-to-day activities.
+
+  .. Where do you check the authentication logs 
+…How do you find files modified in the last 15 days ?
+…    How do you identify a newly added disk in Linux without performing a server reboot?
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+
+….. How would you troubleshoot if df -h is hung or stuck ?
+…How to clear cache memory to the server.
+….How to assign static ip to the server 
+…. Tell me about selinux 
+…Explain the end-to-end patching process
+…If the initramfs file is corrupted, how would you resolve the issue?
+…While extending an LVM, if you get a ‘Permission denied’ error, how would you troubleshoot and resolve it? 
+…While creating a file, you get a ‘No space left on device’ error. 
+…. Diff between ext4 and xfs
+….    How do you analyze CPU,memory,utilization for a specific time period?
+….. A user is unable to access the server. How would you troubleshoot the issue?
+…. What is the use of handlers in Ansible?
+
+- [ ] 4 While extending an LVM, you receive a “Permission denied” error. How would you troubleshoot and resolve the issue?
+
+3 What happens when you execute
+
+chmod 4755 file
+
+4     What commands do you use to check open/listening ports?
+5     Difference between ext4 and XFS?
+6 disk utilisation still showing 100
+
+8
+9     Tell me about the most difficult Linux issue you have handled in production. What was the root cause?
+
