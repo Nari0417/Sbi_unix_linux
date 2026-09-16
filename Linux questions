@@ -1,3 +1,48 @@
+=======================================================================================================
+Please introduce yourself and explain your current role, responsibilities, and day-to-day activities.
+
+1) Where do you check the authentication logs 
+2) what is the umask how to set permanent umask. 
+3)How do you identify a newly added disk in Linux without performing a server reboot?
+
+echo "- - -" > /sys/class/scsi_host/host0/scan
+
+4)How would you troubleshoot if df -h is hung or stuck ?
+
+5) How to break root password. 
+6) How to assign static ip address to the server 
+tell me manual 
+7) what is the use of patching, Explain the patching process
+8) what is the use of selinux, how to change the modes.
+
+9) If the initramfs file is corrupted, how would you regenarate the file ?
+
+10) While extending an LVM, if you get a ‘Permission denied’ error, how would you troubleshoot and resolve it? 
+
+11) While creating a file, you get a ‘No space left on device’ error. 
+
+12) Diff between ext4 and xfs.
+how to reduce the filesystem size 
+
+13)  Need last 5days of cpu and memory utilization
+
+14) A user is unable to access the server through ssh. waht are the possible causes.
+15) What is the use of handlers in Ansible? and ansible vault.
+
+
+
+
+====================================
+1) What commands do you use to check open/listening ports?
+2) disk utilisation still showing 100
+3) How do you find files modified in the last 15 days ?
+4) Tell me about the most difficult Linux issue you have handled in production. What was the root cause?
+
+
+
+==================================================================================================
+
+
 Please introduce yourself and explain your current role, responsibilities, and day-to-day activities.
 
   .. Where do you check the authentication logs 
