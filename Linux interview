@@ -67,4 +67,8 @@ if server is hacked first what u will do
 2) How to configure local.repo tell me the steps?
 3) How do you check which file system is consuming the most space.
 4) what is the purpose of BOOTPROTO and ONBOOT?
-5) 
+5) ====================
+.	Can we create a hard link across different partitions in Linux?
+2. What are systemd targets in Linux?
+3. While unmounting a filesystem, you get a “target is busy” error. How would you troubleshoot it?
+4. What would you do if the root filesystem becomes full?
