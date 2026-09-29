@@ -1,0 +1,15 @@
+1.Tell me Linux architecture 
+
+2.What packages are updated during server patching?
+
+2.How do you reduce the size of an LVM 
+integrity check 
+shrink
+3 How do you allow a specific port number through the firewall .?
+
+3.Can we create a user  without using the useradd command? If yes, how?
+4. Suppose you are trying to delete a file and get an “Operation not permitted” error, even though you have root privileges. How would you troubleshoot and resolve the issue?
+5. The root filesystem is corrupted and the server is not booting. How will you fix the issue?
+6. Two users need to access the same file, but you cannot add the second user to the file’s group. How would you provide access to the second user?
+7. What is the purpose of an SSL/TLS certificate, and where is it used?
+8. How do you deactivate and activate a Volume Group i
