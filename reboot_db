@@ -1,0 +1,202 @@
+[root@rlmsprdb01 log]# grep -nE 'Oct 17 10:0[0-9]|Oct 17 10:0[0-9]' /var/log/messages | tail -200
+1305296:Oct 17 10:08:18 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211898.4859] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305297:Oct 17 10:08:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211899.0027] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305298:Oct 17 10:08:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211899.6947] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305299:Oct 17 10:08:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211899.6948] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305300:Oct 17 10:08:20 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211900.4846] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305301:Oct 17 10:08:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211909.0069] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305302:Oct 17 10:08:29 rlmsprdb01 kernel: [738059.885060] IPv4: martian source 10.189.214.255 from 10.189.214.175, on dev ens257
+1305303:Oct 17 10:08:29 rlmsprdb01 kernel: [738059.885074] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 c7 fb 08 00        .......PV.....
+1305304:Oct 17 10:08:29 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.175, on dev ens257
+1305305:Oct 17 10:08:29 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 c7 fb 08 00        .......PV.....
+1305306:Oct 17 10:08:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211909.6955] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305307:Oct 17 10:08:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211909.6978] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305308:Oct 17 10:08:30 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211910.4878] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305309:Oct 17 10:08:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211911.0046] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305310:Oct 17 10:08:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211911.6953] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305311:Oct 17 10:08:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211911.6954] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305312:Oct 17 10:08:32 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211912.4856] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305313:Oct 17 10:08:35 rlmsprdb01 kernel: [738066.178920] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305314:Oct 17 10:08:35 rlmsprdb01 kernel: [738066.178938] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305315:Oct 17 10:08:35 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305316:Oct 17 10:08:35 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305317:Oct 17 10:08:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211921.0084] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305318:Oct 17 10:08:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211921.6959] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305319:Oct 17 10:08:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211921.6981] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305320:Oct 17 10:08:42 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211922.4904] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305321:Oct 17 10:08:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211923.0059] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305322:Oct 17 10:08:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211923.6966] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305323:Oct 17 10:08:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211923.6966] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305324:Oct 17 10:08:44 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211924.4865] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305325:Oct 17 10:08:48 rlmsprdb01 kernel: [738079.224950] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305326:Oct 17 10:08:48 rlmsprdb01 kernel: [738079.224968] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305327:Oct 17 10:08:48 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305328:Oct 17 10:08:48 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305329:Oct 17 10:08:49 rlmsprdb01 kernel: [738079.980666] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305330:Oct 17 10:08:49 rlmsprdb01 kernel: [738079.980681] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305331:Oct 17 10:08:49 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305332:Oct 17 10:08:49 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305333:Oct 17 10:08:50 rlmsprdb01 kernel: [738080.735382] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305334:Oct 17 10:08:50 rlmsprdb01 kernel: [738080.735396] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305335:Oct 17 10:08:50 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305336:Oct 17 10:08:50 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305337:Oct 17 10:08:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211933.0103] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305338:Oct 17 10:08:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211933.6978] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305339:Oct 17 10:08:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211933.7002] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305340:Oct 17 10:08:54 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211934.4895] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305341:Oct 17 10:08:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211935.0076] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305342:Oct 17 10:08:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211935.6979] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305343:Oct 17 10:08:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211935.6979] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305344:Oct 17 10:08:56 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211936.4878] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305345:Oct 17 10:09:01 rlmsprdb01 systemd[1]: Started Session 14091 of user oracle.
+1305346:Oct 17 10:09:01 rlmsprdb01 crond[3082156]: sendmail: fatal: parameter inet_interfaces: no local interface found for ::1
+1305347:Oct 17 10:09:01 rlmsprdb01 systemd[1]: session-14091.scope: Succeeded.
+1305348:Oct 17 10:09:02 rlmsprdb01 kernel: [738093.079608] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305349:Oct 17 10:09:02 rlmsprdb01 kernel: [738093.079616] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305350:Oct 17 10:09:02 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305351:Oct 17 10:09:02 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305352:Oct 17 10:09:03 rlmsprdb01 kernel: [738093.827896] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305353:Oct 17 10:09:03 rlmsprdb01 kernel: [738093.827911] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305354:Oct 17 10:09:03 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305355:Oct 17 10:09:03 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305356:Oct 17 10:09:03 rlmsprdb01 kernel: [738094.422872] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305357:Oct 17 10:09:03 rlmsprdb01 kernel: [738094.422888] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305358:Oct 17 10:09:04 rlmsprdb01 kernel: [738094.577974] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305359:Oct 17 10:09:04 rlmsprdb01 kernel: [738094.577990] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305360:Oct 17 10:09:03 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305361:Oct 17 10:09:03 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305362:Oct 17 10:09:04 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305363:Oct 17 10:09:04 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305364:Oct 17 10:09:04 rlmsprdb01 kernel: [738095.171734] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305365:Oct 17 10:09:04 rlmsprdb01 kernel: [738095.171740] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305366:Oct 17 10:09:04 rlmsprdb01 kernel: [738095.508996] IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305367:Oct 17 10:09:04 rlmsprdb01 kernel: [738095.509013] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305368:Oct 17 10:09:04 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305369:Oct 17 10:09:04 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305370:Oct 17 10:09:04 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305371:Oct 17 10:09:04 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305372:Oct 17 10:09:05 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211945.0113] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305373:Oct 17 10:09:05 rlmsprdb01 kernel: [738095.953338] IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305374:Oct 17 10:09:05 rlmsprdb01 kernel: [738095.953345] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305375:Oct 17 10:09:05 rlmsprdb01 kernel: [738096.106573] IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305376:Oct 17 10:09:05 rlmsprdb01 kernel: [738096.106589] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305377:Oct 17 10:09:05 rlmsprdb01 kernel: [738096.261400] IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305378:Oct 17 10:09:05 rlmsprdb01 kernel: [738096.261406] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305379:Oct 17 10:09:05 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.30, on dev ens257
+1305380:Oct 17 10:09:05 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 cd 1f 08 00        .......PV.....
+1305381:Oct 17 10:09:05 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305382:Oct 17 10:09:05 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305383:Oct 17 10:09:05 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305384:Oct 17 10:09:05 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305385:Oct 17 10:09:05 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211945.6989] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305386:Oct 17 10:09:05 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211945.7017] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305387:Oct 17 10:09:06 rlmsprdb01 kernel: [738096.870760] IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305388:Oct 17 10:09:06 rlmsprdb01 kernel: [738096.870777] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305389:Oct 17 10:09:06 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.28, on dev ens257
+1305390:Oct 17 10:09:06 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 2a a5 08 00        .......PV.*...
+1305391:Oct 17 10:09:06 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211946.4919] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305392:Oct 17 10:09:07 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211947.0087] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305393:Oct 17 10:09:07 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211947.6990] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305394:Oct 17 10:09:07 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211947.6991] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305395:Oct 17 10:09:08 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211948.4886] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305396:Oct 17 10:09:16 rlmsprdb01 kernel: [738107.491512] net_ratelimit: 2 callbacks suppressed
+1305397:Oct 17 10:09:16 rlmsprdb01 kernel: [738107.491520] IPv4: martian source 10.189.95.255 from 10.189.74.72, on dev ens257
+1305398:Oct 17 10:09:16 rlmsprdb01 kernel: [738107.491524] IPv4: martian source 10.189.95.255 from 10.189.74.72, on dev ens225
+1305399:Oct 17 10:09:16 rlmsprdb01 kernel: [738107.491527] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 11 7f 08 00        .......PV.....
+1305400:Oct 17 10:09:16 rlmsprdb01 kernel: [738107.491529] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 11 7f 08 00        .......PV.....
+1305401:Oct 17 10:09:16 rlmsprdb01 kernel: net_ratelimit: 2 callbacks suppressed
+1305402:Oct 17 10:09:16 rlmsprdb01 kernel: IPv4: martian source 10.189.95.255 from 10.189.74.72, on dev ens257
+1305403:Oct 17 10:09:16 rlmsprdb01 kernel: IPv4: martian source 10.189.95.255 from 10.189.74.72, on dev ens225
+1305404:Oct 17 10:09:16 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 11 7f 08 00        .......PV.....
+1305405:Oct 17 10:09:16 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 11 7f 08 00        .......PV.....
+1305406:Oct 17 10:09:17 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211957.0134] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305407:Oct 17 10:09:17 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211957.6993] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305408:Oct 17 10:09:17 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211957.7020] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305409:Oct 17 10:09:18 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211958.4918] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305410:Oct 17 10:09:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211959.0097] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305411:Oct 17 10:09:19 rlmsprdb01 kernel: [738110.046223] IPv4: martian source 10.189.214.255 from 10.189.214.213, on dev ens257
+1305412:Oct 17 10:09:19 rlmsprdb01 kernel: [738110.046240] ll header: 00000000: ff ff ff ff ff ff 9c dc 71 66 3c b9 08 00        ........qf<...
+1305413:Oct 17 10:09:19 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.213, on dev ens257
+1305414:Oct 17 10:09:19 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 9c dc 71 66 3c b9 08 00        ........qf<...
+1305415:Oct 17 10:09:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211959.6992] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305416:Oct 17 10:09:19 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211959.6993] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305417:Oct 17 10:09:20 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211960.4903] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305418:Oct 17 10:09:21 rlmsprdb01 kernel: [738112.027305] IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305419:Oct 17 10:09:21 rlmsprdb01 kernel: [738112.027311] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305420:Oct 17 10:09:21 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305421:Oct 17 10:09:21 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305422:Oct 17 10:09:22 rlmsprdb01 kernel: [738112.777014] IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305423:Oct 17 10:09:22 rlmsprdb01 kernel: [738112.777033] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305424:Oct 17 10:09:22 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305425:Oct 17 10:09:22 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305426:Oct 17 10:09:22 rlmsprdb01 kernel: [738113.533208] IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305427:Oct 17 10:09:22 rlmsprdb01 kernel: [738113.533214] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305428:Oct 17 10:09:22 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.177, on dev ens257
+1305429:Oct 17 10:09:22 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 10 15 08 00        .......PV.....
+1305430:Oct 17 10:09:28 rlmsprdb01 kernel: [738118.828480] FINAL_REJECT: IN=ens161 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0xE0 TTL=1 ID=0 PROTO=2
+1305431:Oct 17 10:09:28 rlmsprdb01 kernel: [738118.828499] FINAL_REJECT: IN=ens192 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0xA0 TTL=1 ID=0 PROTO=2
+1305432:Oct 17 10:09:28 rlmsprdb01 kernel: [738118.828559] FINAL_REJECT: IN=ens256 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305433:Oct 17 10:09:28 rlmsprdb01 kernel: [738118.828582] FINAL_REJECT: IN=ens225 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305434:Oct 17 10:09:28 rlmsprdb01 kernel: [738118.828624] FINAL_REJECT: IN=ens257 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305435:Oct 17 10:09:28 rlmsprdb01 kernel: FINAL_REJECT: IN=ens161 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0xE0 TTL=1 ID=0 PROTO=2
+1305436:Oct 17 10:09:28 rlmsprdb01 kernel: FINAL_REJECT: IN=ens192 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0xA0 TTL=1 ID=0 PROTO=2
+1305437:Oct 17 10:09:28 rlmsprdb01 kernel: FINAL_REJECT: IN=ens256 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305438:Oct 17 10:09:28 rlmsprdb01 kernel: FINAL_REJECT: IN=ens225 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305439:Oct 17 10:09:28 rlmsprdb01 kernel: FINAL_REJECT: IN=ens257 OUT= MAC=01:00:5e:00:00:01:55:55:55:55:55:55:08:00 SRC=0.0.0.0 DST=224.0.0.1 LEN=36 TOS=0x00 PREC=0x80 TTL=1 ID=0 PROTO=2
+1305440:Oct 17 10:09:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211969.0132] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305441:Oct 17 10:09:29 rlmsprdb01 kernel: [738119.995652] IPv4: martian source 10.189.214.255 from 10.189.214.103, on dev ens257
+1305442:Oct 17 10:09:29 rlmsprdb01 kernel: [738119.995668] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 25 af 08 00        .......PV.%...
+1305443:Oct 17 10:09:29 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.103, on dev ens257
+1305444:Oct 17 10:09:29 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 25 af 08 00        .......PV.%...
+1305445:Oct 17 10:09:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211969.7005] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305446:Oct 17 10:09:29 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211969.7031] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305447:Oct 17 10:09:30 rlmsprdb01 kernel: [738120.753964] IPv4: martian source 10.189.214.255 from 10.189.214.103, on dev ens257
+1305448:Oct 17 10:09:30 rlmsprdb01 kernel: [738120.753981] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 25 af 08 00        .......PV.%...
+1305449:Oct 17 10:09:30 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.103, on dev ens257
+1305450:Oct 17 10:09:30 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 25 af 08 00        .......PV.%...
+1305451:Oct 17 10:09:30 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211970.4930] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305452:Oct 17 10:09:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211971.0110] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305453:Oct 17 10:09:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211971.7007] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305454:Oct 17 10:09:31 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211971.7007] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305455:Oct 17 10:09:32 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211972.4917] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305456:Oct 17 10:09:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211981.0149] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305457:Oct 17 10:09:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211981.7017] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305458:Oct 17 10:09:41 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211981.7040] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305459:Oct 17 10:09:42 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211982.4955] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305460:Oct 17 10:09:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211983.0120] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305461:Oct 17 10:09:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211983.7019] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305462:Oct 17 10:09:43 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211983.7019] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305463:Oct 17 10:09:44 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211984.4934] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305464:Oct 17 10:09:48 rlmsprdb01 kernel: [738139.225063] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305465:Oct 17 10:09:48 rlmsprdb01 kernel: [738139.225069] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305466:Oct 17 10:09:48 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305467:Oct 17 10:09:48 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305468:Oct 17 10:09:49 rlmsprdb01 kernel: [738139.977762] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305469:Oct 17 10:09:49 rlmsprdb01 kernel: [738139.977778] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305470:Oct 17 10:09:49 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305471:Oct 17 10:09:49 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305472:Oct 17 10:09:50 rlmsprdb01 kernel: [738140.761697] IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305473:Oct 17 10:09:50 rlmsprdb01 kernel: [738140.761714] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305474:Oct 17 10:09:50 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.145, on dev ens257
+1305475:Oct 17 10:09:50 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 b5 8a 08 00        .......PV.....
+1305476:Oct 17 10:09:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211993.0151] platform-linux: do-add-ip6-address[2: fe80::250:56ff:fea0:142e]: failure 13 (Permission denied)
+1305477:Oct 17 10:09:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211993.7030] platform-linux: do-add-ip6-address[3: fe80::250:56ff:fea0:d983]: failure 13 (Permission denied)
+1305478:Oct 17 10:09:53 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211993.7058] platform-linux: do-add-ip6-address[4: fe80::250:56ff:fe8f:d266]: failure 13 (Permission denied)
+1305479:Oct 17 10:09:54 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211994.4968] platform-linux: do-add-ip6-address[5: fe80::250:56ff:fea0:5d90]: failure 13 (Permission denied)
+1305480:Oct 17 10:09:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211995.0128] ipv6ll[4e790b8c325eaef7,ifindex=2]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305481:Oct 17 10:09:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211995.7037] ipv6ll[c6cd3b38ef7cd122,ifindex=3]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305482:Oct 17 10:09:55 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211995.7037] ipv6ll[299b7217bd4df513,ifindex=4]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305483:Oct 17 10:09:56 rlmsprdb01 kernel: [738146.677067] IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305484:Oct 17 10:09:56 rlmsprdb01 kernel: [738146.677083] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+1305485:Oct 17 10:09:56 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305486:Oct 17 10:09:56 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+1305487:Oct 17 10:09:56 rlmsprdb01 NetworkManager[6681]: <warn>  [1792211996.4946] ipv6ll[70e6dab3ce047a21,ifindex=5]: changed: no IPv6 link local address to retry after Duplicate Address Detection failures (back off)
+1305488:Oct 17 10:09:56 rlmsprdb01 kernel: [738147.428097] IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305489:Oct 17 10:09:56 rlmsprdb01 kernel: [738147.428114] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+1305490:Oct 17 10:09:56 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305491:Oct 17 10:09:56 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+1305492:Oct 17 10:09:57 rlmsprdb01 kernel: [738148.193493] IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305493:Oct 17 10:09:57 rlmsprdb01 kernel: [738148.193508] ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+1305494:Oct 17 10:09:57 rlmsprdb01 kernel: IPv4: martian source 10.189.214.255 from 10.189.214.183, on dev ens257
+1305495:Oct 17 10:09:57 rlmsprdb01 kernel: ll header: 00000000: ff ff ff ff ff ff 00 50 56 a0 5e 11 08 00        .......PV.^...
+[root@rlmsprdb01 log]#
