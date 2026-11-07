@@ -133,3 +133,142 @@ check app URL
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+
+====================================================new=============================
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------app server patching------------------------------------------------------------------------------------------
+
+>>take snap shot
+
+>>take oracle home backup
+ tar -zcvf Oracle_12.2.1.4_Home.tar.gz Oracle_12.2.1.4_Home
+ 
+ >> Stop weblogic services and thread scheduler 
+ 
+ >>check mount point size df -h
+ 
+ >>upload files to data2/patch_home/ 
+ Opatch utility zip file
+ weblogic patch zip file
+ 
+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ prepare below variable 
+ 
+ Oracle_Home 
+ domain Home
+ Opatch path 
+ patch files home
+ java path
+ ca ceart path
+ 
+ curretn java version
+ curretn Opatch version
+ current patch version.
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>upgrade java if requies
+
+upload java unzip file to /opt/java path
+
+-- unizp and untar files
+unzip p18143322_1800_Linux-x86-64.zip
+ tar -xvf jdk-8u511-linux-x64.tar.gz
+
+--change requie permission to java folder
+chmod -R 755 jdk1.8.0_511
+
+unlink jdk
+ln -s jdk1.8.0_511 jdk
+
+>after this soft links update soft inlink below location if requies
+1.)
+/data2/Oracle/Oracle_12.2.1.4_Home/oui
+ls -la
+vi .globalEnv.properties  -- take bacup and upate using vi
+
+2.)
+/data2/Oracle/Oracle_12.2.1.4_Home/oui/bin
+grep jdk *
+sed -i.bkp 's/jdk-17.0.19/jdk/g'  *     -- change firest argument as per server jdk dir name
+
+3.)
+/data3/Middleware_12.2.1.4/Oracle_Home_12.2.1.4/user_projects/domains/PRADV/init-info
+grep jdk * 
+
+4.)
+/domain_home/bin
+grep jdk * 
+#Do the changes in setNMJavaHome.sh
+
+5.)
+/domain_home/nodemanager
+grep jdk * 
+
+6)
+We need to get all the files and directories by using "ls -a" command.
+	cat .bash_profile ==> To check whether "jdk" is mentioned their or not if yes repalce it 
+
+check java -version
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>>after upgrading java make sure to take old ca ceart from old old java and put in new java ca cert.
+cd jdk1.8.0_511/jre/lib/security/  -- go to new jdk take back up of caceart
+mv cacerts cacerts_bkp_31_10_26
+
+cd /opt/java/jdk1.8.0_491/jre/lib/security/   -- go to old jdk 
+cp -rp cacerts /opt/java/jdk1.8.0_511/jre/lib/security  --copy old ca from old jdk to new jdk
+cd  /opt/java/jdk1.8.0_511/jre/lib/security   -- go to new jdk and confirm ca cert file data
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>Upgrade Opatch ultity if requies
+
+upload Opatch and Version patch jar to /data2/patchy_home dir
+unzip p28186730_1394225_Generic.zip
+cd /data2/Oracle_12.2.1.4_Home/OPatch/
+./opatch lsinv
+--note down old version.
+
+cd /opt/java/jdk1.8.0_511/bin/
+-- goto latest java bin
+
+java -jar /data2/patchy_home/6880880/opatch_generic.jar -silent oracle_home=/data2/Oracle_12.2.1.4_Home
+again check Opatch version upgraded or not.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>>Pre check and apply Patch weblogic patch version
+
+cd /data2/patchy_home/
+unzip p40129641_122140_Generic.zip
+-- Unzip weblogic version patch
+
+cd WLS_SPB_12.2.1.4.261007/tools/spbat/generic/SPBAT/
+
+./spbat.sh -phase precheck -oracle_home /data2/Oracle_12.2.1.4_Home
+ ./spbat.sh -phase apply -oracle_home /data2/Oracle_12.2.1.4_Home
+
+--check latest patch again
+cd /data2/Oracle_12.2.1.4_Home/OPatch/
+ ./opatch lsinv
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--start services.
+
+admin
+nodemanager
+manage server
+
+scheduler 
+
+check app URL
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+===========================================end==============================================================================
+
+
