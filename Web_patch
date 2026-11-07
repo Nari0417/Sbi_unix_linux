@@ -1,0 +1,135 @@
+
+------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------Web Server Patching ---------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+>>take snap shot
+
+>>take oracle home backup
+ tar -zcvf Oracle_12.2.1.4_Home.tar.gz Oracle_12.2.1.4_Home
+ 
+ >> Stop OHS  services and thread scheduler 
+ 
+ >>check mount point size df -h
+ 
+ >>upload files to data2/patch_home/ 
+ Opatch utility zip file
+ OHS patch zip file
+ 
+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ prepare below variable 
+ 
+ Oracle_Home 
+ domain Home
+ Opatch path 
+ patch files home
+ java path
+ 
+ curretn java version
+ curretn Opatch version
+ current patch version.
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>upgrade java if requies
+
+upload java unzip file to /opt/java path
+
+-- unizp and untar files
+unzip p18143322_1800_Linux-x86-64.zip
+ tar -xvf jdk-8u511-linux-x64.tar.gz
+
+--change requie permission to java folder
+chmod -R 755 jdk1.8.0_511
+
+unlink jdk
+ln -s jdk1.8.0_511 jdk
+
+>after this soft links update soft inlink below location if requies
+1.)
+/data2/Oracle/Oracle_12.2.1.4_Home/oui
+ls -la
+vi .globalEnv.properties  -- take bacup and upate using vi
+
+2.)
+/data2/Oracle/Oracle_12.2.1.4_Home/oui/bin
+grep jdk *
+sed -i.bkp 's/jdk-17.0.19/jdk/g'  *     -- change firest argument as per server jdk dir name
+
+3.)
+/data3/Middleware_12.2.1.4/Oracle_Home_12.2.1.4/user_projects/domains/PRADV/init-info
+grep jdk * 
+
+4.)
+/domain_home/bin
+grep jdk * 
+#Do the changes in setNMJavaHome.sh
+
+5.)
+/domain_home/nodemanager
+grep jdk * 
+
+6)
+Next we need to go home path by using (cd ~ or cd) command.
+We need to get all the files and directories by using "ls -a" command.
+	cat .bash_profile ==> To check whether "jdk" is mentioned their or not if yes repalce it 
+
+check java -version
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTE :- CACEART FROM OLD JAVA IS NOT REQUIRED IN WEB PACTHING JAVA UPGRADE
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>Upgrade Opatch ultity if requies
+
+#upload Opatch  zip to /data2/Middleware/patch_home/ 
+
+cd /data2/patchy_home/
+unzip p28186730_1394225_Generic.zip
+
+#After unzip 6880880 folder will be extratced. in side this folder utility jar is there so do below.
+
+java -jar /data2/patchy_home/6880880/opatch_generic.jar -silent oracle_home=/data2/Oracle_12.2.1.4_Home
+#again check Opatch version upgraded or not.()
+
+cd /opt/java/jdk1.8.0_511/bin/   
+#goto latest java bin if unable to execute from from path and execute from there
+
+cd /data2/Middleware/OPatch/
+./opatch lsinv
+--note down old version.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+>>CHANGE OWNERSHIP OF LAUNCHS FILE 
+
+#BEDORE START APPLYING PATCH IN BELOW DIR PATH THERE IS LAUNCH FILE (HIGHLIGHTED IN RED) ASK OS TEAM TO CHANGE USE FROM ROOT TO ORACLE.
+
+cd /data2/Middleware/ohs/bin/
+LAUNCH FILE - root --> oRACLE 
+
+#POST PATCH APPLIED REVOKE USER ORACLE TO ROOT FOR LAUNCH FILE  AND CHANGE PERMISSION TO 6750  launchs (should be highlighted in red )
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>>APPLY OHS PATCH
+
+ cd    /data2/Middleware/patch_home/Oct_Opatch/ohs_patch_oct  -- patch zip is here
+
+ cd /data2/Middleware/OPatch/			   
+./opatch apply  /data2/Middleware/patch_home/Oct_Opatch/ohs_patch_oct/p39987730_141200_Linux-x86-64.zip
+#do not unzip file. directly apply poatch with zip file
+
+ ./opatch lsinv
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--start services.
+nodemanager
+ohs component
+scheduler 
+
+check app URL
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
