@@ -1,0 +1,36 @@
+filebeat test config -c /etc/filebeat/filebeat.yml
+filebeat test output -c /etc/filebeat/filebeat.yml
+
+journalctl -u filebeat -n 100 --no-pager
+
+grep -i "harvester" /var/log/filebeat/filebeat*
+
+redis-cli -h 10.191.148.237 -p 6379 -a 'YOUR_PASSWORD'
+
+
+curl -s http://ELASTICSEARCH_IP:9200/_cat/indices?v
+
+curl -s -X GET "http://ELASTICSEARCH_IP:9200/YOUR_INDEX/_search?pretty" \
+-H 'Content-Type: application/json' \
+-d '{
+  "size": 10,
+  "sort": [
+    {"@timestamp": {"order": "desc"}}
+  ]
+}'
+
+
+
+curl -s -X GET "http://ELASTICSEARCH_IP:9200/YOUR_INDEX/_search?pretty" \
+-H 'Content-Type: application/json' \
+-d '{
+  "size": 10,
+  "query": {
+    "wildcard": {
+      "log.file.path": "*rlms-common-api*"
+    }
+  }
+}'
+
+
+
