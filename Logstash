@@ -1,0 +1,164 @@
+bind 127.0.0.1 10.191.148.237
+protected-mode yes
+port 6379
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+
+daemonize no
+supervised no
+pidfile /var/run/redis_6379.pid
+
+loglevel notice
+logfile "/rlms/redis/logs/redis-server.log"
+
+databases 16
+
+save 900 1
+save 300 10
+save 60 10000
+
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+dir /rlms/redis/data
+
+requirepass rlms123
+
+replica-serve-stale-data yes
+replica-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+repl-disable-tcp-nodelay no
+replica-priority 100
+
+appendonly no
+appendfilename "appendonly.aof"
+appendfsync everysec
+
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+
+latency-monitor-threshold 0
+notify-keyspace-events ""
+
+list-max-ziplist-size -2
+list-compress-depth 0
+
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+
+hz 10
+dynamic-hz yes
+
+
+
+
+------------
+logstash 
+---------
+
+
+input {
+  redis {
+    id => "redis-rlms"
+    host => "127.0.0.1"
+    port => 6379
+    password => "rlms123"
+    key => "rlms"
+    data_type => "list"
+    type => "syslog"
+  }
+
+  redis {
+    id => "redis-d1rlmsapiapp1"
+    host => "127.0.0.1"
+    port => 6379
+    password => "rlms123"
+    key => "d1rlmsapiapp1"
+    data_type => "list"
+    type => "syslog"
+  }
+}
+
+filter {
+  if [type] == "syslog" {
+    grok {
+      match => {
+        "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}"
+      }
+
+      add_field => {
+        "received_at" => "%{@timestamp}"
+        "received_from" => "%{host}"
+      }
+    }
+
+    syslog_pri {}
+
+    date {
+      match => [
+        "syslog_timestamp",
+        "MMM d HH:mm:ss",
+        "MMM dd HH:mm:ss"
+      ]
+    }
+  }
+}
+
+output {
+  elasticsearch {
+    id => "elasticsearch-rlms"
+    hosts => ["https://elk.rlms.sbi:9200"]
+    user => "elastic"
+    password => "rlms123"
+
+    ssl_enabled => true
+    ssl_certificate_authorities => ["/etc/logstash/conf.d/ca.crt"]
+
+    sniffing => false
+    manage_template => false
+
+    index => "rlms-logs-%{+yyyy.MM.dd}"
+  }
+}
+
+
+
+
+-----------------
+
+kibana----
+---------------
+server.port: 5601
+server.host: elk.rlms.sbi
+
+elasticsearch.hosts:
+  - "https://elk.rlms.sbi:9200"
+
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "rlms123"
+
+elasticsearch.ssl.certificateAuthorities:
+  - "/etc/kibana/ca.crt"
+
+elasticsearch.ssl.verificationMode: full
+
+logging:
+  appenders:
+    file:
+      type: file
+      fileName: /var/log/kibana/kibana.log
+      layout:
+        type: json
+  root:
+    appenders:
+      - default
+      - file
+
+pid.file: /run/kibana/kibana.pid
+-------
+
+
