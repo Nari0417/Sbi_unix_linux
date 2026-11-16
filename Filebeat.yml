@@ -1,0 +1,36 @@
+filebeat.inputs:
+
+  - type: filestream
+    id: rlms-all-application-logs
+    enabled: true
+
+    paths:
+      - /rlms/RLMS/logs/rlms-gateway/*.log
+      - /rlms/RLMS/logs/rlms-hi-api/*.log
+      - /rlms/RLMS/logs/rlms-common-api/*.log
+      - /rlms/RLMS/logs/rlms-gp-api/*.log
+
+
+# ================= Redis Output =================
+
+output.redis:
+  hosts: ["10.191.148.237:6379"]
+  password: "rlms123"
+  key: "rlms"
+  db: 0
+  timeout: 5s
+  datatype: "list"
+
+
+# ================= Processors =================
+
+processors:
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+
+# ================= Logging =================
+
+logging.level: info
