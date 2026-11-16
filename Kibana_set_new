@@ -395,6 +395,36 @@ processors:
   - add_kubernetes_metadata: ~
 
 
+==================================================================================
+
+[root@elkapp1 logstash]# cat jvm.options | grep -v "#"
+
+
+-Xms5g
+-Xmx5g
+
+
+
+
+
+
+
+
+-Djava.io.tmpdir=/rlms/logstash_tmp/
+
+-Djava.awt.headless=true
+
+-Dfile.encoding=UTF-8
+
+
+
+-XX:+HeapDumpOnOutOfMemoryError
+
+
+
+-Djava.security.egd=file:/dev/urandom
+
+[root@elkapp1 logstash]#
 
 
 
